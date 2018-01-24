@@ -11,6 +11,7 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "express": "4.16.2",
+    "immutable": "^3.8.2",
     "passport": "^0.4.0",
     "postcss-nested": "^3.0.0",
     "qs": "^6.5.1",

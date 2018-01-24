@@ -1,21 +1,40 @@
 import React from 'react';
 import Login from './Login';
 import StudentMain from './StudentMain';
+import RecruiterMain from './RecruiterMain';
 
 import './App.css';
 
 import { connect } from 'react-redux'
-import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 
 const ConnectedSwitch = connect(state => ({
   location: state.location
 }))(Switch);
 
-const App = () => (
-  <ConnectedSwitch>
-    <Route exact path="/" component={Login} />
-    <Route path="/main" component={StudentMain} />
-  </ConnectedSwitch>
-);
+/**
+ * @return {string} 
+ */
+const checkAuth = user => {
+	return "recruiter";
+}
 
-export default withRouter(App);
+class App extends React.Component {
+	render() {
+		return (
+		  <ConnectedSwitch>
+		  	{checkAuth(this.props.user) === "recruiter" && <Redirect exact path="/" to="/recruiter"/>}
+		  	{checkAuth(this.props.user) === "student" && <Redirect exact path="/" to="/recruiter"/>}
+		    <Route exact path="/" component={Login} />
+		    <Route path="/main" component={StudentMain} />
+		    <Route path="/recruiter" component={RecruiterMain} />
+		  </ConnectedSwitch>
+	  )
+	}
+}
+
+const mapStateToProps = state => ({
+	user: state.user,
+});
+
+export default withRouter(connect(mapStateToProps)(App));

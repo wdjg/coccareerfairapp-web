@@ -3,7 +3,6 @@ import classNames from 'classnames';
 // import logo from './react.svg';
 import './Login.css';
 import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 import {MdError} from 'react-icons/lib/md';
 
