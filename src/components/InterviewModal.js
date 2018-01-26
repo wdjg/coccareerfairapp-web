@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 class InterviewModal extends Component {
 
 	beginInterview(student_id) {
-		console.log("BEGIN INTERVIEW: " + id);
+		console.log("BEGIN INTERVIEW: " + student_id);
 	}
 
 	render() {

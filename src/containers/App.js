@@ -16,7 +16,8 @@ const ConnectedSwitch = connect(state => ({
  * @return {string} 
  */
 const checkAuth = user => {
-	return "recruiter";
+	return null;
+	// return "recruiter";
 }
 
 class App extends React.Component {
