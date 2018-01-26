@@ -2,6 +2,7 @@ import React from 'react';
 import Login from './Login';
 import StudentMain from './StudentMain';
 import RecruiterMain from './RecruiterMain';
+import Example from './Example';
 
 import './App.css';
 
@@ -29,6 +30,7 @@ class App extends React.Component {
 		    <Route exact path="/" component={Login} />
 		    <Route path="/main" component={StudentMain} />
 		    <Route path="/recruiter" component={RecruiterMain} />
+		    <Route path="/example" component={Example} />
 		  </ConnectedSwitch>
 	  )
 	}
