@@ -34,7 +34,7 @@
 	background: #ccc;
 }
 
-.line-container {
+/* .line-container {
 	background: #fff;
 	position: fixed;
 	left: 0;
@@ -43,7 +43,7 @@
 	overflow: hidden;
 	height: 90px;
 	box-shadow: 0 0 30px rgba(0,0,0,0.15);
-}
+} */
 
 .color-bar {
 	width: 25%;
@@ -52,12 +52,12 @@
 	float: right;
 }
 
-.line-content {
+/* .line-content {
  position: absolute;
  overflow: hidden;
  height: 100%;
  width: 100%;
-}
+} */
 
 .finder {
 	position: fixed;

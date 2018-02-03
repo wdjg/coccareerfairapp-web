@@ -5,9 +5,6 @@ import { withRouter } from 'react-router-dom';
 
 import QrReader from 'react-qr-reader'
 
-// import {MdError} from 'react-icons/lib/md';
-// 
-
 class StudentMain extends Component {
 
 	constructor(props) {
@@ -28,6 +25,8 @@ class StudentMain extends Component {
 	render() {
 		return (
 			<div className="StudentMain" onClick={() => this.setState(prev => ({showCamera: true}))}>
+				<div className="line-container">
+				</div>
 				{this.state.showCamera && <div className="scanner-container">
 					<div className="scanner-spacer"></div>
 					<QrReader

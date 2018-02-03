@@ -1,0 +1,16 @@
+.ErrorInput {
+  input {
+    border: 0;
+    outline: none;
+    background: #e2e2e2;
+    padding: 5px;
+    margin: 3px;
+    /* border-radius: 5px; */
+    color: #333;
+    font-family: 'Chivo', sans-serif;
+    box-sizing:border-box;
+    &::placeholder {
+      color: #999;
+    }
+  }
+}

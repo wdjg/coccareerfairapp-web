@@ -24,14 +24,18 @@ const checkAuth = user => {
 class App extends React.Component {
 	render() {
 		return (
-		  <ConnectedSwitch>
-		  	{checkAuth(this.props.user) === "recruiter" && <Redirect exact path="/" to="/recruiter"/>}
-		  	{checkAuth(this.props.user) === "student" && <Redirect exact path="/" to="/recruiter"/>}
-		    <Route exact path="/" component={Login} />
-		    <Route path="/main" component={StudentMain} />
-		    <Route path="/recruiter" component={RecruiterMain} />
-		    <Route path="/example" component={Example} />
-		  </ConnectedSwitch>
+			<div className="App">
+				<nav>
+			  </nav>
+			  <ConnectedSwitch>
+					{checkAuth(this.props.user) === "recruiter" && <Redirect exact path="/" to="/recruiter"/>}
+					{checkAuth(this.props.user) === "student" && <Redirect exact path="/" to="/recruiter"/>}
+					<Route exact path="/" component={Login} />
+					<Route path="/main" component={StudentMain} />
+					<Route path="/recruiter" component={RecruiterMain} />
+					<Route path="/example" component={Example} />
+			  </ConnectedSwitch>
+		  </div>
 	  )
 	}
 }

@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import './InterviewModal.css';
 
-import { connect } from 'react-redux';
-
 class InterviewModal extends Component {
 
 	beginInterview(student_id) {
@@ -16,22 +14,19 @@ class InterviewModal extends Component {
 				<h1 className="name">{this.props.name}</h1>
 				<div className="buttons">
 					<div 
-						className="btn begin-interview"
+						className="btn begin"
 						onClick={() => this.beginInterview(this.props.id)}>
+						Begin
 					</div>
 					<div
 						className="btn cancel"
 						onClick={this.props.closeModal}>
+						Cancel
 					</div>
 				</div>
 			</div>
 		);
 	}
 }
-
-
-const mapStateToProps = state => ({
-	batch: state.batch,
-});
 
 export default InterviewModal;

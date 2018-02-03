@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import './Example.css';
 
+import ErrorInput from '../components/ErrorInput';
+
 import { connect } from 'react-redux'
+
 
 class Example extends Component {
 
@@ -19,6 +22,10 @@ class Example extends Component {
 		);
 	}
 
+	renderStudentInfo(user) {
+		return null;
+	}
+
 	render() {
 		return (
 			<div className="Example" onClick={() => this.setState({bool: !this.state.bool})}>
@@ -28,11 +35,12 @@ class Example extends Component {
 				<div className="entry">{this.props.user.year}</div>
 				<div className="entry">{this.renderInterests(this.props.user.interests)}</div>
 				<div className={classNames("foo", {bar: this.state.bool})}>AAAAAAAAAARG</div>
-				{this.state.bool && <div className="baz">Hello</div>}
+				<ErrorInput text="hello" show={this.state.bool}/>
 			</div>
 		);
 	}
 }
+				// {this.state.bool && <div className="baz">Hello</div>}
 
 const mapStateToProps = state => ({
 	user: {

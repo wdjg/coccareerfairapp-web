@@ -1,0 +1,31 @@
+.buttons {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+}
+
+.btn {
+	-webkit-flex: 1;
+	-moz-flex: 1;
+	-ms-flex: 1;
+	-o-flex: 1;
+	flex: 1;
+	text-align: center;
+}
+
+.begin {
+	background: #2e7;
+	color: #0a4;
+}
+
+.cancel {
+	background: #d33;
+	color: #a00;
+}
+
+h1 {
+	margin: 0;
+	text-align: center;
+}
