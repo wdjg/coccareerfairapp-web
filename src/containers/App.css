@@ -8,5 +8,19 @@ body {
 
 nav {
 	background: #262626;
-  height: 40px;
+  height: 60px;
+}
+
+.App {
+	height: 100vh;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	-webkit-flex-flow: column;
+	-moz-flex-flow: column;
+	-ms-flex-flow: column;
+	-o-flex-flow: column;
+	flex-flow: column;
 }

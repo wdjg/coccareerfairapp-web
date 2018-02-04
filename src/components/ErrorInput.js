@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import classNames from 'classnames';
 import './ErrorInput.css';
 
 import Warning from '../components/Warning';

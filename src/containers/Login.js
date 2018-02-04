@@ -7,8 +7,6 @@ import Hider from '../components/Hider'
 
 import { withRouter } from 'react-router-dom';
 
-import {MdError} from 'react-icons/lib/md';
-
 const loginTabs = [{id: 'student', label: 'Student'}, {id: 'recruiter', label: 'Recruiter'}];
 
 const errors = {
@@ -209,7 +207,7 @@ class Login extends Component {
 								errorCode={this.state.recruiterErrorCodes.password}
 								placeholder="Password"
 								onChange={e => this.setState({recruiterPassword: e.target.value})} />
-							<Hider height={90} hide={!this.state.showRecruiterRegister}>
+							<Hider height={96} hide={!this.state.showRecruiterRegister}>
 								<ErrorInput 
 									className="confirm-password"
 									errorCode={this.state.recruiterErrorCodes.confirmPassword}

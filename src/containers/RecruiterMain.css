@@ -5,6 +5,26 @@
 	border-bottom: 1px #ddd solid;
 }
 
+h2 {
+	text-transform: uppercase;
+	font-size: 12px;
+	margin: 5px 10px;
+	color: #292929;
+}
+
+.stat__entry {
+	h2 {
+		text-align: center;
+		margin: 10px 0 5px 0;
+	}
+	.data {
+		font-size: 30px;
+		font-weight: 300;
+		text-align: center;
+		/* margin-bottom: 10px; */
+	}
+}
+
 .batch__item {
 	border-top: 1px #ddd solid;
 	/* background: #eee; */
@@ -14,6 +34,7 @@
 	padding: 5px 0;
 	text-align: center;
 	cursor: pointer;
+	font-size: 20px;
 	&:hover {
 		background: #eee;
 	}
@@ -27,9 +48,8 @@
 	bottom: 0;
 	background: rgba(0,0,0,0.5);
 	opacity: 0;
-	visibility: hidden;
-	pointer-events: auto;
-	transition: visibility 0s, opacity 0.5s cubic-bezier(.46,.02,.04,.99);
+	pointer-events: none;
+	transition: opacity 0.5s cubic-bezier(.46,.02,.04,.99);
 }
 
 .modal {
@@ -47,13 +67,13 @@
 		right: 0;
 		padding: 10px;
 		bottom: -100%;
-		transition: bottom 0.3s cubic-bezier(.46,.02,.04,.99);
-		padding-bottom: 50vh;
+		transition: bottom 0.5s cubic-bezier(.46,.02,.04,.99);
+		padding-bottom: 5vh;
 	}
 	&.show {
 		.shadow {
 			opacity: 1;
-			visibility: visible;
+			pointer-events: auto;
 		}
 		.content {
 			bottom: 0;
@@ -61,7 +81,34 @@
 	}
 }
 
-
+@media screen and (min-width: 520px) {
+	.batch {
+		/* display: inline-block; */
+	}
+	.batch__item {
+		text-align: left;
+		padding: 5px 8px;
+	}
+	.modal .content {
+		top: 40%;
+		left: 50%;
+		right: auto;
+		bottom: auto;
+		opacity: 0;
+		width: 350px;
+		transition: opacity 0.5s cubic-bezier(.46,.02,.04,.99), top 0.5s cubic-bezier(.46,.02,.04,.99);
+		-webkit-transform: translate(-50%, -50%);
+		-ms-transform: translate(-50%, -50%);
+		-o-transform: translate(-50%, -50%);
+		transform: translate(-50%, -50%);
+	}
+	.modal.show .content {
+		top: 30%;
+		right: auto;
+		bottom: auto;
+		opacity: 1;
+	}
+}
 
 @keyframes shadow-in {
   0% { 
@@ -91,15 +138,4 @@
   	opacity: 0;
   	display: none;
   }
-}
-
-
-@media screen and (min-width: 520px) {
-	.batch {
-		display: inline-block;
-	}
-	.batch__item {
-		text-align: left;
-		padding: 5px 8px;
-	}
 }

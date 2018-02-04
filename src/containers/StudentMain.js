@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import './StudentMain.css';
-import { withRouter } from 'react-router-dom';
+
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import QrReader from 'react-qr-reader'
 
@@ -22,37 +24,43 @@ class StudentMain extends Component {
 		if (err) console.log(err);
 	}
 
+	renderCompany(company) {
+		return company ? company : "Not in Line"
+	}
+
+	//TODO render time correctly
+	renderWait(wait) {
+		if (wait) {
+			return (<span>{Math.round(wait)}<span className="min">min</span></span>);
+		} else {
+			return "N/A";
+		}
+	}
+
 	render() {
 		return (
 			<div className="StudentMain" onClick={() => this.setState(prev => ({showCamera: true}))}>
-				<div className="line-container">
+				<div className="line-details">
+					<div className="company">
+						<h2>In Line</h2>
+						<div className="data">{this.renderCompany(this.props.company)}</div>
+					</div>
+					<div className="wait">
+						<h2>Wait</h2>
+						<div className="data">{this.renderWait(this.props.wait)}</div>
+					</div>
 				</div>
-				{this.state.showCamera && <div className="scanner-container">
-					<div className="scanner-spacer"></div>
-					<QrReader
-						className="qr-scanner"
-	          delay={300}
-	          onError={this.scanSuccess}
-	          onScan={this.scanError}
-	          showViewFinder={false}
-	          style={{ width: '100%' }}
-	          />
-					<div className="scanner-spacer"></div>
-				</div>}
-				<div className="finder">
-					<div className="corner tl"></div>
-					<div className="corner tr"></div>
-					<div className="corner bl"></div>
-					<div className="corner br"></div>
-				</div>
+				<Link className="show-camera btn" to="/scanner">
+					Tap to Show Camera
+				</Link>
 			</div>
 		);
 	}
 }
 
-// <div className="line-container">
-// 					<div className="color-bar"></div>
-// 					<div className="line-content"></div>
-// 				</div>
+const mapStateToProps = state => ({
+	company: "Microsoft",
+	wait: 31.2,
+});
 
-export default withRouter(StudentMain);
+export default connect(mapStateToProps)(StudentMain);

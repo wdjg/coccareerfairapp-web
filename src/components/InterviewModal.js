@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import classNames from 'classnames';
 import './InterviewModal.css';
 
 class InterviewModal extends Component {
@@ -11,7 +10,9 @@ class InterviewModal extends Component {
 	render() {
 		return (
 			<div className="InterviewModal">
+				<h2 className="interview-title">Interview With:</h2>
 				<h1 className="name">{this.props.name}</h1>
+				
 				<div className="buttons">
 					<div 
 						className="btn begin"

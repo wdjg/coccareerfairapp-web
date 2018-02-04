@@ -8,11 +8,11 @@ import InterviewModal from '../components/InterviewModal';
 import './RecruiterMain.css';
 
 const TEST_BATCH = [
-{name: "Blerg Fergusson", id: "8679305"},
-{name: "Floopy Doop", id: "AAAAAAAAAARG"},
 {name: "Valdimar Haraldsson", id: "9532016"},
+{name: "Floopy Doop", id: "AAAAAAAAAARG"},
 {name: "Hermann Jung-Olsen", id: "45634516"},
-{name: "Gudrun Gjukadóttir", id: "67824594"},]
+{name: "Gudrun Gjukadóttir", id: "67824594"},
+{name: "Blerg Fergusson", id: "8679305"},]
 
 class RecruiterMain extends Component {
 
@@ -21,16 +21,17 @@ class RecruiterMain extends Component {
 	
 	  this.state = {
 	  	modalStudent: null,
+	  	showModal: false
 	  };
 	}
 
 	closeModal() {
-		this.setState({ modalStudent: null });
+		this.setState({ showModal: false });
 	}
 
 	openStudentBatchModal(student) {
 		console.log("MODAL: " + student.name + " id: " + student.id);
-		this.setState({modalStudent: student})
+		this.setState({modalStudent: student, showModal: true})
 	}
 
 	renderStudents() {
@@ -42,13 +43,24 @@ class RecruiterMain extends Component {
 		));
 	}
 
+	renderInterviewTime(time) {
+		return Math.round(time);
+	}
+
 	render() {
 		return (
 			<div className="RecruiterMain">
+				<div className="stats">
+					<div className="stat__entry interview-time">
+						<h2>Average Interview Length</h2>
+						<div className="data">{this.renderInterviewTime(this.props.interviewTime)}min</div>
+					</div>
+				</div>
+				<h2>Batch</h2>
 				<ul className="batch">
 					{this.renderStudents()}
 				</ul>
-				<div className={classNames("modal", {show: this.state.modalStudent})}>
+				<div className={classNames("modal", {show: this.state.showModal})}>
 					<div className="shadow" onClick={() => this.closeModal()}></div>
 					<div className="content">
 						{this.state.modalStudent && <InterviewModal
@@ -62,9 +74,13 @@ class RecruiterMain extends Component {
 	}
 }
 
-
+// TODO
 const mapStateToProps = state => ({
 	batch: state.batch,
+	line: {
+		students: 20
+	},
+	interviewTime: 5.34,
 });
 
 export default connect(mapStateToProps)(RecruiterMain);

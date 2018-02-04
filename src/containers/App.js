@@ -3,6 +3,7 @@ import Login from './Login';
 import StudentMain from './StudentMain';
 import RecruiterMain from './RecruiterMain';
 import Example from './Example';
+import QRScanner from './QRScanner';
 
 import './App.css';
 
@@ -31,9 +32,10 @@ class App extends React.Component {
 					{checkAuth(this.props.user) === "recruiter" && <Redirect exact path="/" to="/recruiter"/>}
 					{checkAuth(this.props.user) === "student" && <Redirect exact path="/" to="/recruiter"/>}
 					<Route exact path="/" component={Login} />
-					<Route path="/main" component={StudentMain} />
+					<Route path="/student" component={StudentMain} />
 					<Route path="/recruiter" component={RecruiterMain} />
 					<Route path="/example" component={Example} />
+					<Route path="/scanner" component={QRScanner} />
 			  </ConnectedSwitch>
 		  </div>
 	  )

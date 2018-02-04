@@ -4,9 +4,11 @@
 	display: -ms-flex;
 	display: -o-flex;
 	display: flex;
+	margin: 15px 0 0 0;
+	/* width: 300px; */
 }
 
-.btn {
+.InterviewModal .btn {
 	-webkit-flex: 1;
 	-moz-flex: 1;
 	-ms-flex: 1;
@@ -16,16 +18,34 @@
 }
 
 .begin {
-	background: #2e7;
-	color: #0a4;
+  border-color: #1b5;
+  color: #1b5;
+
+  &:hover {
+    background: #1b5;
+    color: #fff;
+  }
 }
 
 .cancel {
-	background: #d33;
-	color: #a00;
+  border-color: #d33;
+  color: #d33;
+  &:hover {
+    background: #d33;
+    color: #fff;
+  }
 }
 
 h1 {
-	margin: 0;
-	text-align: center;
+	margin: 0 10px;
+	font-weight: 300;
+	color: #292929;
+	font-size: 30px;
+}
+
+.interview-title {
+	text-transform: uppercase;
+	font-size: 12px;
+	margin: 10px 10px 0;
+	color: #292929;
 }
