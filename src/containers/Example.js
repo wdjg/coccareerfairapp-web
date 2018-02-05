@@ -9,43 +9,32 @@ import { connect } from 'react-redux'
 
 class Example extends Component {
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			bool: false,
-		}
+	isFloopMajor(user) {
+		return user.major === "Floopanomics";
 	}
 
-	renderInterests(interests) {
-		return interests.map((entry, index) => 
-			(<div className="interest" key={index}>{entry}</div>)
-		);
-	}
-
-	renderStudentInfo(user) {
-		return null;
+	renderThreads(threads) {
+		return threads.map((entry, index) => {
+			return (<div key={index} className="thread">{entry}</div>)
+		})
 	}
 
 	render() {
 		return (
-			<div className="Example" onClick={() => this.setState({bool: !this.state.bool})}>
+			<div className="Example">
 				<h1 className="name">{this.props.user.name}</h1>
 				<div className="entry">Major: {this.props.user.major}</div>
-				<div className="entry">{this.props.user.gpa}</div>
-				<div className="entry">{this.props.user.year}</div>
-				<div className="entry">{this.renderInterests(this.props.user.interests)}</div>
-				<div className={classNames("foo", {bar: this.state.bool})}>AAAAAAAAAARG</div>
-				<ErrorInput text="hello" show={this.state.bool}/>
+				{!this.isFloopMajor(this.props.user) && 
+					<div className="threads">{this.renderThreads(this.props.user.threads)}</div>}
 			</div>
 		);
 	}
 }
-				// {this.state.bool && <div className="baz">Hello</div>}
-
+// {isFloopMajor() }
 const mapStateToProps = state => ({
 	user: {
 		name: "Floopy",
-		major: "Floopanomics",
+		major: "Doopanomics",
 		gpa: 3.5,
 		year: "Freshman",
 		interests: ["Blarg", "Honk", "Floop"],
