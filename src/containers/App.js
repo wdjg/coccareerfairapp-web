@@ -6,6 +6,7 @@ import RecruiterMain from './RecruiterMain';
 import Example from './Example';
 import QRScanner from './QRScanner';
 import CompanyProfile from './CompanyProfile';
+import RecruiterProfile from './RecruiterProfile';
 
 import './App.css';
 
@@ -17,7 +18,7 @@ const ConnectedSwitch = connect(state => ({
 }))(Switch);
 
 /**
- * @return {string} 
+ * @return {string}
  */
 const checkAuth = user => {
 	return null;
