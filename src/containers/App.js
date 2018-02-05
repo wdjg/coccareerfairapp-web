@@ -1,9 +1,11 @@
 import React from 'react';
+import NotFound from './NotFound';
 import Login from './Login';
 import StudentMain from './StudentMain';
 import RecruiterMain from './RecruiterMain';
 import Example from './Example';
 import QRScanner from './QRScanner';
+import CompanyProfile from './CompanyProfile';
 
 import './App.css';
 
@@ -36,6 +38,9 @@ class App extends React.Component {
 					<Route path="/recruiter" component={RecruiterMain} />
 					<Route path="/example" component={Example} />
 					<Route path="/scanner" component={QRScanner} />
+					<Route path="/company/notfound" component={NotFound} />
+					<Route exact path="/company/:id" component={CompanyProfile} />
+					<Route path="*" component={NotFound} />
 			  </ConnectedSwitch>
 		  </div>
 	  )

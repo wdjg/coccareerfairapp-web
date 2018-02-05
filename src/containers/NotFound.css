@@ -1,0 +1,26 @@
+.NotFound {
+	h1 {
+		text-align: center;
+		margin: 20px; 
+	}
+}
+
+.image {
+	width: 70vw;
+	height: 70vw;
+	margin: 0 auto;
+	overflow: hidden;
+	position: relative;
+	border-radius: 100%;
+	img {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		display: block;
+		width: 100%;
+		-webkit-transform: translate(-50%, -50%);
+		-ms-transform: translate(-50%, -50%);
+		-o-transform: translate(-50%, -50%);
+		transform: translate(-50%, -50%);
+	}
+}

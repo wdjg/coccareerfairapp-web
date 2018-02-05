@@ -21,6 +21,18 @@ const errors = {
 	},
 }
 
+if (!String.prototype.format) {
+  String.prototype.format = function() {
+    var args = arguments;
+    return this.replace(/{(\d+)}/g, function(match, number) { 
+      return typeof args[number] != 'undefined'
+        ? args[number]
+        : match
+      ;
+    });
+  };
+}
+
 class Login extends Component {
 	constructor(props) {
 		super(props);
@@ -83,7 +95,8 @@ class Login extends Component {
 		if (this.state.studentPassword.length < 1)
 			errorCodes.password = errors.general.requiredField;
 
-		console.log("LOGIN: student " + (Object.keys(errorCodes).length > 0 ? "FAILURE" : "SUCCESS"));
+		console.log("LOGIN: student\nuser: {0}\npass: {1}".format(this.state.studentUsername, this.state.studentPassword));
+		// console.log("LOGIN: student " + (Object.keys(errorCodes).length > 0 ? "FAILURE" : "SUCCESS"));
 
 		this.setState({studentErrorCodes: errorCodes});
 	}
@@ -93,7 +106,6 @@ class Login extends Component {
 			username: null,
 			password: null,
 			confirmPassword: null,
-			passcode: null,
 		}});
 		let errorCodes = {}
 		if (this.state.studentUsername.length < 1)
@@ -105,7 +117,9 @@ class Login extends Component {
 		if (this.state.studentConfirmPassword.length < 1)
 			errorCodes.confirmPassword = errors.general.requiredField;
 
-		console.log("REGISTER: student " + (Object.keys(errorCodes).length > 0 ? "FAILURE" : "SUCCESS"));
+		console.log("REGISTER: student\nuser: {0}\npass: {1}\nconf-pass: {2} "
+			.format(this.state.studentUsername, this.state.studentPassword, this.state.studentConfirmPassword));
+		// console.log("REGISTER: student " + (Object.keys(errorCodes).length > 0 ? "FAILURE" : "SUCCESS"));
 
 		this.setState({studentErrorCodes: errorCodes});
 	}
@@ -124,7 +138,8 @@ class Login extends Component {
 		if (this.state.recruiterPassword.length < 1)
 			errorCodes.password = errors.general.requiredField;
 
-		console.log("LOGIN: recruiter " + (Object.keys(errorCodes).length > 0 ? "FAILURE" : "SUCCESS"));
+		console.log("LOGIN: recruiter\nuser: {0}\npass: {1}".format(this.state.recruiterUsername, this.state.recruiterPassword));
+		// console.log("LOGIN: recruiter " + (Object.keys(errorCodes).length > 0 ? "FAILURE" : "SUCCESS"));
 
 		this.setState({recruiterErrorCodes: errorCodes});
 	}
@@ -149,7 +164,9 @@ class Login extends Component {
 		if (this.state.recruiterPasscode.length < 1)
 			errorCodes.passcode = errors.general.requiredField;
 
-		console.log("REGISTER: recruiter " + (Object.keys(errorCodes).length > 0 ? "FAILURE" : "SUCCESS"));
+		console.log("REGISTER: student\nuser: {0}\npass: {1}\nconf-pass: {2}\npasscode: {3}"
+			.format(this.state.recruiterUsername, this.state.recruiterPassword, this.state.recruiterConfirmPassword, this.state.recruiterPasscode));
+		// console.log("REGISTER: recruiter " + (Object.keys(errorCodes).length > 0 ? "FAILURE" : "SUCCESS"));
 
 		this.setState({recruiterErrorCodes: errorCodes});
 	}
