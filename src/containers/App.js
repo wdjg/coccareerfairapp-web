@@ -6,6 +6,7 @@ import RecruiterMain from './RecruiterMain';
 import Example from './Example';
 import QRScanner from './QRScanner';
 import CompanyProfile from './CompanyProfile';
+import StudentProfile from './StudentProfile';
 
 import './App.css';
 
@@ -35,6 +36,7 @@ class App extends React.Component {
 					{checkAuth(this.props.user) === "student" && <Redirect exact path="/" to="/recruiter"/>}
 					<Route exact path="/" component={Login} />
 					<Route path="/student" component={StudentMain} />
+					<Route path="/studentprofile" component={StudentProfile} />					
 					<Route path="/recruiter" component={RecruiterMain} />
 					<Route path="/example" component={Example} />
 					<Route path="/scanner" component={QRScanner} />

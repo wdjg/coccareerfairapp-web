@@ -2,13 +2,13 @@ import { fromJS } from 'immutable';
 import { SET_USER, SET_AUTH_TOKEN } from '../actions';
 
 const initialState = {
-	name: "Floopy",
-	major: "Doopanomics",
+	name: "Wiqas Nassar",
+	major: "Computer Science",
 	gpa: 3.5,
 	year: "Freshman",
 	interests: ["Blarg", "Honk", "Floop"],
-	threads: ['Schnops', 'Blip'],
-	graduation_date: "2",
+	threads: ['People', 'Media'],
+	graduation_date: "May 2019",
 	looking_for: "Internship",
 }
 
