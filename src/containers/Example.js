@@ -24,7 +24,7 @@ class Example extends Component {
 			<div className="Example">
 				<h1 className="name">{this.props.user.name}</h1>
 				<div className="entry">Major: {this.props.user.major}</div>
-				{!this.isFloopMajor(this.props.user) && 
+				{this.isFloopMajor(this.props.user) && 
 					<div className="threads">{this.renderThreads(this.props.user.threads)}</div>}
 			</div>
 		);
@@ -32,15 +32,7 @@ class Example extends Component {
 }
 // {isFloopMajor() }
 const mapStateToProps = state => ({
-	user: {
-		name: "Floopy",
-		major: "Doopanomics",
-		gpa: 3.5,
-		year: "Freshman",
-		interests: ["Blarg", "Honk", "Floop"],
-		graduation_date: "2",
-		looking_for: "Internship",
-	},
+	user: state.user
 });
 
 export default connect(mapStateToProps)(Example);
