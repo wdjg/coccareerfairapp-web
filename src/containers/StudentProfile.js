@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
-import classNames from 'classnames';
 import './StudentProfile.css';
 
 import ErrorInput from '../components/ErrorInput';
 
 import { connect } from 'react-redux'
 
+import TagsInput from 'react-tagsinput'
+import 'react-tagsinput/react-tagsinput.css'
 
 class Example extends Component {
+
+	constructor() {
+		super()
+		this.state = {tags: []}
+	}
+
+	handleChange(tags) {
+		this.setState({tags})
+	}
 
 	isCSMajor(user) {
 		return user.major === "Computer Science";
@@ -29,6 +39,9 @@ class Example extends Component {
 				<div className="entry">GPA: {this.props.user.GPA}</div>
 				<div className="entry">Expected Gradutation Date: {this.props.user.graduation_date}</div>
 				<div className="entry">Looking For: {this.props.user.looking_for}</div>
+				<div className="entry">Interests: 
+					<TagsInput value={this.state.tags} onChange={this.handleChange.bind(this)}/>
+				</div>
 			</div>
 		);
 	}
