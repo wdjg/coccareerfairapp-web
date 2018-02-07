@@ -95,3 +95,54 @@
 		bottom: 0;
 	}
 }
+
+.modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	pointer-events: none;
+	.content {
+		position: absolute;
+		pointer-events: auto;
+		background: #fff;
+		left: 0;
+		right: 0;
+		padding: 10px;
+		bottom: -100%;
+		transition: bottom 0.5s cubic-bezier(.46,.02,.04,.99);
+		padding-bottom: 5vh;
+	}
+	&.show {
+		.shadow {
+			opacity: 1;
+			pointer-events: auto;
+		}
+		.content {
+			bottom: 0;
+		}
+	}
+}
+
+@media screen and (min-width: 520px) {
+	.modal .content {
+		top: 40%;
+		left: 50%;
+		right: auto;
+		bottom: auto;
+		opacity: 0;
+		width: 350px;
+		transition: opacity 0.5s cubic-bezier(.46,.02,.04,.99), top 0.5s cubic-bezier(.46,.02,.04,.99);
+		-webkit-transform: translate(-50%, -50%);
+		-ms-transform: translate(-50%, -50%);
+		-o-transform: translate(-50%, -50%);
+		transform: translate(-50%, -50%);
+	}
+	.modal.show .content {
+		top: 30%;
+		right: auto;
+		bottom: auto;
+		opacity: 1;
+	}
+}
