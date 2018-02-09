@@ -12,13 +12,11 @@ class Example extends Component {
 		return user.major === "Floopanomics"
 	}
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			bool: false,
-		}
+	isFloopMajor(user) {
+		return user.major === "Floopanomics";
 	}
 
+<<<<<<< HEAD
 	renderInterests(interests) {
 		return interests.map((entry, index) =>
 			(<div className="interest" key={index}>{entry}</div>)
@@ -27,6 +25,12 @@ class Example extends Component {
 
 	renderStudentInfo(user) {
 		return null;
+=======
+	renderThreads(threads) {
+		return threads.map((entry, index) => {
+			return (<div key={index} className="thread">{entry}</div>)
+		})
+>>>>>>> master
 	}
 
 	renderThreads(threads) {
@@ -37,18 +41,23 @@ class Example extends Component {
 
 	render() {
 		return (
-			<div className="Example" onClick={() => this.setState({bool: !this.state.bool})}>
+			<div className="Example">
 				<h1 className="name">{this.props.user.name}</h1>
 				<div className="entry">Major: {this.props.user.major}</div>
+<<<<<<< HEAD
 				{this.isFloopMajor(this.props.user) &&
 					<div className = "threads">{this.renderThreads((this.props.user.threads))}</div>}
+=======
+				{this.isFloopMajor(this.props.user) && 
+					<div className="threads">{this.renderThreads(this.props.user.threads)}</div>}
+>>>>>>> master
 			</div>
 		);
 	}
 }
-				// {this.state.bool && <div className="baz">Hello</div>}
-
+// {isFloopMajor() }
 const mapStateToProps = state => ({
+<<<<<<< HEAD
 	user: {
 		name: "Floopy",
 		major: "Floopanomics",
@@ -59,6 +68,9 @@ const mapStateToProps = state => ({
 		graduation_date: "2",
 		looking_for: "Internship",
 	},
+=======
+	user: state.user
+>>>>>>> master
 });
 
 export default connect(mapStateToProps)(Example);

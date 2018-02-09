@@ -17,11 +17,11 @@ const TEST_BATCH = [
 class RecruiterMain extends Component {
 
 	constructor(props) {
-	  super(props);
-	
-	  this.state = {
-	  	modalStudent: null,
-	  	showModal: false
+		super(props);
+
+		this.state = {
+			modalStudent: null,
+			showModal: false
 	  };
 	}
 

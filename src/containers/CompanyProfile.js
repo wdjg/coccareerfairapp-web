@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import './CompanyProfile.css';
 
-import ErrorInput from '../components/ErrorInput';
+import EditableInfo from '../components/EditableInfo';
 
 import { connect } from 'react-redux'
 
@@ -11,23 +11,52 @@ class CompanyProfile extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {}
+		this.state = {
+			company: {},
+			isEditing: false,
+			edits: {},
+		}
+	}
+
+	makeEdit(key, value) {
+		const edits = {...this.state.edits, [key]: value};
+		this.setState({ edits: edits });
+	}
+
+	cancelEdit() {
+		this.setState({isEditing: false, edits: this.state.company});
+	}
+
+	//TODO should be a fetch call up to the server and update redux with the response
+	saveEdits() {
+
 	}
 
 	componentDidMount() {
 		const { match: { params } } = this.props;
 		const company = this.props.companies.find(e => e.url === params.id)
 		if (company)
-			this.setState({...company});
+			this.setState({company: company, edits: company});
 		else
 			this.props.history.push('notfound')
 	}
 
 	render() {
-		console.log(this.state);
 		return (
 			<div className="CompanyProfile">
-				<h1 className="name">{this.state.name}</h1>
+				{!this.state.isEditing && <div className="btn" onClick={() => this.setState({isEditing: true})}>Edit</div>}
+				{this.state.isEditing && <div className="edit-buttons">
+					<div className="edit-buttons__save btn" onClick={() => this.saveEdits()}>Save</div>
+					<div className="edit-buttons__cancel btn" onClick={() => this.cancelEdit()}>Cancel</div>
+				</div>}
+				<EditableInfo
+					edit={this.state.isEditing}
+					placeholder="Company Name"
+					text={this.state.edits.name}
+					errorCode={null}
+					onChange={e => this.makeEdit('name', e)}>
+					<h1 className="name">{this.state.company.name}</h1>
+				</EditableInfo>
 			</div>
 		);
 	}
@@ -36,11 +65,7 @@ class CompanyProfile extends Component {
 //TODO set up company redux
 const mapStateToProps = state => ({
 	user: state.user,
-	companies: [{
-		url: 'microsoft',
-		id: '8675309RICK',
-		name: 'Microsoft',
-	}]
+	companies: state.companies,
 });
 
 export default connect(mapStateToProps)(CompanyProfile);

@@ -186,18 +186,21 @@ class Login extends Component {
 								className="username"
 								errorCode={this.state.studentErrorCodes.username}
 								placeholder="Username"
-								onChange={e => this.setState({studentUsername: e.target.value})} />
+								text={this.state.studentUsername}
+								onChange={e => this.setState({studentUsername: e})} />
 							<ErrorInput 
 								className="password"
 								errorCode={this.state.studentErrorCodes.password}
 								placeholder="Password"
-								onChange={e => this.setState({studentPassword: e.target.value})} />
+								text={this.state.studentPassword}
+								onChange={e => this.setState({studentPassword: e})} />
 							<Hider height={45} hide={!this.state.showStudentRegister}>
 								<ErrorInput 
 									className="confirm-password"
 									errorCode={this.state.studentErrorCodes.confirmPassword}
 									placeholder="Confirm Password"
-									onChange={e => this.setState({studentConfirmPassword: e.target.value})} />
+									text={this.state.studentConfirmPassword}
+									onChange={e => this.setState({studentConfirmPassword: e})} />
 							</Hider>
 							<div 
 								className="btn btn--login selectable"
@@ -218,23 +221,27 @@ class Login extends Component {
 								className="username"
 								errorCode={this.state.recruiterErrorCodes.username}
 								placeholder="Username"
-								onChange={e => this.setState({recruiterUsername: e.target.value})} />
+								text={this.state.recruiterUsername}
+								onChange={e => this.setState({recruiterUsername: e})} />
 							<ErrorInput 
 								className="password"
 								errorCode={this.state.recruiterErrorCodes.password}
 								placeholder="Password"
-								onChange={e => this.setState({recruiterPassword: e.target.value})} />
+								text={this.state.recruiterPassword}
+								onChange={e => this.setState({recruiterPassword: e})} />
 							<Hider height={96} hide={!this.state.showRecruiterRegister}>
 								<ErrorInput 
 									className="confirm-password"
 									errorCode={this.state.recruiterErrorCodes.confirmPassword}
 									placeholder="Confirm Password"
-									onChange={e => this.setState({recruiterConfirmPassword: e.target.value})} />
+									text={this.state.recruiterConfirmPassword}
+									onChange={e => this.setState({recruiterConfirmPassword: e})} />
 								<ErrorInput 
 									className="passcode"
 									errorCode={this.state.recruiterErrorCodes.passcode}
 									placeholder="Company Passcode"
-									onChange={e => this.setState({recruiterPasscode: e.target.value})} />
+									text={this.state.recruiterPasscode}
+									onChange={e => this.setState({recruiterPasscode: e})} />
 							</Hider>
 							<div 
 							className={classNames("btn", "btn--login", "selectable")}

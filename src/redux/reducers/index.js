@@ -3,9 +3,10 @@ import { routerReducer } from 'react-router-redux'
 
 import user from './user';
 import batch from './batch';
+import companies from './companies';
 
 const rootReducer = combineReducers({
-  user, batch,
+  user, batch, companies,
   router: routerReducer,
 });
 
