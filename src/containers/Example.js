@@ -8,6 +8,9 @@ import { connect } from 'react-redux'
 
 
 class Example extends Component {
+	isFloopMajor(user) {
+		return user.major === "Floopanomics"
+	}
 
 	constructor(props) {
 		super(props);
@@ -17,7 +20,7 @@ class Example extends Component {
 	}
 
 	renderInterests(interests) {
-		return interests.map((entry, index) => 
+		return interests.map((entry, index) =>
 			(<div className="interest" key={index}>{entry}</div>)
 		);
 	}
@@ -26,16 +29,19 @@ class Example extends Component {
 		return null;
 	}
 
+	renderThreads(threads) {
+		return threads.map((entry, index) =>{
+			return (<div key = {index} className ="thread">{entry}</div>)
+		})
+	}
+
 	render() {
 		return (
 			<div className="Example" onClick={() => this.setState({bool: !this.state.bool})}>
 				<h1 className="name">{this.props.user.name}</h1>
 				<div className="entry">Major: {this.props.user.major}</div>
-				<div className="entry">{this.props.user.gpa}</div>
-				<div className="entry">{this.props.user.year}</div>
-				<div className="entry">{this.renderInterests(this.props.user.interests)}</div>
-				<div className={classNames("foo", {bar: this.state.bool})}>AAAAAAAAAARG</div>
-				<ErrorInput text="hello" show={this.state.bool}/>
+				{this.isFloopMajor(this.props.user) &&
+					<div className = "threads">{this.renderThreads((this.props.user.threads))}</div>}
 			</div>
 		);
 	}
@@ -49,6 +55,7 @@ const mapStateToProps = state => ({
 		gpa: 3.5,
 		year: "Freshman",
 		interests: ["Blarg", "Honk", "Floop"],
+		threads: ['Schnops', 'Blip'],
 		graduation_date: "2",
 		looking_for: "Internship",
 	},

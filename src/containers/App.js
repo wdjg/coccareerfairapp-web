@@ -39,6 +39,7 @@ class App extends React.Component {
 					<Route path="/recruiter" component={RecruiterMain} />
 					<Route path="/example" component={Example} />
 					<Route path="/scanner" component={QRScanner} />
+                    <Route path="/recruiter-profile" component={RecruiterProfile} />
 					<Route path="/company/notfound" component={NotFound} />
 					<Route exact path="/company/:id" component={CompanyProfile} />
 					<Route path="*" component={NotFound} />

@@ -45,12 +45,8 @@ class RecruiterProfile extends Component {
 const mapStateToProps = state => ({
 	user: {
 		name: "Floopy",
-		major: "Floopanomics",
-		gpa: 3.5,
-		year: "Freshman",
-		interests: ["Blarg", "Honk", "Floop"],
-		graduation_date: "2",
-		looking_for: "Internship",
+		company_id: "3334544",
+        title: ""
 	},
 });
 
