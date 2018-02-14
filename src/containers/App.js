@@ -3,9 +3,10 @@ import NotFound from './NotFound';
 import Login from './Login';
 import StudentMain from './StudentMain';
 import RecruiterMain from './RecruiterMain';
-import Example from './Example';
 import QRScanner from './QRScanner';
 import CompanyProfile from './CompanyProfile';
+import StudentProfile from './StudentProfile';
+import QRMain from './QRMain';
 
 import './App.css';
 
@@ -35,8 +36,9 @@ class App extends React.Component {
 					{checkAuth(this.props.user) === "student" && <Redirect exact path="/" to="/recruiter"/>}
 					<Route exact path="/" component={Login} />
 					<Route path="/student" component={StudentMain} />
+					<Route path="studentprofile" component={StudentProfile} />
+					<Route path="/qr" component={QRMain} />
 					<Route path="/recruiter" component={RecruiterMain} />
-					<Route path="/example" component={Example} />
 					<Route path="/scanner" component={QRScanner} />
 					<Route path="/company/notfound" component={NotFound} />
 					<Route exact path="/company/:id" component={CompanyProfile} />
