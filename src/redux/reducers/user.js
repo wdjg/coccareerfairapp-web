@@ -4,10 +4,10 @@ import { SET_USER, SET_AUTH_TOKEN } from '../actions';
 const initialState = {
 	name: "Wiqas Nassar",
 	major: "Computer Science",
-	gpa: 3.5,
+	gpa: "3.5",
 	year: "Freshman",
-	interests: ["Blarg", "Honk", "Floop"],
-	threads: ['People', 'Media'],
+	interests: ["IoT", "Consulting", "UX"],
+	threads: ["People", "Media"],
 	graduation_date: "May 2019",
 	looking_for: "Internship",
 }

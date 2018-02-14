@@ -1,13 +1,17 @@
-.Example {
+.Student {
 	.entry {
-		margin: 10px 0;
-		/* background: #e20; */
+		margin-left: 50px;
+		margin-bottom: 25px;
+	}
+	.name {
+		margin-top: 10px;
+		margin-bottom: 30px;
 	}
 }
 
-.foo {
-	color: #0f0;
-	&.bar {
-		color: #f00;
-	}
+.interests, .threads
+{
+	flex-direction: row;
+	margin-left: 50px;
+	margin-bottom: 25px;
 }

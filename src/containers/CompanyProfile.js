@@ -24,7 +24,7 @@ class CompanyProfile extends Component {
 	}
 
 	cancelEdit() {
-		this.setState({isEditing: false, edits: this.state.company});
+		this.setState({isEditing: false, edits: {}});
 	}
 
 	//TODO should be a fetch call up to the server and update redux with the response
@@ -36,7 +36,7 @@ class CompanyProfile extends Component {
 		const { match: { params } } = this.props;
 		const company = this.props.companies.find(e => e.url === params.id)
 		if (company)
-			this.setState({company: company, edits: company});
+			this.setState({company: company});
 		else
 			this.props.history.push('notfound')
 	}
@@ -52,7 +52,7 @@ class CompanyProfile extends Component {
 				<EditableInfo
 					edit={this.state.isEditing}
 					placeholder="Company Name"
-					text={this.state.edits.name}
+					text={this.state.company.name}
 					errorCode={null}
 					onChange={e => this.makeEdit('name', e)}>
 					<h1 className="name">{this.state.company.name}</h1>
