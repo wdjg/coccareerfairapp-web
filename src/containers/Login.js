@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
+import axios from 'axios';
 // import logo from './react.svg';
 import './Login.css';
 import ErrorInput from '../components/ErrorInput'
 import Hider from '../components/Hider'
 
-import { withRouter } from 'react-router-dom';
+// import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { setUser, setAuthToken } from '../redux/actions';
 
 const loginTabs = [{id: 'student', label: 'Student'}, {id: 'recruiter', label: 'Recruiter'}];
 
@@ -25,7 +29,7 @@ if (!String.prototype.format) {
   String.prototype.format = function() {
     var args = arguments;
     return this.replace(/{(\d+)}/g, function(match, number) { 
-      return typeof args[number] != 'undefined'
+      return typeof args[number] !== 'undefined'
         ? args[number]
         : match
       ;
@@ -42,20 +46,28 @@ class Login extends Component {
 			showStudentRegister: false,
 			showRecruiterRegister: false,
 
-			studentUsername: '',
-			studentPassword: '',
-			studentConfirmPassword: '',
+			student: {
+				email: '',
+				name: '',
+				password: '',
+				confirmPassword: '',
+			},
 			studentErrorCodes: {
-				username: null,
+				email: null,
+				name: null,
 				password: null,
 				confirmPassword: null,
 			},
 
-			recruiterUsername: '',
-			recruiterPassword: '',
-			recruiterConfirmPassword: '',
-			recruiterPasscode: '',
+			recruiter: {
+				email: '',
+				name: '',
+				password: '',
+				confirmPassword: '',
+				passcode: '',
+			},
 			recruiterErrorCodes: {
+				email: null,
 				username: null,
 				password: null,
 				confirmPassword: null,
@@ -82,21 +94,55 @@ class Login extends Component {
 	}
 
 	onStudentLogin() {
+		console.log("LOGIN: student\nuser: {0}\npass: {1}".format(this.state.studentUsername, this.state.studentPassword));
 		this.setState({studentErrorCodes: {
-			username: null,
+			email: null,
 			password: null,
 			confirmPassword: null,
-			passcode: null,
 		}});
 		let errorCodes = {}
-		if (this.state.studentUsername.length < 1)
-			errorCodes.username = errors.general.requiredField;
+		let s = this.state.student;
+		if (s.email.length < 1)
+			errorCodes.email = errors.general.requiredField;
 
-		if (this.state.studentPassword.length < 1)
+		if (s.password.length < 1)
 			errorCodes.password = errors.general.requiredField;
 
-		console.log("LOGIN: student\nuser: {0}\npass: {1}".format(this.state.studentUsername, this.state.studentPassword));
-		// console.log("LOGIN: student " + (Object.keys(errorCodes).length > 0 ? "FAILURE" : "SUCCESS"));
+		if (Object.keys(errorCodes).length > 0) {
+			console.log("REGISTER: student FAILURE");
+			this.setState({studentErrorCodes: errorCodes});
+			return;
+		}
+
+		axios({
+			method: 'post',
+		  url: 'https://coccareerfairapp-development.herokuapp.com/api/login',
+		  data: {
+		  	email: s.email,
+		  	password: s.password,
+		  },
+		  headers: {
+		    "Content-Type": 'application/json'
+		  }
+		}).then(res => {
+			this.props.setAuthToken(res.data.token);
+			return axios({
+				method: 'get',
+			  url: 'https://coccareerfairapp-development.herokuapp.com/api/users',
+			  headers: {
+			  	"Authorization": "Bearer " + res.data.token,
+			    "Content-Type": 'application/json'
+			  }
+			});
+		}).then(res => {
+			this.props.setUser(res.data);
+			console.log("LOGIN: student SUCCESS");
+			this.props.history.push('student');
+		}).catch(err => {
+			console.log(err);
+			console.log("REGISTER: student FAILURE");
+			// TODO set error values
+		});
 
 		this.setState({studentErrorCodes: errorCodes});
 	}
@@ -108,19 +154,53 @@ class Login extends Component {
 			confirmPassword: null,
 		}});
 		let errorCodes = {}
-		if (this.state.studentUsername.length < 1)
+		let s = this.state.student;
+		if (s.name.length < 1)
 			errorCodes.username = errors.general.requiredField;
 
-		if (this.state.studentPassword.length < 1)
+		if (s.password.length < 1)
 			errorCodes.password = errors.general.requiredField;
 
-		if (this.state.studentConfirmPassword.length < 1)
+		if (s.confirmPassword.length < 1)
 			errorCodes.confirmPassword = errors.general.requiredField;
 
 		console.log("REGISTER: student\nuser: {0}\npass: {1}\nconf-pass: {2} "
-			.format(this.state.studentUsername, this.state.studentPassword, this.state.studentConfirmPassword));
-		// console.log("REGISTER: student " + (Object.keys(errorCodes).length > 0 ? "FAILURE" : "SUCCESS"));
+			.format(s.name, s.password, s.confirmPassword));
+		if (Object.keys(errorCodes).length > 0) {
+			console.log("REGISTER: student FAILURE");
+			this.setState({studentErrorCodes: errorCodes});
+			return;
+		}
 
+		fetch('https://coccareerfairapp-development.herokuapp.com/api/users', { 
+		  method: 'get', 
+		  headers: {
+		    'Content-Type': 'application/json',
+		    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc4Yzc0NGFjNWU4YTAwNjI1MzhlMzEiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsIm5hbWUiOiJCcmlhbiIsImV4cCI6MTUxOTI1MTM2NywiaWF0IjoxNTE4NjQ2NTY3fQ.odbATkeyEZ2cxG410l2Doz1-jkyLrF8vIvfGU-Tc8yM"
+		  },
+		 }).then(res => res.json()).then(res => console.log(res));
+
+		// axios.post('http://coccareerfairapp-development.herokuapp.com/api/register',
+		// 	{
+		// 		email: s.email,
+		// 		name: s.name,
+		// 		password: s.password,
+		// 	})
+		// 	.then(function (token) {
+		// 		this.props.setAuthToken(token);
+		// 		axios.get('https://coccareerfairapp-development.herokuapp.com/api/users',
+		// 			{headers: { Authorization: 'Basic ' + token }})
+		// 			.then(function (userData) {
+		// 				this.props.setUser(userData);
+		// 			})
+		// 			.catch(function (error) {
+		// 				console.log(error);
+		// 			});  
+	 //    })
+	 //    .catch(function (error) {
+  //     	console.log(error);
+	 //    });   
+	  console.log("REGISTER: student " + (Object.keys(errorCodes).length > 0 ? "FAILURE" : "SUCCESS"));
 		this.setState({studentErrorCodes: errorCodes});
 	}
 
@@ -182,25 +262,35 @@ class Login extends Component {
 					<TabWindow id={loginTabs[0].id} hide={this.state.curTab !== 0}>
 						<div className="login-content">
 							<div className="spacer"/>
+							<Hider height={45} hide={!this.state.showStudentRegister}>
+								<ErrorInput 
+									className="name"
+									errorCode={this.state.studentErrorCodes.confirmPassword}
+									placeholder="Name"
+									text={this.state.student.name}
+									onChange={e => this.setState({student: {...this.state.student, name: e}})} />
+							</Hider>
 							<ErrorInput 
-								className="username"
-								errorCode={this.state.studentErrorCodes.username}
-								placeholder="Username"
-								text={this.state.studentUsername}
-								onChange={e => this.setState({studentUsername: e})} />
+								className="email"
+								errorCode={this.state.studentErrorCodes.email}
+								placeholder="Email"
+								text={this.state.student.email}
+								onChange={e => this.setState({student: {...this.state.student, email: e}})} />
 							<ErrorInput 
 								className="password"
 								errorCode={this.state.studentErrorCodes.password}
 								placeholder="Password"
-								text={this.state.studentPassword}
-								onChange={e => this.setState({studentPassword: e})} />
+								password
+								text={this.state.student.password}
+								onChange={e => this.setState({student: {...this.state.student, password: e}})} />
 							<Hider height={45} hide={!this.state.showStudentRegister}>
 								<ErrorInput 
 									className="confirm-password"
 									errorCode={this.state.studentErrorCodes.confirmPassword}
 									placeholder="Confirm Password"
-									text={this.state.studentConfirmPassword}
-									onChange={e => this.setState({studentConfirmPassword: e})} />
+									password
+									text={this.state.student.confirmPassword}
+									onChange={e => this.setState({student: {...this.state.student, confirmPassword: e}})} />
 							</Hider>
 							<div 
 								className="btn btn--login selectable"
@@ -217,31 +307,39 @@ class Login extends Component {
 					<TabWindow id={loginTabs[1].id} hide={this.state.curTab !== 1}>
 						<div className="login-content">
 							<div className="spacer"/>
+							<Hider height={45} hide={!this.state.showStudentRegister}>
+								<ErrorInput 
+									className="name"
+									errorCode={this.state.recruiterErrorCodes.name}
+									placeholder="Name"
+									text={this.state.recruiter.name}
+									onChange={e => this.setState({recruiter: {...this.state.recruiter, name: e}})} />
+							</Hider>
 							<ErrorInput 
-								className="username"
+								className="email"
 								errorCode={this.state.recruiterErrorCodes.username}
-								placeholder="Username"
-								text={this.state.recruiterUsername}
-								onChange={e => this.setState({recruiterUsername: e})} />
+								placeholder="Email"
+								text={this.state.recruiter.email}
+								onChange={e => this.setState({recruiter: {...this.state.recruiter, email: e}})} />
 							<ErrorInput 
 								className="password"
 								errorCode={this.state.recruiterErrorCodes.password}
 								placeholder="Password"
-								text={this.state.recruiterPassword}
-								onChange={e => this.setState({recruiterPassword: e})} />
+								text={this.state.recruiter.pass}
+								onChange={e => this.setState({recruiter: {...this.state.recruiter, password: e}})} />
 							<Hider height={96} hide={!this.state.showRecruiterRegister}>
 								<ErrorInput 
 									className="confirm-password"
 									errorCode={this.state.recruiterErrorCodes.confirmPassword}
 									placeholder="Confirm Password"
-									text={this.state.recruiterConfirmPassword}
-									onChange={e => this.setState({recruiterConfirmPassword: e})} />
+									text={this.state.recruiter.confirmPassword}
+									onChange={e => this.setState({recruiter: {...this.state.recruiter, confirmPassword: e}})} />
 								<ErrorInput 
 									className="passcode"
 									errorCode={this.state.recruiterErrorCodes.passcode}
 									placeholder="Company Passcode"
-									text={this.state.recruiterPasscode}
-									onChange={e => this.setState({recruiterPasscode: e})} />
+									text={this.state.recruiter.passcode}
+									onChange={e => this.setState({recruiter: {...this.state.recruiter, passcode: e}})} />
 							</Hider>
 							<div 
 							className={classNames("btn", "btn--login", "selectable")}
@@ -272,4 +370,11 @@ class TabWindow extends Component {
 	}
 }
 
-export default withRouter(Login);
+const mapStateToProps = state => ({
+	
+});
+
+const mapDispatchToProps = dispatch =>
+	bindActionCreators({ setUser, setAuthToken }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

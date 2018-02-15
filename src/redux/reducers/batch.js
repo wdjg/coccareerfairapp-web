@@ -4,19 +4,19 @@ import { PUSH_STUDENTS_TO_BATCH, REMOVE_STUDENTS_FROM_BATCH, SET_BATCH } from '.
 const initialState = []
 
 const batch = (state = initialState, action) => {
-  state = fromJS(state);
+  let immutableState = fromJS(immutableState);
   switch (action.type) {
     case PUSH_STUDENTS_TO_BATCH:
-      return state.concat(action.payload.students).toJS();
+      return immutableState.concat(action.payload.students).toJS();
     case REMOVE_STUDENTS_FROM_BATCH:
       action.payload.students.forEach(student => {
-        state = state.remove(state.indexOf(student));
+        immutableState = immutableState.remove(immutableState.indexOf(student));
       });
-      return state.toJS();
+      return immutableState.toJS();
     case SET_BATCH:
       return action.payload.batch;
     default:
-      return state.toJS();
+      return state;
   }
 };
 

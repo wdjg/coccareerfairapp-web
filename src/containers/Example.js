@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import classNames from 'classnames';
 import './Example.css';
-
-import ErrorInput from '../components/ErrorInput';
 
 import { connect } from 'react-redux'
 

@@ -29,7 +29,7 @@ class CompanyProfile extends Component {
 
 	//TODO should be a fetch call up to the server and update redux with the response
 	saveEdits() {
-
+		
 	}
 
 	componentDidMount() {

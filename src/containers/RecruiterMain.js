@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
+import axios from 'axios';
 
 import { connect } from 'react-redux';
 
@@ -23,6 +24,12 @@ class RecruiterMain extends Component {
 			modalStudent: null,
 			showModal: false
 	  };
+	}
+
+	componentDidMount() {
+		axios.get('http://coccareerfairapp-development.herokuapp.com/api/lines', {
+
+		})
 	}
 
 	closeModal() {
