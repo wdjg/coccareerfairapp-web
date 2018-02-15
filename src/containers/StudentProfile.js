@@ -19,7 +19,6 @@ class StudentProfile extends Component {
 		this.state = {
 			isEditing: false,
 			edits: {},
-			tags: {},
 		}
 	}
 
@@ -42,8 +41,9 @@ class StudentProfile extends Component {
 		this.setState({isEditing: false});
 	}
 
-	handleChange(tags) {
-		this.setState({tags})
+	handleChange(key, tags) {
+		const edits = {...this.state.edits, [key]: tags};
+		this.setState({ edits: edits });
 	}
 
 	isCSMajor(user) {
@@ -119,8 +119,7 @@ class StudentProfile extends Component {
 				<h1>Interests: </h1>
 				<div>
 					{!this.state.isEditing && <div className="interests">{this.renderInterests(this.props.user.interests)}</div>} 
-					{this.state.isEditing && <TagsInput className="entry" value={this.props.user.interests} onChange={this.handleChange.bind(this)}/>}
-					<TagsInput value={this.state.tags} onChange={this.handleChange.bind(this)} />
+					{this.state.isEditing && <TagsInput className="entry" value={this.state.edits.interests} onChange={e => this.handleChange('interests', e)}/>}
 				</div>
 			</div>
 		);

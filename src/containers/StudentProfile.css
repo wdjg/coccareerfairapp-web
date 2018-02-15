@@ -9,9 +9,16 @@
 	}
 }
 
-.interests, .threads
-{
-	flex-direction: row;
+.interests, .threads {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
 	margin-left: 50px;
 	margin-bottom: 25px;
+}
+
+.interest, .thread {
+	margin-right: 20px;
 }
