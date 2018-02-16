@@ -3,7 +3,7 @@ import './QRConfirmationModal.css';
 
 class QRConfirmationModal extends Component {
 
-	joinLine(company_id) {
+	handleScan(company_id) {
 		console.log("JOIN LINE: " + company_id);
 	}
 
@@ -16,7 +16,7 @@ class QRConfirmationModal extends Component {
 				<div className="buttons">
 					<div 
 						className="btn confirm"
-						onClick={() => this.joinLine(this.props.id)}>
+						onClick={() => this.handleScan(this.props.id)}>
 						Join
 					</div>
 					<div

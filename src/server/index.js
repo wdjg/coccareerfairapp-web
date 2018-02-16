@@ -30,9 +30,9 @@ server
     // Render the component to a string
     const markup = renderToString(
       <Provider store={store}>
-          <ConnectedRouter history={history}>
-            <App />
-          </ConnectedRouter>
+        <ConnectedRouter history={history}>
+          <App />
+        </ConnectedRouter>
       </Provider>
     );
 

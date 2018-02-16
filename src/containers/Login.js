@@ -9,7 +9,7 @@ import Hider from '../components/Hider'
 // import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setUser, setAuthToken } from '../redux/actions';
+import { setUser, setAuthToken } from '../redux/actions/user';
 
 const loginTabs = [{id: 'student', label: 'Student'}, {id: 'recruiter', label: 'Recruiter'}];
 
@@ -23,18 +23,6 @@ const errors = {
 	password: {
 		incorrect: "Password is incorrect",
 	},
-}
-
-if (!String.prototype.format) {
-  String.prototype.format = function() {
-    var args = arguments;
-    return this.replace(/{(\d+)}/g, function(match, number) { 
-      return typeof args[number] !== 'undefined'
-        ? args[number]
-        : match
-      ;
-    });
-  };
 }
 
 class Login extends Component {
@@ -68,7 +56,7 @@ class Login extends Component {
 			},
 			recruiterErrorCodes: {
 				email: null,
-				username: null,
+				name: null,
 				password: null,
 				confirmPassword: null,
 				passcode: null,
@@ -94,7 +82,7 @@ class Login extends Component {
 	}
 
 	onStudentLogin() {
-		console.log("LOGIN: student\nuser: {0}\npass: {1}".format(this.state.studentUsername, this.state.studentPassword));
+		console.log("LOGIN: student");
 		this.setState({studentErrorCodes: {
 			email: null,
 			password: null,
@@ -140,7 +128,7 @@ class Login extends Component {
 			this.props.history.push('student');
 		}).catch(err => {
 			console.log(err);
-			console.log("REGISTER: student FAILURE");
+			console.log("LOGIN: student FAILURE");
 			// TODO set error values
 		});
 
@@ -164,89 +152,151 @@ class Login extends Component {
 		if (s.confirmPassword.length < 1)
 			errorCodes.confirmPassword = errors.general.requiredField;
 
-		console.log("REGISTER: student\nuser: {0}\npass: {1}\nconf-pass: {2} "
-			.format(s.name, s.password, s.confirmPassword));
+		console.log("REGISTER: student");
 		if (Object.keys(errorCodes).length > 0) {
 			console.log("REGISTER: student FAILURE");
 			this.setState({studentErrorCodes: errorCodes});
 			return;
 		}
 
-		fetch('https://coccareerfairapp-development.herokuapp.com/api/users', { 
-		  method: 'get', 
-		  headers: {
-		    'Content-Type': 'application/json',
-		    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTc4Yzc0NGFjNWU4YTAwNjI1MzhlMzEiLCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSIsIm5hbWUiOiJCcmlhbiIsImV4cCI6MTUxOTI1MTM2NywiaWF0IjoxNTE4NjQ2NTY3fQ.odbATkeyEZ2cxG410l2Doz1-jkyLrF8vIvfGU-Tc8yM"
+		axios({
+			method: 'post',
+		  url: 'https://coccareerfairapp-development.herokuapp.com/api/register',
+		  data: {
+		  	email: s.email,
+		  	name: s.name,
+		  	password: s.password,
 		  },
-		 }).then(res => res.json()).then(res => console.log(res));
+		  headers: {
+		    "Content-Type": 'application/json'
+		  }
+		}).then(res => {
+			this.props.setAuthToken(res.data.token);
+			return axios({
+				method: 'get',
+			  url: 'https://coccareerfairapp-development.herokuapp.com/api/users',
+			  headers: {
+			  	"Authorization": "Bearer " + res.data.token,
+			    "Content-Type": 'application/json'
+			  }
+			});
+		}).then(res => {
+			this.props.setUser(res.data);
+			console.log("REGISTER: student SUCCESS");
+			this.props.history.push('student');
+		}).catch(err => {
+			console.log(err);
+			console.log("REGISTER: student FAILURE");
+			// TODO set error values
+		});
 
-		// axios.post('http://coccareerfairapp-development.herokuapp.com/api/register',
-		// 	{
-		// 		email: s.email,
-		// 		name: s.name,
-		// 		password: s.password,
-		// 	})
-		// 	.then(function (token) {
-		// 		this.props.setAuthToken(token);
-		// 		axios.get('https://coccareerfairapp-development.herokuapp.com/api/users',
-		// 			{headers: { Authorization: 'Basic ' + token }})
-		// 			.then(function (userData) {
-		// 				this.props.setUser(userData);
-		// 			})
-		// 			.catch(function (error) {
-		// 				console.log(error);
-		// 			});  
-	 //    })
-	 //    .catch(function (error) {
-  //     	console.log(error);
-	 //    });   
-	  console.log("REGISTER: student " + (Object.keys(errorCodes).length > 0 ? "FAILURE" : "SUCCESS"));
 		this.setState({studentErrorCodes: errorCodes});
 	}
 
 	onRecruiterLogin() {
 		this.setState({recruiterErrorCodes: {
-			username: null,
+			name: null,
 			password: null,
 			confirmPassword: null,
 			passcode: null,
 		}});
 		let errorCodes = {}
-		if (this.state.recruiterUsername.length < 1)
+		let r = this.state.recruiter;
+		if (r.name.length < 1)
 			errorCodes.username = errors.general.requiredField;
 
-		if (this.state.recruiterPassword.length < 1)
+		if (r.password.length < 1)
 			errorCodes.password = errors.general.requiredField;
 
-		console.log("LOGIN: recruiter\nuser: {0}\npass: {1}".format(this.state.recruiterUsername, this.state.recruiterPassword));
-		// console.log("LOGIN: recruiter " + (Object.keys(errorCodes).length > 0 ? "FAILURE" : "SUCCESS"));
+		console.log("LOGIN: recruiter");
+		axios({
+			method: 'post',
+		  url: 'https://coccareerfairapp-development.herokuapp.com/api/login',
+		  data: {
+		  	email: r.email,
+		  	password: r.password,
+		  },
+		  headers: {
+		    "Content-Type": 'application/json'
+		  }
+		}).then(res => {
+			this.props.setAuthToken(res.data.token);
+			return axios({
+				method: 'get',
+			  url: 'https://coccareerfairapp-development.herokuapp.com/api/users',
+			  headers: {
+			  	"Authorization": "Bearer " + res.data.token,
+			    "Content-Type": 'application/json'
+			  }
+			});
+		}).then(res => {
+			this.props.setUser(res.data);
+			console.log("LOGIN: recruiter SUCCESS");
+			this.props.history.push('recruiter');
+		}).catch(err => {
+			console.log(err);
+			console.log("LOGIN: recruiter FAILURE");
+			// TODO set error values
+		});
 
-		this.setState({recruiterErrorCodes: errorCodes});
+		this.setState({studentErrorCodes: errorCodes});
 	}
 
 	onRecruiterRegister() {
 		this.setState({recruiterErrorCodes: {
-			username: null,
+			name: null,
 			password: null,
 			confirmPassword: null,
 			passcode: null,
 		}});
 		let errorCodes = {}
-		if (this.state.recruiterUsername.length < 1)
-			errorCodes.username = errors.general.requiredField;
+		let r = this.state.recruiter;
+		if (r.name.length < 1)
+			errorCodes.name = errors.general.requiredField;
 
-		if (this.state.recruiterPassword.length < 1)
+		if (r.password.length < 1)
 			errorCodes.password = errors.general.requiredField;
 
-		if (this.state.recruiterConfirmPassword.length < 1)
+		if (r.confirmPassword.length < 1)
 			errorCodes.confirmPassword = errors.general.requiredField;
 
-		if (this.state.recruiterPasscode.length < 1)
+		if (r.passcode.length < 1)
 			errorCodes.passcode = errors.general.requiredField;
 
-		console.log("REGISTER: student\nuser: {0}\npass: {1}\nconf-pass: {2}\npasscode: {3}"
-			.format(this.state.recruiterUsername, this.state.recruiterPassword, this.state.recruiterConfirmPassword, this.state.recruiterPasscode));
-		// console.log("REGISTER: recruiter " + (Object.keys(errorCodes).length > 0 ? "FAILURE" : "SUCCESS"));
+		console.log("REGISTER: recruiter");
+		axios({
+			method: 'post',
+		  url: 'https://coccareerfairapp-development.herokuapp.com/api/register',
+		  data: {
+		  	email: r.email,
+		  	name: r.name,
+		  	password: r.password,
+		  	user_type: 'recruiter',
+		  	employer_id: r.passcode,
+		  },
+		  headers: {
+		    "Content-Type": 'application/json'
+		  }
+		}).then(res => {
+			this.props.setAuthToken(res.data.token);
+			console.log(res.data.token);
+			return axios({
+				method: 'get',
+			  url: 'https://coccareerfairapp-development.herokuapp.com/api/users',
+			  headers: {
+			  	"Authorization": "Bearer " + res.data.token,
+			    "Content-Type": 'application/json'
+			  }
+			});
+		}).then(res => {
+			this.props.setUser(res.data);
+			console.log("REGISTER: recruiter SUCCESS");
+			this.props.history.push('recruiter');
+		}).catch(err => {
+			console.log(err);
+			console.log("REGISTER: recruiter FAILURE");
+			// TODO set error values
+		});
 
 		this.setState({recruiterErrorCodes: errorCodes});
 	}
@@ -307,7 +357,7 @@ class Login extends Component {
 					<TabWindow id={loginTabs[1].id} hide={this.state.curTab !== 1}>
 						<div className="login-content">
 							<div className="spacer"/>
-							<Hider height={45} hide={!this.state.showStudentRegister}>
+							<Hider height={45} hide={!this.state.showRecruiterRegister}>
 								<ErrorInput 
 									className="name"
 									errorCode={this.state.recruiterErrorCodes.name}

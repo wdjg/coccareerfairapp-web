@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import classNames from 'classnames';
 import './CompanyProfile.css';
 
 import EditableInfo from '../components/EditableInfo';

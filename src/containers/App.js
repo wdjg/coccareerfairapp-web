@@ -24,7 +24,7 @@ const checkAuth = user => {
 	return user.user_type;
 }
 
-const AuthRoute = ({component: Component, authType: required, userAuth: auth, ...routeProps }) => (
+const AuthRoute = ({component: Component, authTypes: required, userAuth: auth, ...routeProps }) => (
 	<Route {...routeProps} render={props => (
     (auth && required.includes(auth))
       ? <Component {...props} auth={auth} />
@@ -43,9 +43,9 @@ class App extends React.Component {
 					{checkAuth(this.props.user) === "recruiter" && <Redirect exact path="/" to="/recruiter"/>}
 					{checkAuth(this.props.user) === "student" && <Redirect exact path="/" to="/student"/>}
 					<Route path="/login" component={Login} />
-					<AuthRoute path="/student" authType={["student"]} userAuth={checkAuth(this.props.user)} component={StudentMain} />
-					<AuthRoute path="/scanner" authType={["student"]} userAuth={checkAuth(this.props.user)} component={QRScanner} />
-					<AuthRoute path="/recruiter" authType={["recruiter"]} userAuth={checkAuth(this.props.user)} component={RecruiterMain} />
+					<AuthRoute path="/student" authTypes={["student"]} userAuth={checkAuth(this.props.user)} component={StudentMain} />
+					<AuthRoute path="/scanner" authTypes={["student"]} userAuth={checkAuth(this.props.user)} component={QRScanner} />
+					<AuthRoute path="/recruiter" authTypes={["recruiter"]} userAuth={checkAuth(this.props.user)} component={RecruiterMain} />
 					<Route path="/company/notfound" component={NotFound} />
 					<Route path="/company/:id" render={props => (<CompanyProfile {...props} auth={checkAuth(this.props.user)} />)} />
 					<Route path="/" component={Example} />

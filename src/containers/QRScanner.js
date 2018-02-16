@@ -14,7 +14,6 @@ class QRScanner extends Component {
 		super(props);
 
 		this.state = {
-			lastQR: null,
 			showModal: false,
 			company: null
 	  };
@@ -27,7 +26,7 @@ class QRScanner extends Component {
 		//TODO make this not Microsoft
 		data = '8675309RICK'
 		const company = this.props.companies.find(e => e.id === data);
-		this.setState({lastQR: data, showModal: true});
+		this.setState({ showModal: true, company: company });
 	}
 
 	scanError(err) {
@@ -79,6 +78,7 @@ class QRScanner extends Component {
 const mapStateToProps = state => ({
 	user: state.user,
 	companies: state.companies,
+	line: state.line,
 });
 
 export default connect(mapStateToProps)(QRScanner);

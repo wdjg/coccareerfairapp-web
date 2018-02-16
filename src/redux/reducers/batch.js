@@ -4,7 +4,7 @@ import { PUSH_STUDENTS_TO_BATCH, REMOVE_STUDENTS_FROM_BATCH, SET_BATCH } from '.
 const initialState = []
 
 const batch = (state = initialState, action) => {
-  let immutableState = fromJS(immutableState);
+  let immutableState = fromJS(state);
   switch (action.type) {
     case PUSH_STUDENTS_TO_BATCH:
       return immutableState.concat(action.payload.students).toJS();

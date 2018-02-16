@@ -27,9 +27,9 @@ class RecruiterMain extends Component {
 	}
 
 	componentDidMount() {
-		axios.get('http://coccareerfairapp-development.herokuapp.com/api/lines', {
+		// axios.get('http://coccareerfairapp-development.herokuapp.com/api/lines', {
 
-		})
+		// })
 	}
 
 	closeModal() {
