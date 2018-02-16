@@ -75,6 +75,15 @@ class RecruiterProfile extends Component {
 						onChange={e => this.makeEdit('company_name', e)} >
 						<h1 className="entry">{this.props.user.company_name}</h1>
 					</EditableInfo>
+				Position:
+				<EditableInfo
+						edit={this.state.isEditing}
+						placeholder="Position"
+						text={this.state.edits.company_position}
+						errorCode={null}
+						onChange={e => this.makeEdit('position', e)} >
+						<h1 className="entry">{this.props.user.position}</h1>
+				</EditableInfo>
 			</div>
 		);
 	}
