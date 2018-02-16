@@ -5,12 +5,11 @@ const initialState = {
 	name: "Wiqas Nassar",
 	major: "Computer Science",
 	gpa: "3.5",
-	year: "Freshman",
 	interests: ["IoT", "Consulting", "UX"],
 	threads: ["People", "Media"],
-	graduation_date: null,
-	looking_for: "Internship",
-  authorized: "no",
+	graduation_date: "May 2019",
+	looking_for: "",
+  authorized: "yes",
 }
 
 const user = (state = initialState, action) => {
