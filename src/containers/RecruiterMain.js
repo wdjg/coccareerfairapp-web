@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
@@ -67,6 +68,9 @@ class RecruiterMain extends Component {
 				<ul className="batch">
 					{this.renderStudents()}
 				</ul>
+				<Link className="qr-link btn" to="/qr">
+					Tap to show company QR Code
+				</Link>
 				<div className={classNames("modal", {show: this.state.showModal})}>
 					<div className="shadow" onClick={() => this.closeModal()}></div>
 					<div className="content">

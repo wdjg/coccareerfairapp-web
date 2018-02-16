@@ -109,3 +109,17 @@ h2 {
 		opacity: 1;
 	}
 }
+
+.qr-link {
+	margin: 0 auto;
+	margin-top: 180px;
+	padding: 10px;
+	color: #222;
+	border: 1px solid #222;
+	font-weight: 700;
+	text-transform: uppercase;
+	text-decoration: none;
+	&:hover, &:active {
+		background: #222;
+	}
+}

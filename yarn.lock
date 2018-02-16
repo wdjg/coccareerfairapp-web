@@ -5378,6 +5378,12 @@ qr.js@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/qr.js/-/qr.js-0.0.0.tgz#cace86386f59a0db8050fa90d9b6b0e88a1e364f"
 
+qrcode-react@^0.1.16:
+  version "0.1.16"
+  resolved "https://registry.yarnpkg.com/qrcode-react/-/qrcode-react-0.1.16.tgz#d064999d510ffc3e55a9ca3ffcf6c203c69f1517"
+  dependencies:
+    qr.js "0.0.0"
+
 qrcode.react@^0.7.2:
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/qrcode.react/-/qrcode.react-0.7.2.tgz#72a5718fd56baafe15c2c153fe436628d83aa286"
@@ -5594,13 +5600,6 @@ react-icons@^2.2.7:
   dependencies:
     react-icon-base "2.1.0"
 
-react-qr-code@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/react-qr-code/-/react-qr-code-0.1.2.tgz#3e8172aa5296ff37be82e45408c90d70517681fe"
-  dependencies:
-    prop-types "^15.5.10"
-    qr.js "0.0.0"
-
 react-qr-reader@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-qr-reader/-/react-qr-reader-2.0.1.tgz#f7be785e8c880d7e68423fc129802994f70b6b58"
@@ -5657,6 +5656,10 @@ react-router@^4.2.0:
     path-to-regexp "^1.7.0"
     prop-types "^15.5.4"
     warning "^3.0.0"
+
+react-tagsinput@^3.19.0:
+  version "3.19.0"
+  resolved "https://registry.yarnpkg.com/react-tagsinput/-/react-tagsinput-3.19.0.tgz#6e3b45595f2d295d4657bf194491988f948caabf"
 
 react-transition-group@^2.2.1:
   version "2.2.1"

@@ -375,6 +375,7 @@ class Login extends Component {
 								className="password"
 								errorCode={this.state.recruiterErrorCodes.password}
 								placeholder="Password"
+								password
 								text={this.state.recruiter.pass}
 								onChange={e => this.setState({recruiter: {...this.state.recruiter, password: e}})} />
 							<Hider height={96} hide={!this.state.showRecruiterRegister}>
@@ -382,6 +383,7 @@ class Login extends Component {
 									className="confirm-password"
 									errorCode={this.state.recruiterErrorCodes.confirmPassword}
 									placeholder="Confirm Password"
+									password
 									text={this.state.recruiter.confirmPassword}
 									onChange={e => this.setState({recruiter: {...this.state.recruiter, confirmPassword: e}})} />
 								<ErrorInput 

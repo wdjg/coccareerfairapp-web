@@ -5,7 +5,6 @@ import StudentMain from './StudentMain';
 import RecruiterMain from './RecruiterMain';
 import QRScanner from './QRScanner';
 import CompanyProfile from './CompanyProfile';
-import StudentProfile from './StudentProfile';
 import QRMain from './QRMain';
 
 import './App.css';
@@ -50,7 +49,6 @@ class App extends React.Component {
 					<AuthRoute path="/qr" authTypes={["recruiter"]} userAuth={checkAuth(this.props.user)}  component={QRMain} />
 					<Route path="/company/notfound" component={NotFound} />
 					<Route path="/company/:id" render={props => (<CompanyProfile {...props} auth={checkAuth(this.props.user)} />)} />
-					<Route path="/" component={Example} />
 					<Route path="*" component={NotFound} />
 			  </ConnectedSwitch>
 		  </div>
