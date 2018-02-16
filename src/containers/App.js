@@ -3,9 +3,10 @@ import NotFound from './NotFound';
 import Login from './Login';
 import StudentMain from './StudentMain';
 import RecruiterMain from './RecruiterMain';
-import Example from './Example';
 import QRScanner from './QRScanner';
 import CompanyProfile from './CompanyProfile';
+import StudentProfile from './StudentProfile';
+import QRMain from './QRMain';
 
 import './App.css';
 
@@ -46,6 +47,7 @@ class App extends React.Component {
 					<AuthRoute path="/student" authTypes={["student"]} userAuth={checkAuth(this.props.user)} component={StudentMain} />
 					<AuthRoute path="/scanner" authTypes={["student"]} userAuth={checkAuth(this.props.user)} component={QRScanner} />
 					<AuthRoute path="/recruiter" authTypes={["recruiter"]} userAuth={checkAuth(this.props.user)} component={RecruiterMain} />
+					<AuthRoute path="/qr" authTypes={["recruiter"]} userAuth={checkAuth(this.props.user)}  component={QRMain} />
 					<Route path="/company/notfound" component={NotFound} />
 					<Route path="/company/:id" render={props => (<CompanyProfile {...props} auth={checkAuth(this.props.user)} />)} />
 					<Route path="/" component={Example} />
