@@ -8,8 +8,9 @@ const initialState = {
 	year: "Freshman",
 	interests: ["IoT", "Consulting", "UX"],
 	threads: ["People", "Media"],
-	graduation_date: "May 2019",
+	graduation_date: null,
 	looking_for: "Internship",
+  authorized: "no",
 }
 
 const user = (state = initialState, action) => {
