@@ -57,6 +57,7 @@ class RecruiterProfile extends Component {
 					<div className="edit-buttons__save btn" onClick={() => this.saveEdits()}>Save</div>
 					<div className="edit-buttons__cancel btn" onClick={() => this.cancelEdit()}>Cancel</div>
 				</div>}
+				Name:
 				<EditableInfo
 					edit={this.state.isEditing}
 					placeholder="Name"
@@ -65,6 +66,15 @@ class RecruiterProfile extends Component {
 					onChange={e => this.makeEdit('name', e)}>
 					<h1 className="name">{this.props.user.name}</h1>
 				</EditableInfo>
+				Company:
+				<EditableInfo
+						edit={this.state.isEditing}
+						placeholder="Company Name"
+						text={this.state.edits.company_name}
+						errorCode={null}
+						onChange={e => this.makeEdit('company_name', e)} >
+						<h1 className="entry">{this.props.user.company_name}</h1>
+					</EditableInfo>
 			</div>
 		);
 	}
