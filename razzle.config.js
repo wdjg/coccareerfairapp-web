@@ -12,7 +12,7 @@ const util = require('util')
 module.exports = {
   modify: (config, {target, dev}, webpack) => {
     // fs.appendFile("e:\\foo.js", "\n\n\n===========\n" + util.inspect(config, {showHidden: false, depth: null,showProxy: true}), () => {});
-    const appConfig = Object.assign({}, config);
+    const appConfig = razzleHeroku(Object.assign({}, config), {target, dev}, webpack);
     if (target == 'web' && !dev)
       appConfig.module.rules[4].use = ExtractTextPlugin.extract({
       fallback: require.resolve('style-loader'),
@@ -32,7 +32,6 @@ module.exports = {
     //    id: 1,
     //    options: {} 
     //  })];
-    // const appConfig = razzleHeroku(config, {target, dev}, webpack);
     // console.log(appConfig)
     // fs.appendFile("e:\\foo.js", "\n\n\n===========\n" + util.inspect(appConfig, {showHidden: false, depth: null,showProxy: true}), () => {});
     
