@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import './Login.css';
 import ErrorInput from '../components/ErrorInput'
 import Hider from '../components/Hider'
+import Button from '../components/Button'
 
 import { withRouter } from 'react-router-dom';
 
@@ -180,7 +181,7 @@ class Login extends Component {
 					</div>
 				<div className="tabs__windows">
 					<TabWindow id={loginTabs[0].id} hide={this.state.curTab !== 0}>
-						<div className="login-content">
+						<form className="login-content">
 							<div className="spacer"/>
 							<ErrorInput 
 								className="username"
@@ -202,20 +203,21 @@ class Login extends Component {
 									text={this.state.studentConfirmPassword}
 									onChange={e => this.setState({studentConfirmPassword: e})} />
 							</Hider>
-							<div 
-								className="btn btn--login selectable"
+							<Button
+								style={{'margin-top': '15px' }}
+								type="submit"
 								onClick={this.state.showStudentRegister ? this.onStudentRegister.bind(this) : this.onStudentLogin.bind(this)}>
 								{this.state.showStudentRegister ? "Register" : "Login"}
-							</div>
+							</Button>
 							<div
 								className="btn-sub selectable"
 								onClick={() => this.setState(prev => ({showStudentRegister: !prev.showStudentRegister}))}>
 								{this.state.showStudentRegister ? "Back to login" : "Don't have a login? Register"}
 							</div>
-						</div>
+						</form>
 					</TabWindow>
 					<TabWindow id={loginTabs[1].id} hide={this.state.curTab !== 1}>
-						<div className="login-content">
+						<form className="login-content">
 							<div className="spacer"/>
 							<ErrorInput 
 								className="username"
@@ -243,17 +245,18 @@ class Login extends Component {
 									text={this.state.recruiterPasscode}
 									onChange={e => this.setState({recruiterPasscode: e})} />
 							</Hider>
-							<div 
-							className={classNames("btn", "btn--login", "selectable")}
-							onClick={this.state.showRecruiterRegister ? this.onRecruiterRegister.bind(this) : this.onRecruiterLogin.bind(this)}>
+							<Button
+								style={{'margin-top': '15px' }}
+								type="submit"
+								onClick={this.state.showRecruiterRegister ? this.onRecruiterRegister.bind(this) : this.onRecruiterLogin.bind(this)}>
 								{this.state.showRecruiterRegister ? "Register" : "Login"}
-							</div>
+							</Button>
 						<div
 						className="btn-sub selectable"
 						onClick={() => this.setState(prev => ({showRecruiterRegister: !prev.showRecruiterRegister}))}>
 						{this.state.showRecruiterRegister ? "Back to login" : "Don't have a login? Register"}
 						</div>
-					</div>
+					</form>
 					</TabWindow>
 					</div>
 				</div>
