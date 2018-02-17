@@ -54,7 +54,7 @@ class App extends React.Component {
 					<AuthRoute path="/recruiter" authTypes={["recruiter"]} userAuth={checkAuth(this.props.user)} component={RecruiterMain} />
 					<AuthRoute path="/qr" authTypes={["recruiter"]} userAuth={checkAuth(this.props.user)}  component={QRMain} />
 					<Route path="/studentprofile" component={StudentProfile} />	
-					<Route path="/recruiter-profile" component={RecruiterProfile} />
+					<Route path="/recruiterprofile" component={RecruiterProfile} />
 					<Route path="/company/notfound" component={NotFound} />
 					<Route path="/company/:id" render={props => (<CompanyProfile {...props} auth={checkAuth(this.props.user)} />)} />
 					<Route path="*" component={NotFound} />

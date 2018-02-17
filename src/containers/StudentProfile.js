@@ -9,6 +9,7 @@ import { bindActionCreators } from 'redux';
 import { setUser } from '../redux/actions/user';
 
 import EditableInfo from '../components/EditableInfo';
+import Button from '../components/Button';
 
 class StudentProfile extends Component {
 
@@ -71,10 +72,10 @@ class StudentProfile extends Component {
 	render() {
 		return (
 			<div className="Student">
-				{!this.state.isEditing && <div className="btn" onClick={() => this.setState({isEditing: true})}>Edit</div>}
+				{!this.state.isEditing && <Button className="btn" onClick={() => this.setState({isEditing: true})}>Edit</Button>}
 				{this.state.isEditing && <div className="edit-buttons">
-					<div className="edit-buttons__save btn" onClick={() => this.saveEdits()}>Save</div>
-					<div className="edit-buttons__cancel btn" onClick={() => this.cancelEdit()}>Cancel</div>
+					<Button className="edit-buttons__save btn" onClick={() => this.saveEdits()}>Save</Button>
+					<Button className="edit-buttons__cancel btn" onClick={() => this.cancelEdit()}>Cancel</Button>
 				</div>}
 				<EditableInfo
 					edit={this.state.isEditing}
@@ -85,13 +86,13 @@ class StudentProfile extends Component {
 					<h1 className="name">{this.props.user.name}</h1>
 				</EditableInfo>
 
-				<h1>Major: </h1>
+				<h2>Major: </h2>
 				<div className="entry">{this.props.user.major}</div>
 				
-				<h1>Threads: </h1>
+				<h2>Threads: </h2>
 				{this.isCSMajor(this.props.user) && 
 					<div className="threads">{this.renderThreads(this.props.user.threads)}</div>}
-				{(this.hasItem(this.props.user, 'gpa') || this.isAuthorizedUser(this.props.user)) && <h1>GPA: </h1>}
+				{(this.hasItem(this.props.user, 'gpa') || this.isAuthorizedUser(this.props.user)) && <h2>GPA: </h2>}
 				<EditableInfo
 					edit={this.state.isEditing}
 					placeholder="GPA"
@@ -101,7 +102,7 @@ class StudentProfile extends Component {
 					<div className="entry">{this.props.user.gpa}</div>
 				</EditableInfo>
 				
-				{(this.hasItem(this.props.user, 'graduation_date') || this.isAuthorizedUser(this.props.user) )&& <h1>Expected Graduation Date: </h1>}
+				{(this.hasItem(this.props.user, 'graduation_date') || this.isAuthorizedUser(this.props.user) )&& <h2>Expected Graduation Date: </h2>}
 				<EditableInfo
 					edit={this.state.isEditing}
 					placeholder="Graduation Date"
@@ -111,7 +112,9 @@ class StudentProfile extends Component {
 					<div className="entry">{this.props.user.graduation_date}</div>
 				</EditableInfo>
 
-				{(this.hasItem(this.props.user, 'looking_for') || this.isAuthorizedUser(this.props.user)) && <h1>Looking For: </h1>}
+				{(this.hasItem(this.props.user, 'looking_for') || this.isAuthorizedUser(this.props.user)) && <h2>Looking For: </h2>}
+				{(!this.hasItem(this.props.user, 'looking_for') && this.isAuthorizedUser(this.props.user))
+					&& <div className="placeholder">Not Provided</div>}
 				<EditableInfo
 					edit={this.state.isEditing}
 					placeholder="Looking For"
@@ -121,7 +124,7 @@ class StudentProfile extends Component {
 					<div className="entry">{this.props.user.looking_for}</div>
 				</EditableInfo>
 
-				{(this.hasItem(this.props.user, 'interests') || this.isAuthorizedUser(this.props.user)) && <h1>Interests: </h1>}
+				{(this.hasItem(this.props.user, 'interests') || this.isAuthorizedUser(this.props.user)) && <h2>Interests: </h2>}
 				<div>
 					{!this.state.isEditing && <div className="interests">{this.renderInterests(this.props.user.interests)}</div>} 
 					{this.state.isEditing && <TagsInput className="entry" value={this.state.edits.interests} onChange={e => this.handleChange('interests', e)}/>}

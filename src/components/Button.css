@@ -1,7 +1,7 @@
 .Button {
 	background: none;
-	border: solid 1px #f24e33;
-	color: #f24e33;
+	border: solid 1px #ea3;
+	color: #ea3;
 	cursor: pointer;
 	font-family: 'Chivo', sans-serif;
 	font-size: 16px;
@@ -12,7 +12,9 @@
 	-o-transition: background 0.25s ease;
 	transition: background 0.25s ease;
 	&:hover {
-		background: #f24e33;
+		background: #ea3;
 		color: #fff;
 	}
 }
+
+/*#f24e33;*/

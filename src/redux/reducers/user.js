@@ -10,6 +10,8 @@ const initialState = {
 	graduation_date: "May 2019",
 	looking_for: "",
   authorized: "yes",
+  "company_name": "Floopanomics",
+  "position": "Software Engineer",
 }
 
 const user = (state = initialState, action) => {

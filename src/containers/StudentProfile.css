@@ -1,6 +1,6 @@
 .Student {
 	.entry {
-		margin-left: 50px;
+		margin-left: 20px;
 		margin-bottom: 25px;
 	}
 	.name {
@@ -15,10 +15,17 @@
 	display: -ms-flex;
 	display: -o-flex;
 	display: flex;
-	margin-left: 50px;
+	margin-left: 20px;
 	margin-bottom: 25px;
 }
 
 .interest, .thread {
-	margin-right: 20px;
+	margin: 0 3px;
+	padding: 5px;
+	background: #ddd;
+}
+
+.placeholder {
+	color: #999;
+	margin-left: 20px;
 }

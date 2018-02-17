@@ -28,7 +28,7 @@ class QRScanner extends Component {
 			url: 'https://coccareerfairapp-development.herokuapp.com/api/lines',
 			headers: {
 				'Content-Type': 'application/json',
-				'Authorization': 'Bearer ' + this.props.token,
+				'Authorization': 'Bearer ' + this.props.user.token,
 			}
 		}).then(res => {
 			if (!res.data)

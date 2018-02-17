@@ -5,7 +5,7 @@ import ErrorInput from '../components/ErrorInput';
 
 class EditableInfo extends Component {
 	render() {
-		console.log(this.props)
+		// console.log(this.props)
 		return (
 			<div className="EditableInfo">
 				{!this.props.edit
