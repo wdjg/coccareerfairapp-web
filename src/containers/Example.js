@@ -1,31 +1,21 @@
 import React, { Component } from 'react';
-import classNames from 'classnames';
 import './Example.css';
 
+<<<<<<< HEAD
 import ErrorInput from '../components/ErrorInput';
+import Button from '../components/Button';
 
+=======
+>>>>>>> company-profile-screen
 import { connect } from 'react-redux'
 
 
 class Example extends Component {
 
-	isFloopMajor(user) {
-		return user.major === "Floopanomics";
-	}
-
-	renderThreads(threads) {
-		return threads.map((entry, index) => {
-			return (<div key={index} className="thread">{entry}</div>)
-		})
-	}
-
 	render() {
 		return (
 			<div className="Example">
-				<h1 className="name">{this.props.user.name}</h1>
-				<div className="entry">Major: {this.props.user.major}</div>
-				{this.isFloopMajor(this.props.user) && 
-					<div className="threads">{this.renderThreads(this.props.user.threads)}</div>}
+				<Button>Test</Button>
 			</div>
 		);
 	}

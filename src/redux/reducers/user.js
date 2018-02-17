@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable';
-import { SET_USER, SET_AUTH_TOKEN } from '../actions';
+import { SET_USER, SET_AUTH_TOKEN } from '../actions/user';
 
 const initialState = {
 	name: "Wiqas Nassar",
@@ -14,14 +14,14 @@ const initialState = {
 }
 
 const user = (state = initialState, action) => {
-  state = fromJS(state);
+  let immutableState = fromJS(state);
   switch (action.type) {
     case SET_USER:
-      return state.merge(action.payload.user).toJS();
+      return immutableState.merge(action.payload.user).toJS();
     case SET_AUTH_TOKEN:
-      return state.set("token", action.payload.token).toJS();
+      return immutableState.set("token", action.payload.token).toJS();
     default:
-      return state.toJS();
+      return state;
   }
 };
 

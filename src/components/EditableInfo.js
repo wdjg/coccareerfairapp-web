@@ -8,12 +8,13 @@ class EditableInfo extends Component {
 		console.log(this.props)
 		return (
 			<div className="EditableInfo">
-				{!this.props.edit && <div className="EditableInfo__text">{this.props.children}</div>}
-				{this.props.edit && <ErrorInput 
-					placeholder={this.props.placeholder}
-					text={this.props.text}
-					errorCode={this.props.errorCode}
-					onChange={e => this.props.onChange(e)}/>}
+				{!this.props.edit
+					? <div className="EditableInfo__text">{this.props.children}</div>
+					: <ErrorInput 
+							placeholder={this.props.placeholder}
+							text={this.props.text}
+							errorCode={this.props.errorCode}
+							onChange={e => this.props.onChange(e)}/>}
 			</div>
 		);
 	}

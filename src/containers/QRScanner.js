@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import QrReader from 'react-qr-reader'
 import classNames from 'classnames';
 import './QRScanner.css';
+import axios from 'axios';
+import { setLineDetails } from '../redux/actions';
+import { bindActionCreators } from 'redux';
 
 import QRConfirmationModal from '../components/QRConfirmationModal';
 
@@ -14,28 +17,56 @@ class QRScanner extends Component {
 		super(props);
 
 		this.state = {
-			lastQR: null,
 			showModal: false,
 			company: null
 	  };
 	}
 
+	componentDidMount() {
+		axios({
+			method: 'get',
+			url: 'https://coccareerfairapp-development.herokuapp.com/api/lines',
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': 'Bearer ' + this.props.token,
+			}
+		}).then(res => {
+			if (!res.data)
+				return;
+			this.props.setLineDetails(res.data);
+		}).catch(err => console.log(err));
+	}
+
 	//TODO make sure we're getting id from the qr code for redux
+	//TODO handle case where user is already in line
 	scanSuccess(data) {
 		if (this.state.showModal) return;
-		if (data) console.log(data);
+		if (!data) return;
+		console.log(data);
 		//TODO make this not Microsoft
-		data = '8675309RICK'
-		const company = this.props.companies.find(e => e.id === data);
-		this.setState({lastQR: data, showModal: true});
+		axios({
+			method: 'post',
+			url: 'https://coccareerfairapp-development.herokuapp.com/api/employers/qr',
+			header: {
+				'Content-Type': 'application/json',
+				'Authorization': 'Bearer ' + this.props.user.token,
+			},
+			data: {
+				value: data
+			}
+		}).then(res => {
+			this.setState({ showModal: true, company: res.data });
+		}).catch(err => console.log(err));
 	}
 
 	scanError(err) {
 		if (err) console.log(err);
 	}
 
-	closeModal() {
+	closeModal(leave=false) {
 		this.setState({ showModal: false });
+		if (leave)
+			this.props.history.goBack();
 	}
 
 
@@ -65,8 +96,11 @@ class QRScanner extends Component {
 					<div className="shadow" onClick={() => this.closeModal()}></div>
 					<div className="content">
 						{this.state.company && <QRConfirmationModal
-							name={this.state.state.company}
-							id={this.state.state.company}
+							name={this.state.company.name}
+							employerID={this.state.company._id}
+							lineID={this.props.line._id}
+							status={this.props.line.status}
+							token={this.props.user.token}
 							closeModal={() => this.closeModal()}/>}
 					</div>
 				</div>
@@ -78,7 +112,10 @@ class QRScanner extends Component {
 
 const mapStateToProps = state => ({
 	user: state.user,
-	companies: state.companies,
+	line: state.line,
 });
 
-export default connect(mapStateToProps)(QRScanner);
+const mapDispatchToProps = dispatch =>
+	bindActionCreators({ setLineDetails }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(QRScanner);
