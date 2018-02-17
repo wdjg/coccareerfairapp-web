@@ -311,7 +311,7 @@ class Login extends Component {
 					</div>
 				<div className="tabs__windows">
 					<TabWindow id={loginTabs[0].id} hide={this.state.curTab !== 0}>
-						<form className="login-content">
+						<div className="login-content">
 							<div className="spacer"/>
 							<Hider height={45} hide={!this.state.showStudentRegister}>
 								<ErrorInput 
@@ -345,7 +345,7 @@ class Login extends Component {
 							</Hider>
 							<Button
 								style={{marginTop: '15px' }}
-								type="submit"
+								
 								onClick={this.state.showStudentRegister ? this.onStudentRegister.bind(this) : this.onStudentLogin.bind(this)}>
 								{this.state.showStudentRegister ? "Register" : "Login"}
 							</Button>
@@ -354,10 +354,10 @@ class Login extends Component {
 								onClick={() => this.setState(prev => ({showStudentRegister: !prev.showStudentRegister}))}>
 								{this.state.showStudentRegister ? "Back to login" : "Don't have a login? Register"}
 							</div>
-						</form>
+						</div>
 					</TabWindow>
 					<TabWindow id={loginTabs[1].id} hide={this.state.curTab !== 1}>
-						<form className="login-content">
+						<div className="login-content">
 							<div className="spacer"/>
 							<Hider height={45} hide={!this.state.showRecruiterRegister}>
 								<ErrorInput 
@@ -397,7 +397,7 @@ class Login extends Component {
 							</Hider>
 							<Button
 								style={{marginTop: '15px' }}
-								type="submit"
+								
 								onClick={this.state.showRecruiterRegister ? this.onRecruiterRegister.bind(this) : this.onRecruiterLogin.bind(this)}>
 								{this.state.showRecruiterRegister ? "Register" : "Login"}
 							</Button>
@@ -406,7 +406,7 @@ class Login extends Component {
 						onClick={() => this.setState(prev => ({showRecruiterRegister: !prev.showRecruiterRegister}))}>
 						{this.state.showRecruiterRegister ? "Back to login" : "Don't have a login? Register"}
 						</div>
-					</form>
+					</div>
 					</TabWindow>
 					</div>
 				</div>

@@ -3,9 +3,10 @@ import NotFound from './NotFound';
 import Login from './Login';
 import StudentMain from './StudentMain';
 import RecruiterMain from './RecruiterMain';
-import QRScanner from './QRScanner';
+// import QRScanner from './QRScanner';
 import CompanyProfile from './CompanyProfile';
 import QRMain from './QRMain';
+import QRScannerTest from './QRScannerTest';
 
 import './App.css';
 
@@ -38,13 +39,14 @@ class App extends React.Component {
 			<div className="App">
 				<nav>
 			  </nav>
+			  <QRScannerTest/>
 			  <ConnectedSwitch>
 					{checkAuth(this.props.user) && <Redirect path="/login" to="/"/>}
 					{checkAuth(this.props.user) === "recruiter" && <Redirect exact path="/" to="/recruiter"/>}
 					{checkAuth(this.props.user) === "student" && <Redirect exact path="/" to="/student"/>}
 					<Route path="/login" component={Login} />
 					<AuthRoute path="/student" authTypes={["student"]} userAuth={checkAuth(this.props.user)} component={StudentMain} />
-					<AuthRoute path="/scanner" authTypes={["student"]} userAuth={checkAuth(this.props.user)} component={QRScanner} />
+					{/*<AuthRoute path="/scanner" authTypes={["student"]} userAuth={checkAuth(this.props.user)} component={QRScanner} />*/}
 					<AuthRoute path="/recruiter" authTypes={["recruiter"]} userAuth={checkAuth(this.props.user)} component={RecruiterMain} />
 					<AuthRoute path="/qr" authTypes={["recruiter"]} userAuth={checkAuth(this.props.user)}  component={QRMain} />
 					<Route path="/company/notfound" component={NotFound} />
