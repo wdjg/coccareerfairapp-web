@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import './StudentProfile.css';
 
-import ErrorInput from '../components/ErrorInput';
-
 import TagsInput from 'react-tagsinput'
 import 'react-tagsinput/react-tagsinput.css'
 
@@ -67,7 +65,7 @@ class StudentProfile extends Component {
 	}
 
 	isAuthorizedUser(user) {
-		return user.authorized == "yes";
+		return user.authorized === "yes";
 	}
 
 	render() {
@@ -93,44 +91,41 @@ class StudentProfile extends Component {
 				<h1>Threads: </h1>
 				{this.isCSMajor(this.props.user) && 
 					<div className="threads">{this.renderThreads(this.props.user.threads)}</div>}
-				{this.isAuthorizedUser(this.props.user) &&
-					<div>
-						{this.hasItem(this.props.user, 'gpa') && <h1>GPA: </h1>}
-						<EditableInfo
-							edit={this.state.isEditing}
-							placeholder="GPA"
-							text={this.state.edits.gpa}
-							errorCode={null}
-							onChange={e => this.makeEdit('gpa', e)} >
-							<div className="entry">{this.props.user.gpa}</div>
-						</EditableInfo>
-						
-						{this.hasItem(this.props.user, 'graduation_date') && <h1>Expected Graduation Date: </h1>}
-						<EditableInfo
-							edit={this.state.isEditing}
-							placeholder="Graduation Date"
-							text={this.state.edits.graduation_date}
-							errorCode={null}
-							onChange={e => this.makeEdit('graduation_date', e)} >
-							<div className="entry">{this.props.user.graduation_date}</div>
-						</EditableInfo>
+				{(this.hasItem(this.props.user, 'gpa') || this.isAuthorizedUser(this.props.user)) && <h1>GPA: </h1>}
+				<EditableInfo
+					edit={this.state.isEditing}
+					placeholder="GPA"
+					text={this.state.edits.gpa}
+					errorCode={null}
+					onChange={e => this.makeEdit('gpa', e)} >
+					<div className="entry">{this.props.user.gpa}</div>
+				</EditableInfo>
+				
+				{(this.hasItem(this.props.user, 'graduation_date') || this.isAuthorizedUser(this.props.user) )&& <h1>Expected Graduation Date: </h1>}
+				<EditableInfo
+					edit={this.state.isEditing}
+					placeholder="Graduation Date"
+					text={this.state.edits.graduation_date}
+					errorCode={null}
+					onChange={e => this.makeEdit('graduation_date', e)} >
+					<div className="entry">{this.props.user.graduation_date}</div>
+				</EditableInfo>
 
-						{this.hasItem(this.props.user, 'looking_for') && <h1>Looking For: </h1>}
-						<EditableInfo
-							edit={this.state.isEditing}
-							placeholder="Looking For"
-							text={this.state.edits.looking_for}
-							errorCode={null}
-							onChange={e => this.makeEdit('looking_for', e)} >
-							<div className="entry">{this.props.user.looking_for}</div>
-						</EditableInfo>
+				{(this.hasItem(this.props.user, 'looking_for') || this.isAuthorizedUser(this.props.user)) && <h1>Looking For: </h1>}
+				<EditableInfo
+					edit={this.state.isEditing}
+					placeholder="Looking For"
+					text={this.state.edits.looking_for}
+					errorCode={null}
+					onChange={e => this.makeEdit('looking_for', e)} >
+					<div className="entry">{this.props.user.looking_for}</div>
+				</EditableInfo>
 
-						{this.hasItem(this.props.user, 'interests') && <h1>Interests: </h1>}
-						<div>
-							{!this.state.isEditing && <div className="interests">{this.renderInterests(this.props.user.interests)}</div>} 
-							{this.state.isEditing && <TagsInput className="entry" value={this.state.edits.interests} onChange={e => this.handleChange('interests', e)}/>}
-						</div>
-					</div>}
+				{(this.hasItem(this.props.user, 'interests') || this.isAuthorizedUser(this.props.user)) && <h1>Interests: </h1>}
+				<div>
+					{!this.state.isEditing && <div className="interests">{this.renderInterests(this.props.user.interests)}</div>} 
+					{this.state.isEditing && <TagsInput className="entry" value={this.state.edits.interests} onChange={e => this.handleChange('interests', e)}/>}
+				</div>
 			</div>
 		);
 	}

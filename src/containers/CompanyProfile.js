@@ -43,7 +43,8 @@ class CompanyProfile extends Component {
 	render() {
 		return (
 			<div className="CompanyProfile">
-				{!this.state.isEditing && <div className="btn" onClick={() => this.setState({isEditing: true})}>Edit</div>}
+				{(!this.state.isEditing && this.props.auth === 'recruiter')
+					&& <div className="btn" onClick={() => this.setState({isEditing: true})}>Edit</div>}
 				{this.state.isEditing && <div className="edit-buttons">
 					<div className="edit-buttons__save btn" onClick={() => this.saveEdits()}>Save</div>
 					<div className="edit-buttons__cancel btn" onClick={() => this.cancelEdit()}>Cancel</div>

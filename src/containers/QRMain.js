@@ -31,7 +31,9 @@ class QRMain extends Component {
 	render() {
 		return(
 			<div className="QRMain">
-				<QRCode value={this.state.code} />
+				<div className="code-container">
+					<div className="code"><QRCode value={this.state.code} size={260} /></div>
+				</div>
 			</div>
 		);
 	}
