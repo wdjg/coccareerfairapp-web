@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import axios from 'axios';
+// import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';

@@ -4,7 +4,7 @@ import express from 'express';
 import serialize from 'serialize-javascript';
 // import qs from 'qs';
 import createHistory from 'history/createMemoryHistory'
-import passport from 'passport';
+// import passport from 'passport';
 
 import { Provider } from 'react-redux';
 import { renderToString } from 'react-dom/server';
