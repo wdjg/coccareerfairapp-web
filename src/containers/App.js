@@ -7,6 +7,7 @@ import QRScanner from './QRScanner';
 import CompanyProfile from './CompanyProfile';
 import StudentProfile from './StudentProfile';
 import QRMain from './QRMain';
+import RecruiterProfile from './RecruiterProfile';
 
 import './App.css';
 
@@ -18,7 +19,11 @@ const ConnectedSwitch = connect(state => ({
 }))(Switch);
 
 /**
+<<<<<<< HEAD
  * @return {string} the authorization type of this user
+=======
+ * @return {string}
+>>>>>>> recruiter-profile-screen
  */
 const checkAuth = user => {
 	// console.log(user);
@@ -49,6 +54,7 @@ class App extends React.Component {
 					<AuthRoute path="/recruiter" authTypes={["recruiter"]} userAuth={checkAuth(this.props.user)} component={RecruiterMain} />
 					<AuthRoute path="/qr" authTypes={["recruiter"]} userAuth={checkAuth(this.props.user)}  component={QRMain} />
 					<Route path="/studentprofile" component={StudentProfile} />	
+					<Route path="/recruiter-profile" component={RecruiterProfile} />
 					<Route path="/company/notfound" component={NotFound} />
 					<Route path="/company/:id" render={props => (<CompanyProfile {...props} auth={checkAuth(this.props.user)} />)} />
 					<Route path="*" component={NotFound} />
