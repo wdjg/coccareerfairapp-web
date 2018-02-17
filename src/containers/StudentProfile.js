@@ -62,20 +62,8 @@ class StudentProfile extends Component {
 		})
 	}
 
-	hasGPA(user) {
-		return user.gpa == null;
-	}
-
-	hasExpectedGraduationDate(user) {
-		return user.graduation_date == null;
-	}
-
-	hasLookingFor(user) {
-		return user.looking_for == null;
-	}
-
-	hasInterests(user) {
-		return user.interests == null;
+	hasItem(user, key) {
+		return user[key] && user[key] !== '';
 	}
 
 	isAuthorizedUser(user) {
@@ -107,41 +95,41 @@ class StudentProfile extends Component {
 					<div className="threads">{this.renderThreads(this.props.user.threads)}</div>}
 				{this.isAuthorizedUser(this.props.user) &&
 					<div>
-					{!this.hasGPA(this.props.user) && <h1>GPA: </h1>}
-					<EditableInfo
-						edit={this.state.isEditing}
-						placeholder="GPA"
-						text={this.state.edits.gpa}
-						errorCode={null}
-						onChange={e => this.makeEdit('gpa', e)} >
-						<div className="entry">{this.props.user.gpa}</div>
-					</EditableInfo>
-					
-					{!this.hasExpectedGraduationDate(this.props.user) && <h1>Expected Graduation Date: </h1>}
-					<EditableInfo
-						edit={this.state.isEditing}
-						placeholder="Graduation Date"
-						text={this.state.edits.graduation_date}
-						errorCode={null}
-						onChange={e => this.makeEdit('graduation_date', e)} >
-						<div className="entry">{this.props.user.graduation_date}</div>
-					</EditableInfo>
+						{this.hasItem(this.props.user, 'gpa') && <h1>GPA: </h1>}
+						<EditableInfo
+							edit={this.state.isEditing}
+							placeholder="GPA"
+							text={this.state.edits.gpa}
+							errorCode={null}
+							onChange={e => this.makeEdit('gpa', e)} >
+							<div className="entry">{this.props.user.gpa}</div>
+						</EditableInfo>
+						
+						{this.hasItem(this.props.user, 'graduation_date') && <h1>Expected Graduation Date: </h1>}
+						<EditableInfo
+							edit={this.state.isEditing}
+							placeholder="Graduation Date"
+							text={this.state.edits.graduation_date}
+							errorCode={null}
+							onChange={e => this.makeEdit('graduation_date', e)} >
+							<div className="entry">{this.props.user.graduation_date}</div>
+						</EditableInfo>
 
-					{!this.hasLookingFor(this.props.user) && <h1>Looking For: </h1>}
-					<EditableInfo
-						edit={this.state.isEditing}
-						placeholder="Looking For"
-						text={this.state.edits.looking_for}
-						errorCode={null}
-						onChange={e => this.makeEdit('looking_for', e)} >
-						<div className="entry">{this.props.user.looking_for}</div>
-					</EditableInfo>
+						{this.hasItem(this.props.user, 'looking_for') && <h1>Looking For: </h1>}
+						<EditableInfo
+							edit={this.state.isEditing}
+							placeholder="Looking For"
+							text={this.state.edits.looking_for}
+							errorCode={null}
+							onChange={e => this.makeEdit('looking_for', e)} >
+							<div className="entry">{this.props.user.looking_for}</div>
+						</EditableInfo>
 
-					{!this.hasInterests(this.props.user) && <h1>Interests: </h1>}
-					<div>
-						{!this.state.isEditing && <div className="interests">{this.renderInterests(this.props.user.interests)}</div>} 
-						{this.state.isEditing && <TagsInput className="entry" value={this.state.edits.interests} onChange={e => this.handleChange('interests', e)}/>}
-					</div>
+						{this.hasItem(this.props.user, 'interests') && <h1>Interests: </h1>}
+						<div>
+							{!this.state.isEditing && <div className="interests">{this.renderInterests(this.props.user.interests)}</div>} 
+							{this.state.isEditing && <TagsInput className="entry" value={this.state.edits.interests} onChange={e => this.handleChange('interests', e)}/>}
+						</div>
 					</div>}
 			</div>
 		);
