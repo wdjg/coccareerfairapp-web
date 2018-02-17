@@ -7,7 +7,7 @@ const batch = (state = initialState, action) => {
   let immutableState = fromJS(state);
   switch (action.type) {
     case SET_LINE_DETAILS:
-      return immutableState.concat(action.payload.details).toJS();
+      return immutableState.merge(action.payload.details).toJS();
     default:
       return state;
   }

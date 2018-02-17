@@ -23,12 +23,13 @@ class QRScanner extends Component {
 	}
 
 	componentDidMount() {
+		console.log(this.props.user.token);
 		axios({
 			method: 'get',
 			url: 'https://coccareerfairapp-development.herokuapp.com/api/lines',
 			headers: {
 				'Content-Type': 'application/json',
-				'Authorization': 'Bearer ' + this.props.token,
+				'Authorization': 'Bearer ' + this.props.user.token,
 			}
 		}).then(res => {
 			if (!res.data)
@@ -40,14 +41,16 @@ class QRScanner extends Component {
 	//TODO make sure we're getting id from the qr code for redux
 	//TODO handle case where user is already in line
 	scanSuccess(data) {
+		// console.log(data);
 		if (this.state.showModal) return;
 		if (!data) return;
 		console.log(data);
+		console.log(this.props.user.token);
 		//TODO make this not Microsoft
 		axios({
 			method: 'post',
 			url: 'https://coccareerfairapp-development.herokuapp.com/api/employers/qr',
-			header: {
+			headers: {
 				'Content-Type': 'application/json',
 				'Authorization': 'Bearer ' + this.props.user.token,
 			},

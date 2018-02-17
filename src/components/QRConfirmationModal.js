@@ -6,7 +6,7 @@ class QRConfirmationModal extends Component {
 
 	handleConfirm(employer_id) {
 		if (!this.props.status) {
-			console.log("JOIN LINE: " + employer_id);
+			console.log("JOIN LINE: " + employer_id + " " + this.props.token);
 			axios({
 				method: 'post',
 				url: 'https://coccareerfairapp-development.herokuapp.com/api/lines',
