@@ -18,7 +18,8 @@ class QRScanner extends Component {
 
 		this.state = {
 			showModal: false,
-			company: null
+			company: null,
+			line: {},
 	  };
 	}
 
@@ -44,10 +45,11 @@ class QRScanner extends Component {
 		if (!data) return;
 		console.log(data);
 		//TODO make this not Microsoft
+		console.log(this.props.user.token);
 		axios({
 			method: 'post',
 			url: 'https://coccareerfairapp-development.herokuapp.com/api/employers/qr',
-			header: {
+			headers: {
 				'Content-Type': 'application/json',
 				'Authorization': 'Bearer ' + this.props.user.token,
 			},
@@ -55,6 +57,7 @@ class QRScanner extends Component {
 				value: data
 			}
 		}).then(res => {
+			// console.log(res.data)
 			this.setState({ showModal: true, company: res.data });
 		}).catch(err => console.log(err));
 	}
@@ -98,8 +101,8 @@ class QRScanner extends Component {
 						{this.state.company && <QRConfirmationModal
 							name={this.state.company.name}
 							employerID={this.state.company._id}
-							lineID={this.props.line._id}
-							status={this.props.line.status}
+							lineID={this.state.line._id}
+							status={this.state.line.status}
 							token={this.props.user.token}
 							closeModal={() => this.closeModal()}/>}
 					</div>

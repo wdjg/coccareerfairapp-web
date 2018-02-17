@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './QRConfirmationModal.css';
 import axios from 'axios';
 
+import Button from './Button';
+
 class QRConfirmationModal extends Component {
 
 	handleConfirm(employer_id) {
@@ -51,16 +53,16 @@ class QRConfirmationModal extends Component {
 				<h1 className="name">{this.props.name}</h1>
 				
 				<div className="buttons">
-					<div 
+					<Button 
 						className="btn confirm"
 						onClick={() => this.handleConfirm(this.props.employerID)}>
 						{this.props.status === 'notification' ? 'Confirm' : 'Join'}
-					</div>
-					<div
+					</Button>
+					<Button
 						className="btn cancel"
 						onClick={this.props.closeModal}>
 						Cancel
-					</div>
+					</Button>
 				</div>
 			</div>
 		);
