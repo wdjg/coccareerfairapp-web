@@ -8,7 +8,7 @@ import 'react-tagsinput/react-tagsinput.css'
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setUser } from '../redux/actions';
+import { setUser } from '../redux/actions/user';
 
 import EditableInfo from '../components/EditableInfo';
 

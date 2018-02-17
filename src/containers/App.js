@@ -5,11 +5,8 @@ import StudentMain from './StudentMain';
 import RecruiterMain from './RecruiterMain';
 import QRScanner from './QRScanner';
 import CompanyProfile from './CompanyProfile';
-<<<<<<< HEAD
 import StudentProfile from './StudentProfile';
-=======
 import QRMain from './QRMain';
->>>>>>> 288931a24ddf072dd26776a9fda86d2077dd7c5a
 
 import './App.css';
 
