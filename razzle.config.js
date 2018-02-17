@@ -34,7 +34,7 @@ module.exports = {
     //  })];
     // const appConfig = razzleHeroku(config, {target, dev}, webpack);
     // console.log(appConfig)
-    fs.appendFile("e:\\foo.js", "\n\n\n===========\n" + util.inspect(appConfig, {showHidden: false, depth: null,showProxy: true}), () => {});
+    // fs.appendFile("e:\\foo.js", "\n\n\n===========\n" + util.inspect(appConfig, {showHidden: false, depth: null,showProxy: true}), () => {});
     
     if (target == 'web' && dev)
       appConfig.module.rules[4].use[2].options.plugins = () => [
