@@ -4,9 +4,9 @@ const autoprefixer = require('autoprefixer');
 const razzleHeroku = require('razzle-heroku');
 const util = require('util')
 
-var fs = require('fs');
-var log_file = fs.createWriteStream('e:/foo.js', {flags : 'w'});
-var log_stdout = process.stdout;
+// var fs = require('fs');
+// var log_file = fs.createWriteStream('e:/foo.js', {flags : 'w'});
+// var log_stdout = process.stdout;
 
 
 module.exports = {
