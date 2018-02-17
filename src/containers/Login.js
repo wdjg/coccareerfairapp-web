@@ -344,7 +344,7 @@ class Login extends Component {
 									onChange={e => this.setState({student: {...this.state.student, confirmPassword: e}})} />
 							</Hider>
 							<Button
-								style={{'margin-top': '15px' }}
+								style={{marginTop: '15px' }}
 								type="submit"
 								onClick={this.state.showStudentRegister ? this.onStudentRegister.bind(this) : this.onStudentLogin.bind(this)}>
 								{this.state.showStudentRegister ? "Register" : "Login"}
@@ -396,7 +396,7 @@ class Login extends Component {
 									onChange={e => this.setState({recruiter: {...this.state.recruiter, passcode: e}})} />
 							</Hider>
 							<Button
-								style={{'margin-top': '15px' }}
+								style={{marginTop: '15px' }}
 								type="submit"
 								onClick={this.state.showRecruiterRegister ? this.onRecruiterRegister.bind(this) : this.onRecruiterLogin.bind(this)}>
 								{this.state.showRecruiterRegister ? "Register" : "Login"}

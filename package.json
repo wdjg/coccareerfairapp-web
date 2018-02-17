@@ -20,6 +20,7 @@
     "qs": "^6.5.1",
     "raf": "3.4.0",
     "razzle": "0.8.7",
+    "razzle-heroku": "^2.1.0",
     "react": "16.2.0",
     "react-dom": "16.2.0",
     "react-height": "^3.0.0",
