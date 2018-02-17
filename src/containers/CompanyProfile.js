@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import classNames from 'classnames';
 import './CompanyProfile.css';
 
 import EditableInfo from '../components/EditableInfo';
@@ -29,7 +28,7 @@ class CompanyProfile extends Component {
 
 	//TODO should be a fetch call up to the server and update redux with the response
 	saveEdits() {
-
+		
 	}
 
 	componentDidMount() {

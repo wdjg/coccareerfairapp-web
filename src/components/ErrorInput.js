@@ -8,9 +8,10 @@ class ErrorInput extends Component {
 		return (
 			<div className="ErrorInput">
 				<Warning text={this.props.errorCode} show={this.props.errorCode}/>
-				<input 
+				<input
 					placeholder={this.props.placeholder}
 					value={this.props.text}
+					type={this.props.password ? 'password' : ''}
 					onChange={e => this.props.onChange(e.target.value)}/>
 			</div>
 		);

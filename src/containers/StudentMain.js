@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import classNames from 'classnames';
 import './StudentMain.css';
 
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-
-import QrReader from 'react-qr-reader'
 
 class StudentMain extends Component {
 

@@ -3,9 +3,9 @@ import NotFound from './NotFound';
 import Login from './Login';
 import StudentMain from './StudentMain';
 import RecruiterMain from './RecruiterMain';
-import Example from './Example';
 import QRScanner from './QRScanner';
 import CompanyProfile from './CompanyProfile';
+import QRMain from './QRMain';
 
 import './App.css';
 
@@ -17,12 +17,20 @@ const ConnectedSwitch = connect(state => ({
 }))(Switch);
 
 /**
- * @return {string} 
+ * @return {string} the authorization type of this user
  */
 const checkAuth = user => {
-	return null;
-	// return "recruiter";
+	// console.log(user);
+	return user.user_type;
 }
+
+const AuthRoute = ({component: Component, authTypes: required, userAuth: auth, ...routeProps }) => (
+	<Route {...routeProps} render={props => (
+    (auth && required.includes(auth))
+      ? <Component {...props} auth={auth} />
+      : <Redirect to='/login' />
+  )} />
+);
 
 class App extends React.Component {
 	render() {
@@ -31,15 +39,16 @@ class App extends React.Component {
 				<nav>
 			  </nav>
 			  <ConnectedSwitch>
+					{checkAuth(this.props.user) && <Redirect path="/login" to="/"/>}
 					{checkAuth(this.props.user) === "recruiter" && <Redirect exact path="/" to="/recruiter"/>}
-					{checkAuth(this.props.user) === "student" && <Redirect exact path="/" to="/recruiter"/>}
-					<Route exact path="/" component={Login} />
-					<Route path="/student" component={StudentMain} />
-					<Route path="/recruiter" component={RecruiterMain} />
-					<Route path="/example" component={Example} />
-					<Route path="/scanner" component={QRScanner} />
+					{checkAuth(this.props.user) === "student" && <Redirect exact path="/" to="/student"/>}
+					<Route path="/login" component={Login} />
+					<AuthRoute path="/student" authTypes={["student"]} userAuth={checkAuth(this.props.user)} component={StudentMain} />
+					<AuthRoute path="/scanner" authTypes={["student"]} userAuth={checkAuth(this.props.user)} component={QRScanner} />
+					<AuthRoute path="/recruiter" authTypes={["recruiter"]} userAuth={checkAuth(this.props.user)} component={RecruiterMain} />
+					<AuthRoute path="/qr" authTypes={["recruiter"]} userAuth={checkAuth(this.props.user)}  component={QRMain} />
 					<Route path="/company/notfound" component={NotFound} />
-					<Route exact path="/company/:id" component={CompanyProfile} />
+					<Route path="/company/:id" render={props => (<CompanyProfile {...props} auth={checkAuth(this.props.user)} />)} />
 					<Route path="*" component={NotFound} />
 			  </ConnectedSwitch>
 		  </div>

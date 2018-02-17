@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import classNames from 'classnames';
 import './Example.css';
 
+<<<<<<< HEAD
 import ErrorInput from '../components/ErrorInput';
 import Button from '../components/Button';
 
+=======
+>>>>>>> company-profile-screen
 import { connect } from 'react-redux'
 
 
