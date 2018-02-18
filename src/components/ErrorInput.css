@@ -7,7 +7,7 @@
     margin: 3px;
     /* border-radius: 5px; */
     color: #333;
-    font-family: 'Chivo', sans-serif;
+    font-family: 'Lato', sans-serif;
     box-sizing:border-box;
     &::placeholder {
       color: #999;

@@ -1,7 +1,4 @@
-.titlebar {
-  background: #262626;
-  height: 40px;
-}
+@import '../constants.css';
 
 .tabs {
 }
@@ -28,7 +25,7 @@
   display: -ms-flex;
   display: -o-flex;
   display: flex;
-  background: #262626;
+  background: $black;
   padding: 0 5%;
 
   -webkit-transition: padding 0.5s cubic-bezier(.46,.02,.04,.99);
@@ -53,7 +50,7 @@
       left: 50%;
       height: 3px;
       width: 0;
-      background: #ea3;
+      background: $primary;
       transform: translateX(-50%);
       opacity: 0;
       border-radius: 3px;

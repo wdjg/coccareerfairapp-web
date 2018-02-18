@@ -2,17 +2,24 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const nested = require('postcss-nested');
 const autoprefixer = require('autoprefixer');
 const razzleHeroku = require('razzle-heroku');
-const util = require('util')
-
-// var fs = require('fs');
-// var log_file = fs.createWriteStream('e:/foo.js', {flags : 'w'});
-// var log_stdout = process.stdout;
+const vars = require('postcss-simple-vars');
+const postcssImport = require('postcss-import');
+const util = require('util');
 
 
 module.exports = {
   modify: (config, {target, dev}, webpack) => {
+    // var fs = require('fs');
+    // var log_file = fs.createWriteStream('e:/foo.js', {flags : 'w'});
+    // var log_stdout = process.stdout;
     // fs.appendFile("e:\\foo.js", "\n\n\n===========\n" + util.inspect(config, {showHidden: false, depth: null,showProxy: true}), () => {});
     const appConfig = razzleHeroku(Object.assign({}, config), {target, dev}, webpack);
+    // appConfig.module.rules.push({
+    //   test: /\.svg$/,
+    //   use: [
+    //     'svg-inline-loader'
+    //   ],
+    // });
     if (target == 'web' && !dev)
       appConfig.module.rules[4].use = ExtractTextPlugin.extract({
       fallback: require.resolve('style-loader'),
@@ -37,17 +44,11 @@ module.exports = {
     
     if (target == 'web' && dev)
       appConfig.module.rules[4].use[2].options.plugins = () => [
+        postcssImport(),
         nested(),
+        vars(),
         require('postcss-flexbugs-fixes'),
-        autoprefixer({
-          browsers: [
-            '>1%',
-            'last 4 versions',
-            'Firefox ESR',
-            'not ie < 9',
-          ],
-          flexbox: 'no-2009',
-        }),
+        autoprefixer(),
       ];
     return appConfig;
   }

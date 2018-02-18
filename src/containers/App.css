@@ -1,14 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family=Chivo:300,400,700,900');
+@import '../constants.css';
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
 
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Chivo', sans-serif;
-}
-
-nav {
-	background: #262626;
-  height: 60px;
+  font-family: 'Lato', sans-serif;
 }
 
 .App {
@@ -23,4 +19,32 @@ nav {
 	-ms-flex-flow: column;
 	-o-flex-flow: column;
 	flex-flow: column;
+}
+
+.top-nav {
+	background: $black;
+  height: 70px;
+  display: flex;
+  .top-nav__item {
+		flex: 1;
+		line-height: 70px;
+		&.title {
+			text-align: center;
+			color: $white;
+			font-size: 16px;
+			font-weight: 700;
+		}
+  }
+  .burger {
+  	height: 20px;
+  	margin: 25px 15px;
+  }
+}
+
+.bottom-nav {
+	background: $grey;
+  height: 45px;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
 }
