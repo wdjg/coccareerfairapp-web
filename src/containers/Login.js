@@ -104,42 +104,8 @@ class Login extends Component {
 			return;
 		}
 
-		this.props.userLogin(s.email.trim(), s.password)
-		// if (res.sucess) {
-		// 	this.props.history.push('student');
-		// } else {
-		// 	console.log(res.err);
-		// }
-
-		// axios({
-		// 	method: 'post',
-		//   url: 'https://coccareerfairapp-development.herokuapp.com/api/login',
-		//   data: {
-		//   	email: s.email,
-		//   	password: s.password,
-		//   },
-		//   headers: {
-		//     "Content-Type": 'application/json'
-		//   }
-		// }).then(res => {
-		// 	this.props.setAuthToken(res.data.token);
-		// 	return axios({
-		// 		method: 'get',
-		// 	  url: 'https://coccareerfairapp-development.herokuapp.com/api/users',
-		// 	  headers: {
-		// 	  	"Authorization": "Bearer " + res.data.token,
-		// 	    "Content-Type": 'application/json'
-		// 	  }
-		// 	});
-		// }).then(res => {
-		// 	this.props.setUser(res.data);
-		// 	console.log("LOGIN: student SUCCESS");
-		// 	this.props.history.push('student');
-		// }).catch(err => {
-		// 	console.log(err);
-		// 	console.log("LOGIN: student FAILURE");
-		// 	// TODO set error values
-		// });
+		this.props.userLogin(s.email.trim(), s.password);
+		// TODO get and display errors from this call
 
 		this.setState({studentErrorCodes: errorCodes});
 	}
@@ -203,6 +169,7 @@ class Login extends Component {
 	}
 
 	onRecruiterLogin() {
+		console.log("LOGIN: recruiter");
 		this.setState({recruiterErrorCodes: {
 			name: null,
 			password: null,
@@ -216,37 +183,8 @@ class Login extends Component {
 
 		if (r.password.length < 1)
 			errorCodes.password = errors.general.requiredField;
-
-		console.log("LOGIN: recruiter");
-		axios({
-			method: 'post',
-		  url: 'https://coccareerfairapp-development.herokuapp.com/api/login',
-		  data: {
-		  	email: r.email,
-		  	password: r.password,
-		  },
-		  headers: {
-		    "Content-Type": 'application/json'
-		  }
-		}).then(res => {
-			this.props.setAuthToken(res.data.token);
-			return axios({
-				method: 'get',
-			  url: 'https://coccareerfairapp-development.herokuapp.com/api/users',
-			  headers: {
-			  	"Authorization": "Bearer " + res.data.token,
-			    "Content-Type": 'application/json'
-			  }
-			});
-		}).then(res => {
-			this.props.setUser(res.data);
-			console.log("LOGIN: recruiter SUCCESS");
-			this.props.history.push('recruiter');
-		}).catch(err => {
-			console.log(err);
-			console.log("LOGIN: recruiter FAILURE");
-			// TODO set error values
-		});
+		this.props.userLogin(r.email.trim(), r.password);
+		// TODO get and display errors from this call
 
 		this.setState({studentErrorCodes: errorCodes});
 	}
