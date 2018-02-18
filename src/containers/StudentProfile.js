@@ -6,7 +6,7 @@ import 'react-tagsinput/react-tagsinput.css'
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setUser } from '../redux/actions/user';
+import { updateUser } from '../redux/actions/user';
 
 import EditableInfo from '../components/EditableInfo';
 import Button from '../components/Button';
@@ -36,7 +36,7 @@ class StudentProfile extends Component {
 
 	//TODO should be a fetch call up to the server and update redux with the response
 	saveEdits() {
-		this.props.setUser(this.state.edits);
+		this.props.updateUser(this.state.edits);
 		this.setState({isEditing: false});
 	}
 
@@ -139,6 +139,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-	bindActionCreators({ setUser}, dispatch);
+	bindActionCreators({ updateUser}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(StudentProfile);

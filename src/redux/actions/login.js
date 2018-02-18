@@ -18,10 +18,9 @@ export function sessionLogin() {
 export function userLogin(email, password) {
 	return dispatch => {
 		LoginAPI.login(email, password).then(res => {
-			console.log(res);
-			sessionStorage.setItem('jwt', res.data.token);
-			console.log("token: " + sessionStorage.getItem('jwt'));
-			return LoginAPI.getUser(res.token);
+			const token = res.data.token
+			sessionStorage.setItem('jwt', token);
+			return LoginAPI.getUser(token);
 		}).then(res => {
 			dispatch(setUser(res.data));
 			return { success: true };
@@ -31,5 +30,12 @@ export function userLogin(email, password) {
 				err: err,
 			}
 		});
+	}
+}
+
+export function userLogout() {
+	return dispatch => {
+		sessionStorage.removeItem('jwt');
+		dispatch(setUser({}));
 	}
 }

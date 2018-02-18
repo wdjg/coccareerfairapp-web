@@ -17,7 +17,7 @@ import MenuIcon from '../resources/burger-title.svg';
 import { connect } from 'react-redux'
 import { Route, Switch, withRouter, Redirect, Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { sessionLogin } from '../redux/actions/login';
+import { sessionLogin, userLogout } from '../redux/actions/login';
 
 const ConnectedSwitch = connect(state => ({
   location: state.location
@@ -78,7 +78,9 @@ class App extends React.Component {
 				<nav className="top-nav">
 					<div className="top-nav__item"><img className="burger" src={MenuIcon} alt="menu"/></div>
 					<div className="top-nav__item title"></div>
-					<div className="top-nav__item"></div>
+					<div className="top-nav__item">
+						<div className="logout" onClick={this.props.userLogout}>Logout</div>
+					</div>
 			  </nav>
 			  <ConnectedSwitch>
 					{checkAuth(this.props.user) && <Redirect path="/login" to="/"/>}
@@ -109,6 +111,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-	bindActionCreators({ sessionLogin }, dispatch);
+	bindActionCreators({ sessionLogin, userLogout }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

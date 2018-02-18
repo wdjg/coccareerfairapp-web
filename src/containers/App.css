@@ -48,3 +48,15 @@ body {
   position: fixed;
   bottom: 0;
 }
+
+.logout {
+	color: #fff;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+	float: right;
+	margin: 0 10px;
+}

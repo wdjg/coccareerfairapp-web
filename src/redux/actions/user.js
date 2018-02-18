@@ -1,8 +1,9 @@
 export const SET_USER = 'SET_USER';
+export const UPDATE_USER = 'UPDATE_USER';
 export const SET_AUTH_TOKEN = 'SET_AUTH_TOKEN';
 
 /**
- * @param  {user}    JSON object containing user information
+ * @param  {user}     JSON object containing user information
  * @return {function} reducer action
  */
 export const setUser = user => ({
@@ -11,7 +12,16 @@ export const setUser = user => ({
 });
 
 /**
- * @param  {user}    JSON object containing a string auth token
+ * @param  {user}     JSON object containing user information
+ * @return {function} reducer action
+ */
+export const updateUser = user => ({
+  type: UPDATE_USER,
+  payload: {user: user},
+});
+
+/**
+ * @param  {user}     JSON object containing a string auth token
  * @return {function} reducer action
  */
 export const setAuthToken = token => ({
