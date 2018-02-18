@@ -14,7 +14,7 @@ export function getUser(token) {
 export function login(email, password) {
 	return axios({
 		method: 'post',
-		url: 'https://coccareerfairapp-development.herokuapp.com/api/users',
+		url: 'https://coccareerfairapp-development.herokuapp.com/api/login',
 		headers: {
 			'Content-Type': 'application/json',
 		},

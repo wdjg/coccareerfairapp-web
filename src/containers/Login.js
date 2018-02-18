@@ -11,6 +11,7 @@ import Button from '../components/Button'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setUser, setAuthToken } from '../redux/actions/user';
+import { userLogin } from '../redux/actions/login';
 
 const loginTabs = [{id: 'student', label: 'Student'}, {id: 'recruiter', label: 'Recruiter'}];
 
@@ -103,35 +104,42 @@ class Login extends Component {
 			return;
 		}
 
-		axios({
-			method: 'post',
-		  url: 'https://coccareerfairapp-development.herokuapp.com/api/login',
-		  data: {
-		  	email: s.email,
-		  	password: s.password,
-		  },
-		  headers: {
-		    "Content-Type": 'application/json'
-		  }
-		}).then(res => {
-			this.props.setAuthToken(res.data.token);
-			return axios({
-				method: 'get',
-			  url: 'https://coccareerfairapp-development.herokuapp.com/api/users',
-			  headers: {
-			  	"Authorization": "Bearer " + res.data.token,
-			    "Content-Type": 'application/json'
-			  }
-			});
-		}).then(res => {
-			this.props.setUser(res.data);
-			console.log("LOGIN: student SUCCESS");
-			this.props.history.push('student');
-		}).catch(err => {
-			console.log(err);
-			console.log("LOGIN: student FAILURE");
-			// TODO set error values
-		});
+		this.props.userLogin(s.email.trim(), s.password)
+		// if (res.sucess) {
+		// 	this.props.history.push('student');
+		// } else {
+		// 	console.log(res.err);
+		// }
+
+		// axios({
+		// 	method: 'post',
+		//   url: 'https://coccareerfairapp-development.herokuapp.com/api/login',
+		//   data: {
+		//   	email: s.email,
+		//   	password: s.password,
+		//   },
+		//   headers: {
+		//     "Content-Type": 'application/json'
+		//   }
+		// }).then(res => {
+		// 	this.props.setAuthToken(res.data.token);
+		// 	return axios({
+		// 		method: 'get',
+		// 	  url: 'https://coccareerfairapp-development.herokuapp.com/api/users',
+		// 	  headers: {
+		// 	  	"Authorization": "Bearer " + res.data.token,
+		// 	    "Content-Type": 'application/json'
+		// 	  }
+		// 	});
+		// }).then(res => {
+		// 	this.props.setUser(res.data);
+		// 	console.log("LOGIN: student SUCCESS");
+		// 	this.props.history.push('student');
+		// }).catch(err => {
+		// 	console.log(err);
+		// 	console.log("LOGIN: student FAILURE");
+		// 	// TODO set error values
+		// });
 
 		this.setState({studentErrorCodes: errorCodes});
 	}
@@ -430,6 +438,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-	bindActionCreators({ setUser, setAuthToken }, dispatch);
+	bindActionCreators({ setUser, setAuthToken, userLogin }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

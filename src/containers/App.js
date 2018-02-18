@@ -38,10 +38,10 @@ const AuthRoute = ({component: Component, authTypes, userAuth, ...routeProps }) 
   )} />
 );
 
-const TitleRoute = ({title, setNavTitle, ...routeProps}) => {
-	setNavTitle(title);
-	return <Route {...routeProps} />;
-};
+// const TitleRoute = ({title, setNavTitle, ...routeProps}) => {
+// 	setNavTitle(title);
+// 	return <Route {...routeProps} />;
+// };
 
 class App extends React.Component {
 
@@ -51,6 +51,11 @@ class App extends React.Component {
 	  this.state = {
 	  	title: ''
 	  };
+	}
+
+	componentDidMount() {
+		if (!checkAuth(this.props.user))
+			this.props.sessionLogin();
 	}
 
 	renderBottomNavButtons(buttons) {
