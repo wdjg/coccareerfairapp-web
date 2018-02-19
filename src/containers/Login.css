@@ -1,41 +1,23 @@
 @import '../constants.css';
 
-.tabs {
-}
-
 .Login {
-  .Hider {
-    align-items: center;
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flex;
-    display: -o-flex;
+  form {
+    width: 90%;
     display: flex;
-    -webkit-flex-flow: column;
-    -moz-flex-flow: column;
-    -ms-flex-flow: column;
-    -o-flex-flow: column;
     flex-flow: column;
+    align-items: center;
+    margin: 0 auto;
+    padding-top: 20px;
   }
 }
 
 .tabs__labels {
-  display: -webkit-flex;
-  display: -moz-flex;
-  display: -ms-flex;
-  display: -o-flex;
   display: flex;
   background: $black;
   padding: 0 5%;
 
-  -webkit-transition: padding 0.5s cubic-bezier(.46,.02,.04,.99);
-  -o-transition: padding 0.5s cubic-bezier(.46,.02,.04,.99);
   transition: padding 0.5s cubic-bezier(.46,.02,.04,.99);
   .labels__label {
-    -webkit-flex: 1;
-    -moz-flex: 1;
-    -ms-flex: 1;
-    -o-flex: 1;
     flex: 1;
     text-align: center;
     height: 40px;
@@ -54,8 +36,6 @@
       transform: translateX(-50%);
       opacity: 0;
       border-radius: 3px;
-      -webkit-transition: opacity 0.25s cubic-bezier(.46,.02,.04,.99), width 0.25s cubic-bezier(.46,.02,.04,.99);
-      -o-transition: opacity 0.25s cubic-bezier(.46,.02,.04,.99), width 0.25s cubic-bezier(.46,.02,.04,.99);
       transition: opacity 0.25s cubic-bezier(.46,.02,.04,.99), width 0.25s cubic-bezier(.46,.02,.04,.99);
     }
     &:hover:after {
@@ -70,22 +50,10 @@
 }
 
 .tabs__windows {
-  display: -webkit-flex;
-  display: -moz-flex;
-  display: -ms-flex;
-  display: -o-flex;
   display: flex;
-  -webkit-transition: padding 0.5s cubic-bezier(.46,.02,.04,.99);
-  -o-transition: padding 0.5s cubic-bezier(.46,.02,.04,.99);
   transition: padding 0.5s cubic-bezier(.46,.02,.04,.99);
   .windows__window {
-    -webkit-flex: 1;
-    -moz-flex: 1;
-    -ms-flex: 1;
-    -o-flex: 1;
     flex: 1;
-    -webkit-transition: flex 0.5s cubic-bezier(.46,.02,.04,.99);
-    -o-transition: flex 0.5s cubic-bezier(.46,.02,.04,.99);
     transition: flex 0.5s cubic-bezier(.46,.02,.04,.99);
     width: 0;
     overflow: hidden;
@@ -93,30 +61,12 @@
 }
 
 .login-content {
-  display: -webkit-flex;
-  display: -moz-flex;
-  display: -ms-flex;
-  display: -o-flex;
-  display: flex;
-  -webkit-flex-flow: column;
-  -moz-flex-flow: column;
-  -ms-flex-flow: column;
-  -o-flex-flow: column;
-  flex-flow: column;
   width: 50%;
   margin: 0 25%;
-  align-items: center;
-
-  -webkit-transition: all 0.5s cubic-bezier(.46,.02,.04,.99);
-  -o-transition: all 0.5s cubic-bezier(.46,.02,.04,.99);
   transition: all 0.5s cubic-bezier(.46,.02,.04,.99);
 }
 
 .selectable {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
   user-select: none;
 }
 
@@ -133,76 +83,78 @@
 }
 
 .spacer {
-  height: 30px;
+  height: 20px;
 }
 
 input {
-  -webkit-transition: width 0.5s cubic-bezier(.46,.02,.04,.99);
-  -o-transition: width 0.5s cubic-bezier(.46,.02,.04,.99);
+  border: 0;
+  outline: none;
+  background: #e2e2e2;
+  padding: 5px;
+  margin: 3px;
+  color: #333;
+  font-family: $font-family;
+  box-sizing:border-box;
+  &::placeholder {
+    color: #999;
+  }
+}
+
+.Login input {
   transition: width 0.5s cubic-bezier(.46,.02,.04,.99);
-  width: 80%;
+  
 }
 
 @media screen and (max-width: 680px) {
-  .windows__window.hidden {
-    -webkit-flex: 0;
-    -moz-flex: 0;
-    -ms-flex: 0;
-    -o-flex: 0;
-    flex: 0;
-  }
-  input {
-    width: 100%;
+  .Login {
+    .windows__window.hidden {
+      flex: 0;
+    }
   }
 }
 
 
 @media screen and (min-width: 680px) {
-  .windows__window.hidden {
-    -webkit-flex: 1;
-    -moz-flex: 1;
-    -ms-flex: 1;
-    -o-flex: 1;
-    flex: 1;
-  }
+  .Login {
+    .windows__window.hidden {
+      flex: 1;
+    }
 
-  .labels__label:after {
-    display: none;
-  }
+    .labels__label:after {
+      display: none;
+    }
 
-  .tabs__labels {
-    padding: 0 10%;
-  }
+    .tabs__labels {
+      padding: 0 10%;
+    }
 
-  .labels__label {
-    cursor: auto;
-  }
+    .labels__label {
+      cursor: auto;
+    }
 
-  .login-content {
-    width: 70%;
-    margin: 0 15%;
-  }
+    .login-content {
+      width: 70%;
+      margin: 0 15%;
+    }
 
-  .tabs__windows {
-    padding: 0 10%;
-  }
+    .tabs__windows {
+      padding: 0 10%;
+    }
 
-  input {
-    width: 100%;
-  }
-
-  .warning {
-    width: 100%;
+    .warning {
+      width: 100%;
+    }
   }
 }
 
 @media screen and (min-width: 1120px) {
+  .Login {
+    .tabs__labels {
+      padding: 0 calc(50% - 400px);
+    }
 
-  .tabs__labels {
-    padding: 0 calc(50% - 400px);
-  }
-
-  .tabs__windows {
-    padding: 0 calc(50% - 400px);
+    .tabs__windows {
+      padding: 0 calc(50% - 400px);
+    }
   }
 }

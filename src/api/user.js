@@ -11,7 +11,7 @@ export function getUser(token) {
 	});
 }
 
-export function login(email, password) {
+export function login({email, password}) {
 	return axios({
 		method: 'post',
 		url: 'https://coccareerfairapp-development.herokuapp.com/api/login',
@@ -24,3 +24,20 @@ export function login(email, password) {
 		}
 	});
 }
+
+export function register({name, email, password, modifiers}) {
+	return axios({
+		method: 'post',
+		url: 'https://coccareerfairapp-development.herokuapp.com/api/register',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		data: {
+			name: name,
+			email: email,
+			password: password,
+			...modifiers
+		}
+	});
+}
+

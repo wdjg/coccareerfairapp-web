@@ -54,6 +54,9 @@ class App extends React.Component {
 	}
 
 	componentDidMount() {
+		if (!window.location.href.includes('https')) {
+			
+		}
 		if (!checkAuth(this.props.user))
 			this.props.sessionLogin();
 	}

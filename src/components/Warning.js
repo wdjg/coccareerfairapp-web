@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
-import classNames from 'classnames';
 import './Warning.css';
 
-import {MdError} from 'react-icons/lib/md';
+import {FaExclamationCircle} from 'react-icons/lib/fa';
+import SmoothCollapse from 'react-smooth-collapse';
 
 class Warning extends Component {
 	render() {
 		return (
-			<div className={classNames("Warning", {show: this.props.show})}>
-				<MdError className="error-icon"/>
-        <span className="warning__text"> {this.props.text}</span>
-			</div>
+			<SmoothCollapse expanded={this.props.expanded}>
+				<div className="Warning">
+					<FaExclamationCircle className="error-icon"/>
+	        <span className="warning__text"> {this.props.text}</span>
+				</div>
+			</SmoothCollapse>
 		);
 	}
 }
