@@ -50,6 +50,8 @@ class StudentProfile extends Component {
 	}
 
 	renderInterests(interests) {
+		if (!interests)
+			return <div className="placeholder">Not Provided</div>
 		return interests.map((entry, index) => {
 			return (<div key={index} className="interest">{entry}</div>)
 		})
@@ -65,8 +67,8 @@ class StudentProfile extends Component {
 		return user[key] && user[key] !== '';
 	}
 
-	isAuthorizedUser(user) {
-		return user.authorized === "yes";
+	authorized(user) {
+		return user.user_type === "student";
 	}
 
 	render() {
@@ -92,7 +94,9 @@ class StudentProfile extends Component {
 				<h2>Threads: </h2>
 				{this.isCSMajor(this.props.user) && 
 					<div className="threads">{this.renderThreads(this.props.user.threads)}</div>}
-				{(this.hasItem(this.props.user, 'gpa') || this.isAuthorizedUser(this.props.user)) && <h2>GPA: </h2>}
+				{(this.hasItem(this.props.user, 'gpa') || this.authorized(this.props.user)) && <h2>GPA: </h2>}
+				{(!this.hasItem(this.props.user, 'gpa') && this.authorized(this.props.user))
+					&& <div className="placeholder">Not Provided</div>}
 				<EditableInfo
 					edit={this.state.isEditing}
 					placeholder="GPA"
@@ -102,7 +106,7 @@ class StudentProfile extends Component {
 					<div className="entry">{this.props.user.gpa}</div>
 				</EditableInfo>
 				
-				{(this.hasItem(this.props.user, 'graduation_date') || this.isAuthorizedUser(this.props.user) )&& <h2>Expected Graduation Date: </h2>}
+				{(this.hasItem(this.props.user, 'graduation_date') || this.authorized(this.props.user) )&& <h2>Expected Graduation Date: </h2>}
 				<EditableInfo
 					edit={this.state.isEditing}
 					placeholder="Graduation Date"
@@ -112,8 +116,8 @@ class StudentProfile extends Component {
 					<div className="entry">{this.props.user.graduation_date}</div>
 				</EditableInfo>
 
-				{(this.hasItem(this.props.user, 'looking_for') || this.isAuthorizedUser(this.props.user)) && <h2>Looking For: </h2>}
-				{(!this.hasItem(this.props.user, 'looking_for') && this.isAuthorizedUser(this.props.user))
+				{(this.hasItem(this.props.user, 'looking_for') || this.authorized(this.props.user)) && <h2>Looking For: </h2>}
+				{(!this.hasItem(this.props.user, 'looking_for') && this.authorized(this.props.user))
 					&& <div className="placeholder">Not Provided</div>}
 				<EditableInfo
 					edit={this.state.isEditing}
@@ -124,7 +128,7 @@ class StudentProfile extends Component {
 					<div className="entry">{this.props.user.looking_for}</div>
 				</EditableInfo>
 
-				{(this.hasItem(this.props.user, 'interests') || this.isAuthorizedUser(this.props.user)) && <h2>Interests: </h2>}
+				{(this.hasItem(this.props.user, 'interests') || this.authorized(this.props.user)) && <h2>Interests: </h2>}
 				<div>
 					{!this.state.isEditing && <div className="interests">{this.renderInterests(this.props.user.interests)}</div>} 
 					{this.state.isEditing && <TagsInput className="entry" value={this.state.edits.interests} onChange={e => this.handleChange('interests', e)}/>}

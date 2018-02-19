@@ -20,7 +20,7 @@ class QRScanner extends Component {
 			showModal: false,
 			company: null,
 			line: {},
-	  };
+		};
 	}
 
 	componentDidMount() {
@@ -81,12 +81,12 @@ class QRScanner extends Component {
 					<div className="scanner-spacer"></div>
 					<QrReader
 						className="qr-scanner"
-	          delay={300}
-	          onError={this.scanError.bind(this)}
-	          onScan={this.scanSuccess.bind(this)}
-	          showViewFinder={false}
-	          style={{ width: '100%' }}
-	          />
+						delay={300}
+						onError={this.scanError.bind(this)}
+						onScan={this.scanSuccess.bind(this)}
+						showViewFinder={false}
+						style={{ width: '100%' }}
+					/>
 					<div className="scanner-spacer"></div>
 				</div>
 				<div className="finder">
