@@ -3,7 +3,7 @@ import QrReader from 'react-qr-reader'
 import classNames from 'classnames';
 import './QRScanner.css';
 import axios from 'axios';
-import { setLineDetails } from '../redux/actions';
+import { setLineDetails } from '../redux/actions/line';
 import { bindActionCreators } from 'redux';
 
 import QRConfirmationModal from '../components/QRConfirmationModal';

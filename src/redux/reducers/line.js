@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable';
-import { SET_LINE_DETAILS } from '../actions';
+import { SET_LINE_DETAILS } from '../actions/line';
 
 const initialState = {}
 

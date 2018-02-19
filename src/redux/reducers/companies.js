@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable';
-import { SET_COMPANIES, UPDATE_COMPANY } from '../actions';
+import { SET_COMPANIES, UPDATE_COMPANY } from '../actions/companies';
 
 const initialState = [{
 	url: 'microsoft',

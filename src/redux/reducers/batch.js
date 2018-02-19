@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable';
-import { PUSH_STUDENTS_TO_BATCH, REMOVE_STUDENTS_FROM_BATCH, SET_BATCH } from '../actions';
+import { PUSH_STUDENTS_TO_BATCH, REMOVE_STUDENTS_FROM_BATCH, SET_BATCH } from '../actions/batch';
 
 const initialState = []
 
