@@ -6,10 +6,10 @@ import 'react-tagsinput/react-tagsinput.css'
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateUser } from '../redux/actions/user';
+import { updateUser } from '../../redux/actions/user';
 
-import EditableInfo from '../components/EditableInfo';
-import Button from '../components/Button';
+import EditableInfo from '../../components/EditableInfo';
+import Button from '../../components/Button';
 
 class StudentProfile extends Component {
 

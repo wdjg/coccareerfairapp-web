@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
-// import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
-import InterviewModal from '../components/InterviewModal';
+import InterviewModal from '../../components/InterviewModal';
 
-import './RecruiterMain.css';
+import './RecruiterBatch.css';
 
 const TEST_BATCH = [
 {name: "Valdimar Haraldsson", id: "9532016"},
@@ -16,7 +15,7 @@ const TEST_BATCH = [
 {name: "Gudrun Gjukadóttir", id: "67824594"},
 {name: "Blerg Fergusson", id: "8679305"},]
 
-class RecruiterMain extends Component {
+class RecruiterBatch extends Component {
 
 	constructor(props) {
 		super(props);
@@ -28,9 +27,7 @@ class RecruiterMain extends Component {
 	}
 
 	componentDidMount() {
-		// axios.get('http://coccareerfairapp-development.herokuapp.com/api/lines', {
-
-		// })
+		
 	}
 
 	closeModal() {
@@ -57,7 +54,7 @@ class RecruiterMain extends Component {
 
 	render() {
 		return (
-			<div className="RecruiterMain">
+			<div className="RecruiterBatch">
 				<div className="stats">
 					<div className="stat__entry interview-time">
 						<h2>Average Interview Length</h2>
@@ -94,4 +91,4 @@ const mapStateToProps = state => ({
 	interviewTime: 5.34,
 });
 
-export default connect(mapStateToProps)(RecruiterMain);
+export default connect(mapStateToProps)(RecruiterBatch);

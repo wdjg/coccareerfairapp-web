@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 // import logo from './react.svg';
 import './Login.css';
-import Button from '../components/Button';
-import Warning from '../components/Warning';
+import Button from '../../components/Button';
+import Warning from '../../components/Warning';
 import SmoothCollapse from 'react-smooth-collapse';
 import { Formik } from 'formik';
 
 // import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setUser } from '../redux/actions/user';
-import { userLogin } from '../redux/actions/login';
-import { studentRegister, recruiterRegister } from '../redux/actions/register';
+import { setUser } from '../../redux/actions/user';
+import { userLogin } from '../../redux/actions/login';
+import { studentRegister, recruiterRegister } from '../../redux/actions/register';
 
 const loginTabs = [{id: 'student', label: 'Student'}, {id: 'recruiter', label: 'Recruiter'}];
 

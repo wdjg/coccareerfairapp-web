@@ -3,9 +3,9 @@ import QRCode from 'qrcode-react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-import './QRMain.css'
+import './QRDisplay.css'
 
-class QRMain extends Component {
+class QRDisplay extends Component {
 
 	constructor(props) {
 		super(props);
@@ -30,7 +30,7 @@ class QRMain extends Component {
 
 	render() {
 		return(
-			<div className="QRMain">
+			<div className="QRDisplay">
 				<div className="code-container">
 					<div className="code"><QRCode value={this.state.code} size={260} /></div>
 				</div>
@@ -42,4 +42,4 @@ const mapStateToProps = state => ({
 	user: state.user,
 });
 
-export default connect(mapStateToProps)(QRMain);
+export default connect(mapStateToProps)(QRDisplay);

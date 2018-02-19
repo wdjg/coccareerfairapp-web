@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import './CompanyProfile.css';
 
-import EditableInfo from '../components/EditableInfo';
-
+import EditableInfo from '../../components/EditableInfo';
 import { connect } from 'react-redux'
 
 

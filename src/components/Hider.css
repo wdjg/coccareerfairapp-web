@@ -1,7 +1,0 @@
-.Hider {
-  overflow: hidden;
-  width: 100%;
-  -webkit-transition: max-height 0.5s ease, opacity 0.5s ease;
-  -o-transition: max-height 0.5s ease, opacity 0.5s ease;
-  transition: max-height 0.5s ease, opacity 0.5s ease;
-}

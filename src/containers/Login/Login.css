@@ -1,4 +1,4 @@
-@import '../constants.css';
+@import '../../constants.css';
 
 .Login {
   form {
@@ -8,6 +8,15 @@
     align-items: center;
     margin: 0 auto;
     padding-top: 20px;
+  }
+  .error-input {
+    width: 50%;
+    input {
+      width: 100%;
+    }
+    .Warning {
+      white-space: nowrap
+    }
   }
 }
 
@@ -61,8 +70,8 @@
 }
 
 .login-content {
-  width: 50%;
-  margin: 0 25%;
+  /* width: 50%;
+  margin: 0 25%; */
   transition: all 0.5s cubic-bezier(.46,.02,.04,.99);
 }
 
