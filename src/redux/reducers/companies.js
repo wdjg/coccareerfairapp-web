@@ -5,6 +5,11 @@ const initialState = [{
 	url: 'microsoft',
 	id: '8675309RICK',
 	name: 'Microsoft',
+},
+{
+	url: 'floopametrics',
+	id: '31415926535',
+	name: 'Floopametrics',
 }]
 
 const companies = (state = initialState, action) => {

@@ -10,6 +10,7 @@ import CompanyProfile from './CompanyProfile';
 import RecruiterBatch from './RecruiterBatch';
 import QRDisplay from './QRDisplay';
 import RecruiterProfile from './RecruiterProfile';
+import SearchCompanies from './SearchCompanies';
 
 import './App.css';
 import MenuIcon from '../resources/burger-title.svg';
@@ -90,6 +91,7 @@ class App extends React.Component {
 					{checkAuth(this.props.user) === "recruiter" && <Redirect exact path="/" to="/recruiter"/>}
 					{checkAuth(this.props.user) === "student" && <Redirect exact path="/" to="/student"/>}
 					<Route path="/login" component={Login} />
+					<Route path="/" component={SearchCompanies} />
 					<AuthRoute path="/student" authTypes={["student"]} userAuth={checkAuth(this.props.user)} component={StudentMain} />
 					<AuthRoute path="/scanner" authTypes={["student"]} userAuth={checkAuth(this.props.user)} component={QRScanner} />
 					<AuthRoute path="/recruiter" authTypes={["recruiter"]} userAuth={checkAuth(this.props.user)} component={RecruiterBatch} />
