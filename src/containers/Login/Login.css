@@ -19,6 +19,9 @@
       white-space: nowrap
     }
   }
+  .loading {
+    margin-top: 15px;
+  }
 }
 
 .tabs__labels {

@@ -27,35 +27,19 @@
 
 .qr-scanner {
 	display: inline-block;
-	max-width: 620px;
+	max-width: 820px;
 	margin: 0 auto;
 }
 
 .scanner-container {
-	display: -webkit-flex;
-	display: -moz-flex;
-	display: -ms-flex;
-	display: -o-flex;
 	display: flex;
-	-webkit-flex-flow: column;
-	-moz-flex-flow: column;
-	-ms-flex-flow: column;
-	-o-flex-flow: column;
 	flex-flow: column;
-	-webkit-flex: 1;
-	-moz-flex: 1;
-	-ms-flex: 1;
-	-o-flex: 1;
 	flex: 1;
+	background: #000;
 }
 
 .scanner-spacer {
-	-webkit-flex: 1;
-	-moz-flex: 1;
-	-ms-flex: 1;
-	-o-flex: 1;
 	flex: 1;
-	background: #ccc;
 }
 
 .finder {
@@ -134,9 +118,6 @@
 		opacity: 0;
 		width: 350px;
 		transition: opacity 0.5s cubic-bezier(.46,.02,.04,.99), top 0.5s cubic-bezier(.46,.02,.04,.99);
-		-webkit-transform: translate(-50%, -50%);
-		-ms-transform: translate(-50%, -50%);
-		-o-transform: translate(-50%, -50%);
 		transform: translate(-50%, -50%);
 	}
 	.modal.show .content {
