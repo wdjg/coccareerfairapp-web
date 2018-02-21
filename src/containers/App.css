@@ -27,6 +27,10 @@ body {
   .top-nav__item {
 		flex: 1;
 		line-height: 70px;
+		display: flex;
+		&.right {
+			justify-content: flex-end;
+		}
 		&.title {
 			text-align: center;
 			color: $white;
@@ -37,6 +41,10 @@ body {
   .burger {
   	height: 20px;
   	margin: 25px 15px;
+  }
+  .camera {
+  	width: 25px;
+		margin-right: 15px;
   }
 }
 
@@ -51,11 +59,13 @@ body {
 .logout {
 	color: #fff;
 	cursor: pointer;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	-o-user-select: none;
 	user-select: none;
 	float: right;
-	margin: 0 10px;
+	margin-right: 10px;
+}
+
+.QRScannerFull {
+	height: 100vh;
+	width: 100vw;
+	position: fixed;
 }

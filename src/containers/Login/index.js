@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import './Login.css';
 import Button from '../../components/Button';
 import Warning from '../../components/Warning';
+import Loading from '../../components/Loading';
 import SmoothCollapse from 'react-smooth-collapse';
 import { Formik } from 'formik';
 
@@ -153,6 +154,7 @@ class FormikLogin extends Component {
 												/>
 											</div>
 										</SmoothCollapse>
+										{isSubmitting && <Loading/>}
 										<div className="spacer"></div>
 										<Button type="submit" disabled={isSubmitting}>
 											{this.state.studentRegister ? "Register" : "Login"}
@@ -235,6 +237,7 @@ class FormikLogin extends Component {
 												/>
 											</div>
 										</SmoothCollapse>
+										{isSubmitting && <Loading className="loading"/>}
 										<div className="spacer"></div>
 										<Button type="submit" disabled={isSubmitting}>
 											{this.state.recruiterRegister ? "Register" : "Login"}
