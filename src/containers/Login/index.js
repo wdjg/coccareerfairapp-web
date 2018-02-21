@@ -16,7 +16,7 @@ import { studentRegister, recruiterRegister } from '../../redux/actions/register
 
 const loginTabs = [{id: 'student', label: 'Student'}, {id: 'recruiter', label: 'Recruiter'}];
 
-class FormikLogin extends Component {
+class Login extends Component {
 	constructor(props) {
 		super(props);
 
@@ -84,6 +84,7 @@ class FormikLogin extends Component {
 				setSubmitting(false);
 				this.props.setUser(res.data)
 			}).catch(err => {
+				console.log(err.response.data.message);
 				setErrors(transformAPIError(err.response.data.message));
 			});
 		}
@@ -105,18 +106,16 @@ class FormikLogin extends Component {
 								onSubmit={this.handleStudentSubmit.bind(this)}
 								render={({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting, }) => (
 									<form onSubmit={handleSubmit}>
-										<SmoothCollapse expanded={this.state.studentRegister} heightTransition="0.3s cubic-bezier(.46,.02,.04,.99)">
-											<div className="error-input">
-												<Warning expanded={Boolean(touched.name && errors.name)} text={errors.name}/>
-												<input
-													type="text"
-													name="name"
-													placeholder="Name"
-													onChange={handleChange}
-													onBlur={handleBlur}
-													value={values.name}
-												/>
-											</div>
+										<SmoothCollapse className="error-input" expanded={this.state.studentRegister} heightTransition="0.3s cubic-bezier(.46,.02,.04,.99)">
+											<Warning expanded={Boolean(touched.name && errors.name)} text={errors.name}/>
+											<input
+												type="text"
+												name="name"
+												placeholder="Name"
+												onChange={handleChange}
+												onBlur={handleBlur}
+												value={values.name}
+											/>
 										</SmoothCollapse>
 										<div className="error-input">
 											<Warning expanded={Boolean(touched.email && errors.email)} text={errors.email}/>
@@ -140,18 +139,16 @@ class FormikLogin extends Component {
 												value={values.password}
 											/>
 										</div>
-										<SmoothCollapse expanded={this.state.studentRegister} heightTransition="0.3s cubic-bezier(.46,.02,.04,.99)">
-											<div className="error-input">
-												<Warning expanded={Boolean(touched.confirmPassword && errors.confirmPassword)} text={errors.confirmPassword}/>
-												<input
-													type="password"
-													name="confirmPassword"
-													placeholder="Confirm Password"
-													onChange={handleChange}
-													onBlur={handleBlur}
-													value={values.confirmPassword}
-												/>
-											</div>
+										<SmoothCollapse className="error-input" expanded={this.state.studentRegister} heightTransition="0.3s cubic-bezier(.46,.02,.04,.99)">
+											<Warning expanded={Boolean(touched.confirmPassword && errors.confirmPassword)} text={errors.confirmPassword}/>
+											<input
+												type="password"
+												name="confirmPassword"
+												placeholder="Confirm Password"
+												onChange={handleChange}
+												onBlur={handleBlur}
+												value={values.confirmPassword}
+											/>
 										</SmoothCollapse>
 										<div className="spacer"></div>
 										<Button type="submit" disabled={isSubmitting}>
@@ -171,24 +168,21 @@ class FormikLogin extends Component {
 						<div className="login-content">
 							<Formik
 								initialValues={{ email: '', password: '', name: '', confirmPassword: '', passcode: '' }}
-								validate={this.state.recruiterRegister ? validateRegister : validateLogin}
+								validate={this.state.recruiterRegister ? validateRecruiterRegister : validateLogin}
 								onSubmit={this.handleRecruiterSubmit.bind(this)}
 								render={({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting, }) => (
 									<form onSubmit={handleSubmit}>
-										<SmoothCollapse expanded={this.state.recruiterRegister} heightTransition="0.3s cubic-bezier(.46,.02,.04,.99)">
-											<div className="error-input">
-												<Warning expanded={Boolean(touched.name && errors.name)} text={errors.name}/>
-												<input
-													type="text"
-													name="name"
-													placeholder="Name"
-													onChange={handleChange}
-													onBlur={handleBlur}
-													value={values.name}
-												/>
-											</div>
+										<SmoothCollapse className="error-input" expanded={this.state.recruiterRegister} heightTransition="0.3s cubic-bezier(.46,.02,.04,.99)">
+											<Warning expanded={Boolean(touched.name && errors.name)} text={errors.name}/>
+											<input
+												type="text"
+												name="name"
+												placeholder="Name"
+												onChange={handleChange}
+												onBlur={handleBlur}
+												value={values.name}
+											/>
 										</SmoothCollapse>
-
 										<div className="error-input">
 											<Warning expanded={Boolean(touched.email && errors.email)} text={errors.email}/>
 											<input
@@ -211,29 +205,25 @@ class FormikLogin extends Component {
 												value={values.password}
 											/>
 										</div>
-										<SmoothCollapse expanded={this.state.recruiterRegister} heightTransition="0.3s cubic-bezier(.46,.02,.04,.99)">
-											<div className="error-input">
-												<Warning expanded={Boolean(touched.confirmPassword && errors.confirmPassword)} text={errors.confirmPassword}/>
-												<input
-													type="password"
-													name="confirmPassword"
-													placeholder="Confirm Password"
-													onChange={handleChange}
-													onBlur={handleBlur}
-													value={values.confirmPassword}
-												/>
-											</div>
-											<div className="error-input">
-												<Warning expanded={Boolean(touched.passcode && errors.passcode)} text={errors.passcode}/>
-												<input
-													type="text"
-													name="passcode"
-													placeholder="Company Code"
-													onChange={handleChange}
-													onBlur={handleBlur}
-													value={values.passcode}
-												/>
-											</div>
+										<SmoothCollapse className="error-input" expanded={this.state.recruiterRegister} heightTransition="0.3s cubic-bezier(.46,.02,.04,.99)">
+											<Warning expanded={Boolean(touched.confirmPassword && errors.confirmPassword)} text={errors.confirmPassword}/>
+											<input
+												type="password"
+												name="confirmPassword"
+												placeholder="Confirm Password"
+												onChange={handleChange}
+												onBlur={handleBlur}
+												value={values.confirmPassword}
+											/>
+											<Warning expanded={Boolean(touched.passcode && errors.passcode)} text={errors.passcode}/>
+											<input
+												type="text"
+												name="passcode"
+												placeholder="Company Code"
+												onChange={handleChange}
+												onBlur={handleBlur}
+												value={values.passcode}
+											/>
 										</SmoothCollapse>
 										<div className="spacer"></div>
 										<Button type="submit" disabled={isSubmitting}>
@@ -273,7 +263,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
 	bindActionCreators({ setUser, userLogin, studentRegister, recruiterRegister }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(FormikLogin);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 const validateLogin = values => {
 	// same as above, but feel free to move this into a class method now.
@@ -303,9 +293,18 @@ const validateRegister = values => {
 	return errors;
 }
 
+const validateRecruiterRegister = values => {
+	let errors = validateRegister(values);
+	if (!values.passcode)
+		errors.passcode = 'Required';
+	return errors;
+}
+
 const transformAPIError = error => {
 	let errors = {};
 	if (error === "LoginError: No user found for email")
+		errors.email = "No user with this email"
+	if (error === "LoginError: Invalid email password combination")
 		errors.email = "Invalid Login"
 	return errors;
 }
