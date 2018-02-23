@@ -10,6 +10,7 @@ import CompanyProfile from './CompanyProfile';
 import RecruiterBatch from './RecruiterBatch';
 import QRDisplay from './QRDisplay';
 import RecruiterProfile from './RecruiterProfile';
+import Interview from './Interview';
 
 import './App.css';
 import MenuIcon from '../resources/burger-title.svg';
@@ -94,7 +95,8 @@ class App extends React.Component {
 					<AuthRoute path="/scanner" authTypes={["student"]} userAuth={checkAuth(this.props.user)} component={QRScanner} />
 					<AuthRoute path="/recruiter" authTypes={["recruiter"]} userAuth={checkAuth(this.props.user)} component={RecruiterBatch} />
 					<AuthRoute path="/qr" authTypes={["recruiter"]} userAuth={checkAuth(this.props.user)}  component={QRDisplay} />
-					<Route path="/studentprofile" component={StudentProfile} />	
+					<Route path="/studentprofile" component={StudentProfile} />
+					<Route path="/interview" component={Interview} />	
 					<Route path="/recruiterprofile" component={RecruiterProfile} />
 					<Route path="/company/notfound" component={NotFound} />
 					<Route path="/company/:id" render={props => (<CompanyProfile {...props} auth={checkAuth(this.props.user)} />)} />

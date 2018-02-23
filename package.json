@@ -36,6 +36,8 @@
     "react-router-dom": "4.2.2",
     "react-router-redux": "^5.0.0-alpha.9",
     "react-smooth-collapse": "^1.3.2",
+    "react-tabelify": "^2.0.4",
+    "react-table": "^6.7.6",
     "react-tagsinput": "^3.19.0",
     "react-transition-group": "^2.2.1",
     "redux": "^3.7.2",
