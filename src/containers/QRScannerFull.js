@@ -9,6 +9,7 @@ import { bindActionCreators } from 'redux';
 import QRConfirmationModal from '../components/QRConfirmationModal';
 
 import * as LineAPI from '../api/line';
+import * as QRAPI from '../api/qr';
 import { getLine } from '../redux/actions/line';
 
 import './QRScannerFull.css';
@@ -50,7 +51,7 @@ class QRScannerFull extends Component {
 	scanSuccess(data) {
 		if (!data)
 			return;
-		LineAPI.getCompanyFromQR(this.props.token, data).then(res => {
+		QRAPI.getCompanyFromQR(this.props.token, data).then(res => {
 			this.setState({ company: res.data, showModal: true })
 		}).catch(err => {
 			console.log(err);

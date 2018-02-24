@@ -4,6 +4,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 
 import './QRDisplay.css'
+import * as QRAPI from '../../api/qr';
 
 class QRDisplay extends Component {
 
@@ -15,15 +16,7 @@ class QRDisplay extends Component {
 	}
 
 	componentDidMount() {
-		axios({
-			method: 'get',
-			url: 'https://coccareerfairapp-development.herokuapp.com/api/employers/' + this.props.user.employer_id + '/qr',
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': 'Bearer ' + this.props.user.token,
-			}
-		}).then(res => {
-			console.log(res.data);
+		QRAPI.getQRCode(this.props.user.token, this.props.user.employer_id).then(res => {
 			this.setState({ code: res.data.qr_code_value })
 		})
 	}

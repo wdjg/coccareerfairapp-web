@@ -11,7 +11,7 @@ import { Formik } from 'formik';
 // import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setUser } from '../../redux/actions/user';
+import { updateUser } from '../../redux/actions/user';
 import { userLogin } from '../../redux/actions/login';
 import { studentRegister, recruiterRegister } from '../../redux/actions/register';
 
@@ -50,7 +50,7 @@ class Login extends Component {
 			console.log("REGISTER: student");
 			this.props.studentRegister(values.name, values.email.trim(), values.password).then(res => {
 				setSubmitting(false);
-				this.props.setUser(res.data)
+				this.props.updateUser(res.data)
 			}).catch(err => {
 				setSubmitting(false);
 				setErrors(transformAPIError(err.response.data.message));
@@ -60,7 +60,7 @@ class Login extends Component {
 			console.log("LOGIN: student");
 			this.props.userLogin(values.email.trim(), values.password).then(res => {
 				setSubmitting(false);
-				this.props.setUser(res.data)
+				this.props.updateUser(res.data)
 			}).catch(err => {
 				setSubmitting(false);
 				setErrors(transformAPIError(err.response.data.message));
@@ -73,7 +73,7 @@ class Login extends Component {
 			console.log("REGISTER: recruiter");
 			this.props.recruiterRegister(values.name, values.email.trim(), values.password, values.passcode).then(res => {
 				setSubmitting(false);
-				this.props.setUser(res.data)
+				this.props.updateUser(res.data)
 			}).catch(err => {
 				setSubmitting(false);
 				setErrors(transformAPIError(err.response.data.message));
@@ -83,7 +83,7 @@ class Login extends Component {
 			console.log("LOGIN: recruiter");
 			this.props.userLogin(values.email.trim(), values.password).then(res => {
 				setSubmitting(false);
-				this.props.setUser(res.data)
+				this.props.updateUser(res.data)
 			}).catch(err => {
 				setSubmitting(false);
 				setErrors(transformAPIError(err.response.data.message));
@@ -264,7 +264,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-	bindActionCreators({ setUser, userLogin, studentRegister, recruiterRegister }, dispatch);
+	bindActionCreators({ updateUser, userLogin, studentRegister, recruiterRegister }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
 

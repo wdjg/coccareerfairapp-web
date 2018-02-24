@@ -32,31 +32,11 @@ const ConnectedSwitch = connect(state => ({
   location: state.location
 }))(Switch);
 
-<<<<<<< HEAD
-/**
- * @return {string} the authorization type of this user
- */
-const checkAuth = user => {
-	return user.user_type;
-}
-
-const AuthRoute = ({component: Component, authTypes, userAuth, ...routeProps }) => {
-	console.log(userAuth)
-	return (<Route {...routeProps} render={props => (
-	    (userAuth && authTypes.includes(userAuth))
-	      ? <Component {...props} auth={userAuth} />
-	      : <Redirect to='/login' />
-	  )} />
-	);
-}
-=======
 const studentButtons = [
 	{path: '/', icon: SearchIcon},
 	{path: '/profile', icon: UserIcon},
 	{path: '/info', icon: InfoIcon},
 ];
->>>>>>> search-screen
-
 const recruiterButtons = [
 	{path: '/', icon: SearchIcon},
 	{path: '/profile', icon: UserIcon},
@@ -96,24 +76,11 @@ class App extends React.Component {
 			  </nav>
 			  <ConnectedSwitch>
 					<Route path="/login" component={Auth.userIsNotAuth(Login)} />
-					<Route path="/student" component={Auth.userIsStudent(StudentMain)} />
-					<Route path="/recruiter" component={Auth.userIsRecruiter(RecruiterBatch)} />
-					<Route path="/qr" component={Auth.userIsRecruiter(QRDisplay)} />
-					<Route path="/profile" component={this.props.user_type === "recruiter" ? Auth.userIsRecruiter(RecruiterProfile) : Auth.userIsStudent(StudentProfile)} />	
+					<Route path="/student" component={Auth.userIsAuth(Auth.userIsStudent(StudentMain))} />
+					<Route path="/recruiter" component={Auth.userIsAuth(Auth.userIsRecruiter(RecruiterBatch))} />
+					<Route path="/qr" component={Auth.userIsAuth(Auth.userIsRecruiter(QRDisplay))} />
+					<Route path="/profile" component={Auth.userIsAuth(this.props.user_type === "recruiter" ? Auth.userIsRecruiter(RecruiterProfile) : Auth.userIsStudent(StudentProfile))} />	
 					<Route path="/company/notfound" component={NotFound} />
-<<<<<<< HEAD
-					<Route path="/company/:id" render={props => (<CompanyProfile {...props} auth={checkAuth(this.props.user)} />)} />
-					<Route exact path="/" component={Login} />
-					<Route path="*" component={NotFound} />
-			  </ConnectedSwitch>
-				<nav className="bottom-nav">
-					{this.renderBottomNavButtons(buttons)}
-			  </nav>
-				<QRScannerFull
-					token={this.props.user.token}
-					onExit={() => this.props.setScannerVisibility(false)}
-					visible={this.props.scannerVisible}/>
-=======
 					<Route path="/company/:id" render={props => (<CompanyProfile {...props} auth={this.props.user.user_type} />)} />
 					<Route exact path="/" component={SearchCompanies} />
 					<Route path="*" component={NotFound} />
@@ -122,7 +89,6 @@ class App extends React.Component {
 					{this.renderBottomNavButtons(this.props.user_type === "recruiter" ? recruiterButtons : studentButtons)}
 			  </nav>}
 				<QRScannerFull onExit={() => this.props.setScannerVisibility(false)} visible={this.props.scannerVisible}/>
->>>>>>> search-screen
 		  </div>
 	  )
 	}
