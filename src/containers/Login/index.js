@@ -85,6 +85,7 @@ class FormikLogin extends Component {
 				setSubmitting(false);
 				this.props.setUser(res.data)
 			}).catch(err => {
+				setSubmitting(false);
 				setErrors(transformAPIError(err.response.data.message));
 			});
 		}

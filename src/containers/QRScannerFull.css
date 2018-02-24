@@ -15,11 +15,11 @@
 	overflow: hidden;
 	position: fixed;
 	top: 50%;
-	left: 0;
+	left: 50%;
 	width: 100vw;
 	height: 0;
 	max-width: 800px;
-	transform: translateY(-50%);
+	transform: translate(-50%,-50%);
 	z-index: 10;
 	transition: height 0.4s cubic-bezier(.36,0,0,1);
 	display: flex;

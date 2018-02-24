@@ -13,8 +13,14 @@ import RecruiterProfile from './RecruiterProfile';
 import SearchCompanies from './SearchCompanies';
 
 import './App.css';
+import * as Auth from './auth.js';
 import MenuIcon from '../resources/burger-title.svg';
 import CameraIcon from '../resources/icon-camera-alt.svg';
+
+// import HomeIcon from '../resources/icon-home.svg';
+import InfoIcon from '../resources/icon-info.svg';
+import UserIcon from '../resources/icon-user.svg';
+import SearchIcon from '../resources/icon-serach.svg';
 
 import { connect } from 'react-redux'
 import { Route, Switch, withRouter, Redirect, Link } from 'react-router-dom';
@@ -26,59 +32,39 @@ const ConnectedSwitch = connect(state => ({
   location: state.location
 }))(Switch);
 
-/**
- * @return {string} the authorization type of this user
- */
-const checkAuth = user => {
-	return user.user_type;
-}
+const studentButtons = [
+	{path: '/', icon: SearchIcon},
+	{path: '/profile', icon: UserIcon},
+	{path: '/info', icon: InfoIcon},
+];
 
-const AuthRoute = ({component: Component, authTypes, userAuth, ...routeProps }) => (
-	<Route {...routeProps} render={props => (
-    (userAuth && authTypes.includes(userAuth))
-      ? <Component {...props} auth={userAuth} />
-      : <Redirect to='/login' />
-  )} />
-);
-
-// const TitleRoute = ({title, setNavTitle, ...routeProps}) => {
-// 	setNavTitle(title);
-// 	return <Route {...routeProps} />;
-// };
+const recruiterButtons = [
+	{path: '/', icon: SearchIcon},
+	{path: '/profile', icon: UserIcon},
+	{path: '/info', icon: InfoIcon},
+];
 
 class App extends React.Component {
 
 	constructor(props) {
 	  super(props);
-	
-	  this.state = {
-	  	title: ''
-	  };
 	}
 
 	componentDidMount() {
 		if (!window.location.href.includes('https')) {
 			
 		}
-		if (!checkAuth(this.props.user))
+		if (!this.props.user.user_type)
 			this.props.sessionLogin();
 	}
 
 	renderBottomNavButtons(buttons) {
 		return buttons.map((button, index) =>(
-			<Link to={button.link}><img src={button.icon} alt={button.link}/></Link>
+			<Link key={index} to={button.path} className="bottom-nav__btn"><img src={button.icon} alt={button.path}/></Link>
 		));
 	}
 
 	render() {
-		let buttons = [];
-		if (checkAuth(this.props.user) === "recruiter") {
-
-		} else if (checkAuth(this.props.user) === "student") {
-
-		} else {
-
-		}
 		return (
 			<div className="App">
 				<nav className="top-nav">
@@ -86,38 +72,31 @@ class App extends React.Component {
 					<div className="top-nav__item title"></div>
 					<div className="top-nav__item right">
 						<div className="logout" onClick={this.props.userLogout}>Logout</div>
-						{checkAuth(this.props.user) === "student" && <img className="camera" src={CameraIcon} alt="camera" onClick={() => this.props.setScannerVisibility(true)}/>}
+						{this.props.user.user_type === "student" && <img className="camera" src={CameraIcon} alt="camera" onClick={() => this.props.setScannerVisibility(true)}/>}
 					</div>
 			  </nav>
 			  <ConnectedSwitch>
-					{checkAuth(this.props.user) && <Redirect path="/login" to="/"/>}
-					{checkAuth(this.props.user) === "recruiter" && <Redirect exact path="/" to="/recruiter"/>}
-					{checkAuth(this.props.user) === "student" && <Redirect exact path="/" to="/student"/>}
-					<Route path="/login" component={Login} />
-					<AuthRoute path="/student" authTypes={["student"]} userAuth={checkAuth(this.props.user)} component={StudentMain} />
-					<AuthRoute path="/recruiter" authTypes={["recruiter"]} userAuth={checkAuth(this.props.user)} component={RecruiterBatch} />
-					<AuthRoute path="/qr" authTypes={["recruiter"]} userAuth={checkAuth(this.props.user)}  component={QRDisplay} />
-					<Route path="/studentprofile" component={StudentProfile} />	
-					<Route path="/recruiterprofile" component={RecruiterProfile} />
+					<Route path="/login" component={Auth.userIsNotAuth(Login)} />
+					<Route path="/student" component={Auth.userIsStudent(StudentMain)} />
+					<Route path="/recruiter" component={Auth.userIsRecruiter(RecruiterBatch)} />
+					<Route path="/qr" component={Auth.userIsRecruiter(QRDisplay)} />
+					<Route path="/profile" component={this.props.user_type === "recruiter" ? Auth.userIsRecruiter(RecruiterProfile) : Auth.userIsStudent(StudentProfile)} />	
 					<Route path="/company/notfound" component={NotFound} />
-					<Route path="/company/:id" render={props => (<CompanyProfile {...props} auth={checkAuth(this.props.user)} />)} />
+					<Route path="/company/:id" render={props => (<CompanyProfile {...props} auth={this.props.user.user_type} />)} />
 					<Route exact path="/" component={SearchCompanies} />
 					<Route path="*" component={NotFound} />
 			  </ConnectedSwitch>
-				<nav className="bottom-nav">
-					{this.renderBottomNavButtons(buttons)}
-			  </nav>
+				{this.props.user.user_type && <nav className="bottom-nav">
+					{this.renderBottomNavButtons(this.props.user_type === "recruiter" ? recruiterButtons : studentButtons)}
+			  </nav>}
 				<QRScannerFull onExit={() => this.props.setScannerVisibility(false)} visible={this.props.scannerVisible}/>
 		  </div>
 	  )
 	}
 }
 
-// <Route path="/scanner" authTypes={["student"]} userAuth={checkAuth(this.props.user)} component={QRScanner} />
-
 const mapStateToProps = state => ({
 	user: state.user,
-	path: state.router.location.pathname,
 	scannerVisible: state.scanner.visible,
 });
 

@@ -69,3 +69,19 @@ body {
 	width: 100vw;
 	position: fixed;
 }
+
+.bottom-nav {
+	display: flex;
+	.bottom-nav__btn {
+		height: 100%;
+		flex: 1;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		img {
+			width: 30px;
+			margin: 0 auto;
+		}
+	}
+}
