@@ -18,9 +18,8 @@ class SearchCompanies extends Component {
 	  };
 	}
 
-	componentDidMout() {
-		if (!this.props.companies)
-			this.props.getAllCompanies(this.props.user.token);
+	componentDidMount() {
+		this.props.getCompanies(this.props.user.token);
 	}
 
 	renderCompanies(companies, textFilter) {

@@ -1,16 +1,7 @@
 import { fromJS } from 'immutable';
 import { SET_COMPANIES, UPDATE_COMPANY } from '../actions/companies';
 
-const initialState = [{
-	url: 'microsoft',
-	id: '8675309RICK',
-	name: 'Microsoft',
-},
-{
-	url: 'floopametrics',
-	id: '31415926535',
-	name: 'Floopametrics',
-}]
+const initialState = []
 
 const companies = (state = initialState, action) => {
 	let immutableState = fromJS(state);
