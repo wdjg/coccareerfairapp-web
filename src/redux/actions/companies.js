@@ -24,7 +24,7 @@ export const updateCompany = company => ({
 export function getCompanies(token) {
 	return dispatch => {
 		return CompaniesAPI.getAllCompanies(token).then(res => {
-			dispatch(setCompanies(res));
+			dispatch(setCompanies(res.data));
 		});
 	}
 }
@@ -32,8 +32,8 @@ export function getCompanies(token) {
 export function getCompany(token, id) {
 	return dispatch => {
 		return CompaniesAPI.getCompany(token, id).then(res => {
-			dispatch(updateCompany(res));
-			return Promise.resolve(res);
+			dispatch(updateCompany(res.data));
+			return Promise.resolve(res.data);
 		});
 	}
 }
