@@ -33,13 +33,15 @@ const checkAuth = user => {
 	return user.user_type;
 }
 
-const AuthRoute = ({component: Component, authTypes, userAuth, ...routeProps }) => (
-	<Route {...routeProps} render={props => (
-    (userAuth && authTypes.includes(userAuth))
-      ? <Component {...props} auth={userAuth} />
-      : <Redirect to='/login' />
-  )} />
-);
+const AuthRoute = ({component: Component, authTypes, userAuth, ...routeProps }) => {
+	console.log(userAuth)
+	return (<Route {...routeProps} render={props => (
+	    (userAuth && authTypes.includes(userAuth))
+	      ? <Component {...props} auth={userAuth} />
+	      : <Redirect to='/login' />
+	  )} />
+	);
+}
 
 // const TitleRoute = ({title, setNavTitle, ...routeProps}) => {
 // 	setNavTitle(title);
@@ -101,13 +103,16 @@ class App extends React.Component {
 					<Route path="/recruiterprofile" component={RecruiterProfile} />
 					<Route path="/company/notfound" component={NotFound} />
 					<Route path="/company/:id" render={props => (<CompanyProfile {...props} auth={checkAuth(this.props.user)} />)} />
-					<Route exact path="/" component={SearchCompanies} />
+					<Route exact path="/" component={Login} />
 					<Route path="*" component={NotFound} />
 			  </ConnectedSwitch>
 				<nav className="bottom-nav">
 					{this.renderBottomNavButtons(buttons)}
 			  </nav>
-				<QRScannerFull onExit={() => this.props.setScannerVisibility(false)} visible={this.props.scannerVisible}/>
+				<QRScannerFull
+					token={this.props.user.token}
+					onExit={() => this.props.setScannerVisibility(false)}
+					visible={this.props.scannerVisible}/>
 		  </div>
 	  )
 	}

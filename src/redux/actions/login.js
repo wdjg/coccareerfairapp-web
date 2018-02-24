@@ -1,5 +1,5 @@
 import * as UserAPI from '../../api/user';
-import { setUser, setAuthToken } from './user';
+import { updateUser, setUser, setAuthToken } from './user';
 
 export function sessionLogin() {
 	return dispatch => {
@@ -9,7 +9,7 @@ export function sessionLogin() {
 
 		dispatch(setAuthToken(token));
 		UserAPI.getUser(token).then(res => {
-			dispatch(setUser(res.data));
+			return dispatch(updateUser(res.data));
 		}).catch(err => console.log(err));
 	}
 }

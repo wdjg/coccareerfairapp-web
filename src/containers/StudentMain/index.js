@@ -3,6 +3,8 @@ import './StudentMain.css';
 
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { getLine } from '../../redux/actions/line';
 
 class StudentMain extends Component {
 
@@ -10,28 +12,16 @@ class StudentMain extends Component {
 		super(props);
 		this.state = {
 			showCamera: false,
+			company: null,
 		}
 	}
 
-	scanSuccess(data) {
-		if (data) console.log(data);
-	}
-
-	scanError(err) {
-		if (err) console.log(err);
+	componentDidMount() {
+		this.props.getLine(this.props.user.token);
 	}
 
 	renderCompany(company) {
 		return company ? company : "Not in Line"
-	}
-
-	//TODO render time correctly
-	renderWait(wait) {
-		if (wait) {
-			return (<span>{Math.round(wait)}<span className="min">min</span></span>);
-		} else {
-			return "N/A";
-		}
 	}
 
 	render() {
@@ -43,21 +33,21 @@ class StudentMain extends Component {
 						<div className="data">{this.renderCompany(this.props.company)}</div>
 					</div>
 					<div className="wait">
-						<h2>Wait</h2>
-						<div className="data">{this.renderWait(this.props.wait)}</div>
+						<h2>Place</h2>
+						<div className="data">{}</div>
 					</div>
 				</div>
-				<Link className="show-camera btn" to="/scanner">
-					Tap to Show Camera
-				</Link>
 			</div>
 		);
 	}
 }
 
 const mapStateToProps = state => ({
-	company: "Microsoft",
-	wait: 31.2,
+	user: state.user,
+	line: state.line,
 });
 
-export default connect(mapStateToProps)(StudentMain);
+const mapDispatchToProps = dispatch => 
+	bindActionCreators({ getLine }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(StudentMain);

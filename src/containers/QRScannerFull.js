@@ -3,6 +3,14 @@ import QrReader from 'react-qr-reader'
 import classNames from 'classnames';
 import Transition from 'react-transition-group/Transition';
 
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+
+import QRConfirmationModal from '../components/QRConfirmationModal';
+
+import * as LineAPI from '../api/line';
+import { getLine } from '../redux/actions/line';
+
 import './QRScannerFull.css';
 
 const containerTransition = {
@@ -25,12 +33,28 @@ const finderTransition = {
 
 class QRScannerFull extends Component {
 
-	scanSuccess(data) {
-		console.log(data);
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			company: null,
+			showModal: false,
+		}
 	}
 
-	scanError(err) {
-		if (err) console.log(err);
+	componentWillReceiveProps(next) {
+		if (next.visible && next.token)
+			this.props.getLine(next.token);
+	}
+
+	scanSuccess(data) {
+		if (!data)
+			return;
+		LineAPI.getCompanyFromQR(this.props.token, data).then(res => {
+			this.setState({ company: res.data, showModal: true })
+		}).catch(err => {
+			console.log(err);
+		})
 	}
 
 	scanError(err) {
@@ -40,7 +64,7 @@ class QRScannerFull extends Component {
 	closeModal(leave=false) {
 		this.setState({ showModal: false });
 		if (leave)
-			this.props.history.goBack();
+			this.props.onExit();
 	}
 
 
@@ -63,6 +87,18 @@ class QRScannerFull extends Component {
 						<div className="corner bl"></div>
 						<div className="corner br"></div>
 					</div>
+					<div className={classNames("modal", {show: this.state.showModal})}>
+					<div className="shadow" onClick={() => this.closeModal()}></div>
+					<div className="content">
+						{this.state.company && <QRConfirmationModal
+							name={this.state.company.name}
+							employerID={this.state.company._id}
+							lineID={this.state.line._id}
+							status={this.state.line.status}
+							token={this.props.token}
+							closeModal={() => this.closeModal()}/>}
+					</div>
+				</div>
 					<div className={classNames("exit", {active: state === 'entering' || state === 'entered'})} onClick={this.props.onExit}></div>
 			 	</div>)}
 			</Transition>
@@ -72,4 +108,7 @@ class QRScannerFull extends Component {
 // <div className="scanner-container">
 // </div>
 
-export default QRScannerFull;
+const mapDispatchToProps = dispatch => 
+	bindActionCreators({ getLine }, dispatch);
+
+export default connect(null, mapDispatchToProps)(QRScannerFull);

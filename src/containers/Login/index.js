@@ -85,6 +85,7 @@ class Login extends Component {
 				setSubmitting(false);
 				this.props.setUser(res.data)
 			}).catch(err => {
+				setSubmitting(false);
 				console.log(err.response.data.message);
 				setErrors(transformAPIError(err.response.data.message));
 			});
@@ -309,5 +310,9 @@ const transformAPIError = error => {
 		errors.email = "No user with this email"
 	if (error === "LoginError: Invalid email password combination")
 		errors.email = "Invalid Login"
+	if (error === "RegisterError: User already exists!")
+		error.email = "User already exists"
+	// if (error === )
+	// 	error.email = ""
 	return errors;
 }

@@ -16,7 +16,11 @@ const companies = (state = initialState, action) => {
 	let immutableState = fromJS(state);
 	switch (action.type) {
 		case UPDATE_COMPANY:
-			return immutableState.update(immutableState.findIndex(company => company.id === action.payload.company.id), company => company.merge(action.payload.company)).toJS();
+			const index = immutableState.findIndex(company => company.id === action.payload.company.id)
+			if (index >= 0)
+				return immutableState.update(index, company => company.merge(action.payload.company)).toJS();
+			else
+				return immutableState.push(action.payload.company).toJS();
 		case SET_COMPANIES:
 			return action.payload.companies;
 		default:
