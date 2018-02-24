@@ -86,7 +86,6 @@ class Login extends Component {
 				this.props.setUser(res.data)
 			}).catch(err => {
 				setSubmitting(false);
-				console.log(err.response.data.message);
 				setErrors(transformAPIError(err.response.data.message));
 			});
 		}

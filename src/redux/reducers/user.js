@@ -1,18 +1,7 @@
 import { fromJS } from 'immutable';
 import { SET_USER, SET_AUTH_TOKEN, UPDATE_USER } from '../actions/user';
 
-const initialState = {
-	name: "Wiqas Nassar",
-	major: "Computer Science",
-	gpa: "3.5",
-	interests: ["IoT", "Consulting", "UX"],
-	threads: ["People", "Media"],
-	graduation_date: "May 2019",
-	looking_for: "",
-  authorized: "yes",
-  "company_name": "Floopanomics",
-  "position": "Software Engineer",
-}
+const initialState = {};
 
 const user = (state = initialState, action) => {
   let immutableState = fromJS(state);

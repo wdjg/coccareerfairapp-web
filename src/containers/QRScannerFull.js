@@ -57,10 +57,6 @@ class QRScannerFull extends Component {
 		})
 	}
 
-	scanError(err) {
-		if (err) console.log(err);
-	}
-
 	closeModal(leave=false) {
 		this.setState({ showModal: false });
 		if (leave)
