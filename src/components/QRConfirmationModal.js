@@ -7,42 +7,42 @@ import Button from './Button';
 class QRConfirmationModal extends Component {
 
 	handleConfirm(employer_id) {
-		if (!this.props.status) {
-			console.log("JOIN LINE: " + employer_id);
-			axios({
-				method: 'post',
-				url: 'https://coccareerfairapp-development.herokuapp.com/api/lines',
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': 'Bearer ' + this.props.token,
-				},
-				data: {
-					employer_id: employer_id,
-				}
-			}).then(res => {
-				// TODO handle immediate line placement
-				this.props.closeModal(true);
-			}).catch(err => console.log(err));
-		} else if (this.props.status === 'notification') {
-			console.log("CONFIRM LINE ENTRY: " + employer_id);
-			axios({
-				method: 'put',
-				url: 'https://coccareerfairapp-development.herokuapp.com/api/lines/' + this.props.lineID,
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': 'Bearer ' + this.props.token,
-				},
-				data: {
-					status: 'inline',
-				}
-			}).then(res => {
-				// TODO handle immediate line placement
-				this.props.closeModal(true);
-			}).catch(err => console.log(err));
-		} else if (this.props.status !== 'notification') {
-			// TODO give user notificaiton that they they're already in line, also make sure to differentiate between same line and other
-			// Actually, handle this 
-		}
+		// if (!this.props.status) {
+		// 	console.log("JOIN LINE: " + employer_id);
+		// 	axios({
+		// 		method: 'post',
+		// 		url: 'https://coccareerfairapp-development.herokuapp.com/api/lines',
+		// 		headers: {
+		// 			'Content-Type': 'application/json',
+		// 			'Authorization': 'Bearer ' + this.props.token,
+		// 		},
+		// 		data: {
+		// 			employer_id: employer_id,
+		// 		}
+		// 	}).then(res => {
+		// 		// TODO handle immediate line placement
+		// 		this.props.closeModal(true);
+		// 	}).catch(err => console.log(err));
+		// } else if (this.props.status === 'notification') {
+		// 	console.log("CONFIRM LINE ENTRY: " + employer_id);
+		// 	axios({
+		// 		method: 'put',
+		// 		url: 'https://coccareerfairapp-development.herokuapp.com/api/lines/' + this.props.lineID,
+		// 		headers: {
+		// 			'Content-Type': 'application/json',
+		// 			'Authorization': 'Bearer ' + this.props.token,
+		// 		},
+		// 		data: {
+		// 			status: 'inline',
+		// 		}
+		// 	}).then(res => {
+		// 		// TODO handle immediate line placement
+		// 		this.props.closeModal(true);
+		// 	}).catch(err => console.log(err));
+		// } else if (this.props.status !== 'notification') {
+		// 	// TODO give user notificaiton that they they're already in line, also make sure to differentiate between same line and other
+		// 	// Actually, handle this 
+		// }
 	}
 
 	// TODO change 'Confirm Line Entry' to something more understandable
