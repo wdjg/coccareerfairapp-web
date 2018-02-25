@@ -76,7 +76,7 @@ h2 {
 			pointer-events: auto;
 		}
 		.content {
-			bottom: 0;
+			bottom: 45px;
 		}
 	}
 }
@@ -97,9 +97,6 @@ h2 {
 		opacity: 0;
 		width: 350px;
 		transition: opacity 0.5s cubic-bezier(.46,.02,.04,.99), top 0.5s cubic-bezier(.46,.02,.04,.99);
-		-webkit-transform: translate(-50%, -50%);
-		-ms-transform: translate(-50%, -50%);
-		-o-transform: translate(-50%, -50%);
 		transform: translate(-50%, -50%);
 	}
 	.modal.show .content {

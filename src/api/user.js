@@ -3,7 +3,7 @@ import axios from 'axios';
 export function getUser(token) {
 	return axios({
 		method: 'get',
-		url: 'https://coccareerfairapp-development.herokuapp.com/api/users',
+		url: 'https://coccareerfairapp-development.herokuapp.com/api/users/auth',
 		headers: {
 			'Content-Type': 'application/json',
 			'Authorization': 'Bearer ' + token,

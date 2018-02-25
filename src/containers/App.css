@@ -62,6 +62,7 @@ body {
 	user-select: none;
 	float: right;
 	margin-right: 10px;
+	text-decoration: none;
 }
 
 .QRScannerFull {

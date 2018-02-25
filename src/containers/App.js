@@ -15,33 +15,24 @@ import SearchCompanies from './SearchCompanies';
 import './App.css';
 import * as Auth from './auth.js';
 import MenuIcon from '../resources/burger-title.svg';
-import CameraIcon from '../resources/icon-camera-alt.svg';
+import CameraIcon from '../resources/icon-camera-alt-dark.svg';
 
 // import HomeIcon from '../resources/icon-home.svg';
 import InfoIcon from '../resources/icon-info.svg';
 import UserIcon from '../resources/icon-user.svg';
 import SearchIcon from '../resources/icon-serach.svg';
+import QRIcon from '../resources/icon-qr.svg';
 
 import { connect } from 'react-redux'
 import { Route, Switch, withRouter, Redirect, Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { sessionLogin, userLogout } from '../redux/actions/login';
 import { setScannerVisibility } from '../redux/actions/scanner';
+import { routerActions } from 'react-router-redux';
 
 const ConnectedSwitch = connect(state => ({
   location: state.location
 }))(Switch);
-
-const studentButtons = [
-	{path: '/', icon: SearchIcon},
-	{path: '/profile', icon: UserIcon},
-	{path: '/info', icon: InfoIcon},
-];
-const recruiterButtons = [
-	{path: '/', icon: SearchIcon},
-	{path: '/profile', icon: UserIcon},
-	{path: '/info', icon: InfoIcon},
-];
 
 class App extends React.Component {
 
@@ -59,19 +50,35 @@ class App extends React.Component {
 
 	renderBottomNavButtons(buttons) {
 		return buttons.map((button, index) =>(
-			<Link key={index} to={button.path} className="bottom-nav__btn"><img src={button.icon} alt={button.path}/></Link>
+			<div key={index} onClick={button.function} className="bottom-nav__btn"><img src={button.icon} alt={button.path}/></div>
 		));
 	}
 
 	render() {
+		let auth = this.props.user.user_type;
+		const studentButtons = [
+			{function: () => this.props.history.replace('/'), icon: SearchIcon},
+			{function: () => this.props.history.replace('/profile'), icon: UserIcon},
+			{function: () => this.props.setScannerVisibility(true), icon: CameraIcon},
+			{function: () => this.props.history.replace('/info'), icon: InfoIcon},
+		];
+		const recruiterButtons = [
+			{function: () => this.props.history.replace('/'), icon: SearchIcon},
+			{function: () => this.props.history.replace('/profile'), icon: UserIcon},
+			{function: () => this.props.history.replace('/qr'), icon: QRIcon},
+			{function: () => this.props.history.replace('/info'), icon: InfoIcon},
+		];
+		console.log(auth)
+		// {this.props.user.user_type === "student" && <img className="camera" src={CameraIcon} alt="camera" onClick={() => this.props.setScannerVisibility(true)}/>}
 		return (
 			<div className="App">
 				<nav className="top-nav">
 					<div className="top-nav__item"><img className="burger" src={MenuIcon} alt="menu"/></div>
 					<div className="top-nav__item title"></div>
 					<div className="top-nav__item right">
-						<div className="logout" onClick={this.props.userLogout}>Logout</div>
-						{this.props.user.user_type === "student" && <img className="camera" src={CameraIcon} alt="camera" onClick={() => this.props.setScannerVisibility(true)}/>}
+						{auth ? <div className="logout" onClick={this.props.userLogout}>Logout</div> :
+							<Link className="logout" to="/login">Login</Link>}
+						
 					</div>
 			  </nav>
 			  <ConnectedSwitch>
@@ -79,14 +86,14 @@ class App extends React.Component {
 					<Route path="/student" component={Auth.userIsAuth(Auth.userIsStudent(StudentMain))} />
 					<Route path="/recruiter" component={Auth.userIsAuth(Auth.userIsRecruiter(RecruiterBatch))} />
 					<Route path="/qr" component={Auth.userIsAuth(Auth.userIsRecruiter(QRDisplay))} />
-					<Route path="/profile" component={Auth.userIsAuth(this.props.user_type === "recruiter" ? Auth.userIsRecruiter(RecruiterProfile) : Auth.userIsStudent(StudentProfile))} />	
+					<Route path="/profile" component={Auth.userIsAuth(auth === "recruiter" ? Auth.userIsRecruiter(RecruiterProfile) : Auth.userIsStudent(StudentProfile))} />	
 					<Route path="/company/notfound" component={NotFound} />
 					<Route path="/company/:id" render={props => (<CompanyProfile {...props} auth={this.props.user.user_type} />)} />
 					<Route exact path="/" component={SearchCompanies} />
 					<Route path="*" component={NotFound} />
 			  </ConnectedSwitch>
 				{this.props.user.user_type && <nav className="bottom-nav">
-					{this.renderBottomNavButtons(this.props.user_type === "recruiter" ? recruiterButtons : studentButtons)}
+					{this.renderBottomNavButtons(auth === "recruiter" ? recruiterButtons : studentButtons)}
 			  </nav>}
 				<QRScannerFull onExit={() => this.props.setScannerVisibility(false)} visible={this.props.scannerVisible}/>
 		  </div>

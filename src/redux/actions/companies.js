@@ -24,7 +24,7 @@ export const updateCompany = company => ({
 export function getCompanies(token) {
 	return dispatch => {
 		return CompaniesAPI.getAllCompanies(token).then(res => {
-			dispatch(setCompanies(res.data));
+			dispatch(setCompanies(res.data.employers));
 		});
 	}
 }

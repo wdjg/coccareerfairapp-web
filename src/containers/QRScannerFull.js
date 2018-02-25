@@ -43,6 +43,10 @@ class QRScannerFull extends Component {
 		}
 	}
 
+	scanError(err) {
+		console.log(err);
+	}
+
 	componentWillReceiveProps(next) {
 		if (next.visible && next.token)
 			this.props.getLine(next.token);
