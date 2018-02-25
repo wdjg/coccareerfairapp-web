@@ -34,7 +34,7 @@ class StudentMain extends Component {
 					</div>
 					<div className="wait">
 						<h2>Place</h2>
-						<div className="data">{}</div>
+						<div className="data">7<span className="nun-ending"></span></div>
 					</div>
 				</div>
 			</div>
