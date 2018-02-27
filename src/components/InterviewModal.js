@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './InterviewModal.css';
 
+import Button from './Button';
+
 class InterviewModal extends Component {
 
 	beginInterview(student_id) {
@@ -14,16 +16,16 @@ class InterviewModal extends Component {
 				<h1 className="name">{this.props.name}</h1>
 				
 				<div className="buttons">
-					<div 
+					<Button 
 						className="btn begin"
 						onClick={() => this.beginInterview(this.props.id)}>
 						Begin
-					</div>
-					<div
+					</Button>
+					<Button
 						className="btn cancel"
 						onClick={this.props.closeModal}>
 						Cancel
-					</div>
+					</Button>
 				</div>
 			</div>
 		);

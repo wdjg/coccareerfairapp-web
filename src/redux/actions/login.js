@@ -1,5 +1,6 @@
 import * as UserAPI from '../../api/user';
-import { setUser, setAuthToken } from './user';
+import { updateUser, setUser, setAuthToken } from './user';
+import { routerActions } from 'react-router-redux';
 
 export function sessionLogin() {
 	return dispatch => {
@@ -9,7 +10,7 @@ export function sessionLogin() {
 
 		dispatch(setAuthToken(token));
 		UserAPI.getUser(token).then(res => {
-			dispatch(setUser(res.data));
+			return dispatch(updateUser(res.data));
 		}).catch(err => console.log(err));
 	}
 }
@@ -29,5 +30,6 @@ export function userLogout() {
 	return dispatch => {
 		sessionStorage.removeItem('jwt');
 		dispatch(setUser({}));
+		dispatch(routerActions.replace('/'))
 	}
 }

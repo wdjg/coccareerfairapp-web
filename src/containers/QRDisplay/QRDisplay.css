@@ -1,9 +1,5 @@
-.QRMain {
-	display: -webkit-flex;
-	display: -moz-flex;
-	display: -ms-flex;
-	display: -o-flex;
-	display: flex;
+.QRDisplay {
+		display: flex;
 	justify-content: center;
 	align-content: center;
 	align-items: center;
@@ -11,10 +7,6 @@
 	.code-container {
 		/* margin: 0 auto; */
 		width: 100%;
-		display: -webkit-flex;
-		display: -moz-flex;
-		display: -ms-flex;
-		display: -o-flex;
 		display: flex;
 		flex-flow: row;
 		justify-content: center;

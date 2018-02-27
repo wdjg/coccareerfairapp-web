@@ -2,10 +2,10 @@
 
 .Login {
   form {
-    width: 90%;
     display: flex;
     flex-flow: column;
     align-items: center;
+    justify-content: center;
     margin: 0 auto;
     padding-top: 20px;
   }
@@ -13,10 +13,14 @@
     width: 50%;
     input {
       width: 100%;
+      margin: 3px 0;
     }
     .Warning {
       white-space: nowrap
     }
+  }
+  .loading {
+    margin-top: 15px;
   }
 }
 
@@ -142,8 +146,8 @@ input {
     }
 
     .login-content {
-      width: 70%;
-      margin: 0 15%;
+      width: 90%;
+      margin: 0 5%;
     }
 
     .tabs__windows {
