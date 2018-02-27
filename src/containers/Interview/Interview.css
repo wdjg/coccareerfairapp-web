@@ -1,0 +1,55 @@
+body {
+  font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight',
+               'Helvetica Neueu', Helvetica, Arial, sans-serif;
+  margin: 0;
+  background-color: #efeff5;
+}
+
+h1 { text-align: center }
+
+.stopwatch { text-align: center }
+
+.stopwatch-timer {
+  font-size: 76px;
+  font-weight: 100;
+  line-height: 160px;
+  
+  margin: 0;
+  
+  border: solid #cecfd0;
+  border-width: 1px 0;
+  background-color: white;
+}
+
+.btn {
+  font-family: inherit;
+  font-size: 20px;
+  
+  display: inline-block;
+  
+  width: 72px;
+  height: 72px;
+  margin: 24px;
+  padding: 0;
+  
+  cursor: pointer;
+  letter-spacing: 1px;
+  
+  border: 0;
+  border-radius: 50%;
+  outline: none;
+  background: white;
+}
+
+
+.start-btn { 
+  color: #4bd761;
+  margin-right: 20px; 
+}
+.stop-btn  { color: #fd3d2a }
+.cancel-btn  { color: #fd3d2a }
+.reset-btn { 
+  color: #000000;
+  font-style: bold;
+  font-weight: 900; 
+}
