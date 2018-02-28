@@ -23,6 +23,7 @@ class SearchCompanies extends Component {
 	}
 
 	renderCompanies(companies, textFilter) {
+		console.log(companies);
 		return companies.filter(company => {
   		let valid = company.name.toLowerCase().includes(textFilter.toLowerCase());
   		// if(this.state.day >= 0) valid &= company.day == this.state.day;
