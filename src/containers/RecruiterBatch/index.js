@@ -41,7 +41,7 @@ class RecruiterBatch extends Component {
 
 	renderStudents() {
 		// return this.props.batch.map((entry, index) => (
-		return TEST_BATCH.map((entry, index) => (
+		return this.props.batch.map((entry, index) => (
 			<li className="batch__item" key={index} onClick={() => this.openStudentBatchModal(entry)}>
 				{entry.name}
 			</li>
@@ -84,7 +84,7 @@ class RecruiterBatch extends Component {
 
 // TODO
 const mapStateToProps = state => ({
-	batch: state.batch,
+	batch: state.batch.batch,
 	line: {
 		students: 20
 	},

@@ -1,3 +1,6 @@
+import * as LineAPI from '../../api/line';
+import * as BatchAPI from '../../api/batch';
+
 export const PUSH_STUDENTS_TO_BATCH = 'PUSH_STUDENTS_TO_BATCH';
 export const REMOVE_STUDENTS_FROM_BATCH = 'REMOVE_STUDENTS_FROM_BATCH';
 export const SET_BATCH = 'SET_BATCH';
@@ -39,6 +42,16 @@ export const setBatch = batch => ({
   payload: {batch: batch},
 });
 
-export const getBatch = token => {
+export function getBatch(token, employer_id) {
+	return dispatch => {
+		return BatchAPI.getBatch(token, employer_id).then(res => {
+			setBatch(res.data);
+		});
+	}
+}
 
+export function setInterviewStatus(token, line_id, status) {
+	return dispatch => {
+		return LineAPI.setLineStatus(token, line_id, status);
+	}
 }

@@ -90,8 +90,8 @@ class QRScannerFull extends Component {
 						{this.state.company && <QRConfirmationModal
 							name={this.state.company.name}
 							employerID={this.state.company._id}
-							lineID={this.state.line._id}
-							status={this.state.line.status}
+							lineID={this.props.line._id}
+							status={this.props.line.status}
 							token={this.props.token}
 							closeModal={() => this.closeModal()}/>}
 					</div>
@@ -102,8 +102,10 @@ class QRScannerFull extends Component {
 		);
 	}
 }
-// <div className="scanner-container">
-// </div>
+
+const mapStateToProps = state => ({
+	line: state.line,
+})
 
 const mapDispatchToProps = dispatch => 
 	bindActionCreators({ getLine }, dispatch);

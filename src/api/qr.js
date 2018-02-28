@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-export function getQRCode(token, id) {
+export function getQRCode(token, employer_id) {
 	return axios({
 		method: 'get',
-		url: 'https://coccareerfairapp-development.herokuapp.com/api/employers/' + id + '/qr',
+		url: 'https://coccareerfairapp-development.herokuapp.com/api/employers/' + employer_id + '/qr',
 		headers: {
 			'Content-Type': 'application/json',
 			'Authorization': 'Bearer ' + token,

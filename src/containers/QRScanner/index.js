@@ -3,7 +3,7 @@ import QrReader from 'react-qr-reader'
 import classNames from 'classnames';
 import './QRScanner.css';
 import axios from 'axios';
-import { setLineDetails } from '../../redux/actions/line';
+import { updateLineDetails } from '../../redux/actions/line';
 import { bindActionCreators } from 'redux';
 
 import QRConfirmationModal from '../../components/QRConfirmationModal';
@@ -34,7 +34,7 @@ class QRScanner extends Component {
 		}).then(res => {
 			if (!res.data)
 				return;
-			this.props.setLineDetails(res.data);
+			this.props.updateLineDetails(res.data);
 		}).catch(err => console.log(err));
 	}
 
@@ -119,6 +119,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-	bindActionCreators({ setLineDetails }, dispatch);
+	bindActionCreators({ updateLineDetails }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(QRScanner);
