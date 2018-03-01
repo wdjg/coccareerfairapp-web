@@ -11,9 +11,9 @@ class Interview extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			secondsElapsed: 0,
+			seconds_elapsed: 0,
 			laps: [],
-			lastClearedIncrementer: null
+			last_cleared_incrementer: null
 		};
 		this.incrementer = null;
 	}
@@ -21,7 +21,7 @@ class Interview extends Component {
 	handleStartClick() {
 		this.incrementer = setInterval( () =>
 			this.setState({
-				secondsElapsed: this.state.secondsElapsed + 1
+				seconds_elapsed: this.state.seconds_elapsed + 1
 			})
 		, 1000);
 	}
@@ -29,14 +29,14 @@ class Interview extends Component {
 	handleStopClick() {
 		clearInterval(this.incrementer);
 		this.setState({
-			lastClearedIncrementer: this.incrementer
+			last_cleared_incrementer: this.incrementer
 		});
 	}
 
 	handleResetClick() {
 		clearInterval(this.incrementer);
 		this.setState({
-			secondsElapsed: 0,
+			seconds_elapsed: 0,
 			laps: []
 		});
 	}
@@ -49,8 +49,8 @@ class Interview extends Component {
 				<br />
 				<br />
 				<div className="stopwatch">
-					<h1 className="stopwatch-timer">{formattedSeconds(this.state.secondsElapsed)}</h1>
-	        		{(this.state.secondsElapsed === 0 || this.incrementer === this.state.lastClearedIncrementer
+					<h1 className="stopwatch-timer">{formattedSeconds(this.state.seconds_elapsed)}</h1>
+	        		{(this.state.seconds_elapsed === 0 || this.incrementer === this.state.last_cleared_incrementer
 		          		? 
 		          		<div>
 		          			<br />
@@ -65,7 +65,7 @@ class Interview extends Component {
 		          		
 	          		)}
 
-	        		{(this.state.secondsElapsed !== 0 && this.incrementer === this.state.lastClearedIncrementer
+	        		{(this.state.seconds_elapsed !== 0 && this.incrementer === this.state.last_cleared_incrementer
 	          			? 
 						<div>
 							<br />
