@@ -17,7 +17,7 @@ class QRScanner extends Component {
 		super(props);
 
 		this.state = {
-			showModal: false,
+			show_modal: false,
 			company: null,
 			line: {},
 		};
@@ -41,7 +41,7 @@ class QRScanner extends Component {
 	//TODO make sure we're getting id from the qr code for redux
 	//TODO handle case where user is already in line
 	scanSuccess(data) {
-		if (this.state.showModal) return;
+		if (this.state.show_modal) return;
 		if (!data) return;
 		console.log(data);
 		//TODO make this not Microsoft
@@ -58,7 +58,7 @@ class QRScanner extends Component {
 			}
 		}).then(res => {
 			// console.log(res.data)
-			this.setState({ showModal: true, company: res.data });
+			this.setState({ show_modal: true, company: res.data });
 		}).catch(err => console.log(err));
 	}
 
@@ -67,7 +67,7 @@ class QRScanner extends Component {
 	}
 
 	closeModal(leave=false) {
-		this.setState({ showModal: false });
+		this.setState({ show_modal: false });
 		if (leave)
 			this.props.history.goBack();
 	}
@@ -95,7 +95,7 @@ class QRScanner extends Component {
 					<div className="corner bl"></div>
 					<div className="corner br"></div>
 				</div>
-				<div className={classNames("modal", {show: this.state.showModal})}>
+				<div className={classNames("modal", {show: this.state.show_modal})}>
 					<div className="shadow" onClick={() => this.closeModal()}></div>
 					<div className="content">
 						{this.state.company && <QRConfirmationModal
