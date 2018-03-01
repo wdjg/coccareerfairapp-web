@@ -11,7 +11,7 @@ class CompanyProfile extends Component {
 		super(props);
 		this.state = {
 			company: {},
-			isEditing: false,
+			is_editing: false,
 			edits: {},
 		}
 	}
@@ -22,7 +22,7 @@ class CompanyProfile extends Component {
 	}
 
 	cancelEdit() {
-		this.setState({isEditing: false, edits: {}});
+		this.setState({is_editing: false, edits: {}});
 	}
 
 	//TODO should be a fetch call up to the server and update redux with the response
@@ -42,14 +42,14 @@ class CompanyProfile extends Component {
 	render() {
 		return (
 			<div className="CompanyProfile">
-				{(!this.state.isEditing && this.props.auth === 'recruiter')
-					&& <div className="btn" onClick={() => this.setState({isEditing: true})}>Edit</div>}
-				{this.state.isEditing && <div className="edit-buttons">
+				{(!this.state.is_editing && this.props.auth === 'recruiter')
+					&& <div className="btn" onClick={() => this.setState({is_editing: true})}>Edit</div>}
+				{this.state.is_editing && <div className="edit-buttons">
 					<div className="edit-buttons__save btn" onClick={() => this.saveEdits()}>Save</div>
 					<div className="edit-buttons__cancel btn" onClick={() => this.cancelEdit()}>Cancel</div>
 				</div>}
 				<EditableInfo
-					edit={this.state.isEditing}
+					edit={this.state.is_editing}
 					placeholder="Company Name"
 					text={this.state.company.name}
 					errorCode={null}
