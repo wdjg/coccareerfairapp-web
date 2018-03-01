@@ -49,6 +49,8 @@ export function joinLine(token, employer_id) {
 	}
 }
 
+// setStudentLineStatus
+
 export function setLineStatus(token, line_id, status) {
 	return dispatch => {
 		return LineAPI.setLineStatus(token, line_id, status).then(res => {

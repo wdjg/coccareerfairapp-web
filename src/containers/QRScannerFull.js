@@ -39,7 +39,7 @@ class QRScannerFull extends Component {
 
 		this.state = {
 			company: null,
-			showModal: false,
+			show_modal: false,
 		}
 	}
 
@@ -56,14 +56,14 @@ class QRScannerFull extends Component {
 		if (!data)
 			return;
 		QRAPI.getCompanyFromQR(this.props.token, data).then(res => {
-			this.setState({ company: res.data, showModal: true })
+			this.setState({ company: res.data, show_modal: true })
 		}).catch(err => {
 			console.log(err);
 		})
 	}
 
 	closeModal(leave=false) {
-		this.setState({ showModal: false });
+		this.setState({ show_modal: false });
 		if (leave)
 			this.props.onExit();
 	}
@@ -76,19 +76,18 @@ class QRScannerFull extends Component {
 			 		<div className="qr-container" style={{...containerTransition[state]}}>
 				 	<QrReader
 						className="qr-scanner"
-	          delay={300}
-	          onError={this.scanError.bind(this)}
-	          onScan={this.scanSuccess.bind(this)}
-	          showViewFinder={false}
-	          />
-	          
+	          			delay={300}
+	          			onError={this.scanError.bind(this)}
+	          			onScan={this.scanSuccess.bind(this)}
+	          			showViewFinder={false}
+	          		/>
 					<div className="finder" style={{...finderTransition[state]}}>
 						<div className="corner tl"></div>
 						<div className="corner tr"></div>
 						<div className="corner bl"></div>
 						<div className="corner br"></div>
 					</div>
-					<div className={classNames("modal", {show: this.state.showModal})}>
+					<div className={classNames("modal", {show: this.state.show_modal})}>
 					<div className="shadow" onClick={() => this.closeModal()}></div>
 					<div className="content">
 						{this.state.company && <QRConfirmationModal
