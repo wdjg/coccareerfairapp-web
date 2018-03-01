@@ -11,7 +11,7 @@ class StudentMain extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			showCamera: false,
+			show_camera: false,
 			company: null,
 		}
 	}
@@ -26,7 +26,7 @@ class StudentMain extends Component {
 
 	render() {
 		return (
-			<div className="StudentMain" onClick={() => this.setState(prev => ({showCamera: true}))}>
+			<div className="StudentMain" onClick={() => this.setState(prev => ({show_camera: true}))}>
 				<div className="line-details">
 					<div className="company">
 						<h2>In Line</h2>
