@@ -22,7 +22,7 @@ class Login extends Component {
 		super(props);
 
 		this.state = {
-			curTab: 0,
+			cur_tab: 0,
 			studentRegister: false,
 			recruiterRegister: false,
 		};
@@ -33,7 +33,7 @@ class Login extends Component {
 			<div className={classNames(
 				"windows__window",
 				item.id,
-				{hidden: this.state.curTab === index})}>
+				{hidden: this.state.cur_tab === index})}>
 			</div>));
 	}
 
@@ -41,8 +41,8 @@ class Login extends Component {
 		return tabs.map((item, index) => 
 			(<div
 				key={index}
-				className={classNames("labels__label", "selectable", {selected: this.state.curTab === index})}
-				onClick={() => this.setState({curTab: index})}>{item.label}</div>));
+				className={classNames("labels__label", "selectable", {selected: this.state.cur_tab === index})}
+				onClick={() => this.setState({cur_tab: index})}>{item.label}</div>));
 	}
 
 	handleStudentSubmit(values, { setSubmitting, setErrors}) {
@@ -99,7 +99,7 @@ class Login extends Component {
 						{this.renderTabLabels(loginTabs)}
 					</div>
 				<div className="tabs__windows">
-					<TabWindow id={loginTabs[0].id} hide={this.state.curTab !== 0}>
+					<TabWindow id={loginTabs[0].id} hide={this.state.cur_tab !== 0}>
 						<div className="login-content">
 							<Formik
 								initialValues={{ email: '', password: '', confirmPassword: '', name: '' }}
@@ -166,7 +166,7 @@ class Login extends Component {
 							/>
 						</div>
 					</TabWindow>
-					<TabWindow id={loginTabs[1].id} hide={this.state.curTab !== 1}>
+					<TabWindow id={loginTabs[1].id} hide={this.state.cur_tab !== 1}>
 						<div className="login-content">
 							<Formik
 								initialValues={{ email: '', password: '', name: '', confirmPassword: '', passcode: '' }}
