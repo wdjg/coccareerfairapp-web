@@ -50,8 +50,8 @@ class SearchCompanies extends Component {
 						value={this.state.search}
 						ref={ref => {this.searchInput = ref}}
 						onChange={e => this.setState({ search: e.target.value })}/>
-					<div className={classNames("search_button clear", {active: this.state.search})} onClick={() => this.onSearchClear()}></div>
-					<div className="search_button filter"><img src={BurgerFilter} alt=""/></div>
+					<div className={classNames("search__button clear", {active: this.state.search})} onClick={() => this.onSearchClear()}></div>
+					<div className="search__button filter"><img src={BurgerFilter} alt=""/></div>
 				</div>
 				<div className="companies">
 					{this.renderCompanies(this.props.companies, this.state.search)}

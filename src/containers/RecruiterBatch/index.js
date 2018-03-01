@@ -21,8 +21,8 @@ class RecruiterBatch extends Component {
 		super(props);
 
 		this.state = {
-			modalStudent: null,
-			showModal: false
+			modal_student: null,
+			show_modal: false
 	  };
 	}
 
@@ -31,12 +31,12 @@ class RecruiterBatch extends Component {
 	}
 
 	closeModal() {
-		this.setState({ showModal: false });
+		this.setState({ show_modal: false });
 	}
 
 	openStudentBatchModal(student) {
 		console.log("MODAL: " + student.name + " id: " + student.id);
-		this.setState({modalStudent: student, showModal: true})
+		this.setState({modal_student: student, show_modal: true})
 	}
 
 	renderStudents() {
@@ -65,12 +65,12 @@ class RecruiterBatch extends Component {
 				<ul className="batch">
 					{this.renderStudents()}
 				</ul>
-				<div className={classNames("modal", {show: this.state.showModal})}>
+				<div className={classNames("modal", {show: this.state.show_modal})}>
 					<div className="shadow" onClick={() => this.closeModal()}></div>
 					<div className="content">
-						{this.state.modalStudent && <InterviewModal
-							name={this.state.modalStudent.name}
-							id={this.state.modalStudent.id}
+						{this.state.modal_student && <InterviewModal
+							name={this.state.modal_student.name}
+							id={this.state.modal_student.id}
 							closeModal={() => this.closeModal()}/>}
 					</div>
 				</div>
