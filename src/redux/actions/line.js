@@ -49,7 +49,14 @@ export function joinLine(token, employer_id) {
 	}
 }
 
-// setStudentLineStatus
+export function setStudentLineStatus(token, line_id, status) {
+	return dispatch => {
+		return LineAPI.setStudentLineStatus(token, line_id, status).then(res => {
+			dispatch(updateLineDetails(res.data));
+			return new Promise(res);
+		})
+	}
+}
 
 export function setLineStatus(token, line_id, status) {
 	return dispatch => {

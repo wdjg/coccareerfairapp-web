@@ -59,3 +59,17 @@ export function setLineStatus(token, line_id, status) {
 		}
 	})
 }
+
+export function setStudentLineStatus(token, line_id, status) {
+	return axios({
+		method: 'patch',
+		url: 'https://coccareerfairapp-development.herokuapp.com/api/lines/' + line_id + 'status',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': 'Bearer ' + token,
+		},
+		data: {
+			status: status,
+		}
+	})
+}
