@@ -51,7 +51,7 @@ export function joinLine(token, employer_id) {
 
 export function setStudentLineStatus(token, line_id, status) {
 	return dispatch => {
-		return LineAPI.setStudentLineStatus(token, line_id, status).then(res => {
+		return LineAPI.recruiterSetLineStatus(token, line_id, status).then(res => {
 			dispatch(updateLineDetails(res.data));
 			return new Promise(res);
 		})
