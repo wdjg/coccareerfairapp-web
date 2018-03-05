@@ -3,9 +3,15 @@ import classNames from 'classnames';
 import './Interview.css';
 import Button from '../../components/Button';
 
+import { connect } from 'react-redux'
+import { bindActionCreators} from 'redux'
+import { setStudentLineStatus } from '../../redux/actions/line'
+
 
 const formattedSeconds = (sec) =>
 	Math.floor(sec / 60) + ':' + ('0' + sec % 60).slice(-2)
+
+const line_id = 0
 
 class Interview extends Component {
 	constructor(props) {
@@ -13,12 +19,32 @@ class Interview extends Component {
 		this.state = {
 			seconds_elapsed: 0,
 			laps: [],
-			last_cleared_incrementer: null
+			last_cleared_incrementer: null,
+			line_status: ""
 		};
 		this.incrementer = null;
 	}
 
+	// componentDidMount() {
+	// 	this.props.setStudentLineStatus();
+	// }
+
+	recruiterStart() {
+		this.setState({
+			line_status: "start"
+		})
+		this.props.setStudentLineStatus(this.props.user.token, line_id, this.line_status);
+	}
+
+	recruiterStop() {
+		this.setState({
+			line_status: "stop"
+		})
+		this.props.setStudentLineStatus(this.props.user.token, line_id, this.line_status);
+	}
+
 	handleStartClick() {
+		this.recruiterStart();
 		this.incrementer = setInterval( () =>
 			this.setState({
 				seconds_elapsed: this.state.seconds_elapsed + 1
@@ -27,13 +53,14 @@ class Interview extends Component {
 	}
 
 	handleStopClick() {
+		this.recruiterStop();
 		clearInterval(this.incrementer);
 		this.setState({
 			last_cleared_incrementer: this.incrementer
 		});
 	}
 
-	handleResetClick() {
+	handleCancelClick() {
 		clearInterval(this.incrementer);
 		this.setState({
 			seconds_elapsed: 0,
@@ -55,7 +82,7 @@ class Interview extends Component {
 		          		<div>
 		          			<br />
 		          			<Button className="start-btn" onClick={this.handleStartClick.bind(this)}>Start Interview</Button>
-		          			<Button className="cancel-btn" onClick={this.handleResetClick.bind(this)}>Cancel Interview</Button>
+		          			<Button className="cancel-btn" onClick={this.handleCancelClick.bind(this)}>Cancel Interview</Button>
 		          		</div>
 		          		: 
 		          		<div>
@@ -69,7 +96,7 @@ class Interview extends Component {
 	          			? 
 						<div>
 							<br />
-	          				<Button className="reset-btn" onClick={this.handleResetClick.bind(this)}>RESET</Button>
+	          				<Button className="reset-btn" onClick={this.handleCancelClick.bind(this)}>RESET</Button>
 	          			</div>
 	          			: null
 	        		)}
@@ -79,4 +106,11 @@ class Interview extends Component {
 	}
 }
 
-export default Interview;
+const mapStateToProps = state => ({
+	user: state.user,
+	line: state.line,
+})
+
+const mapDispatchToProps = dispatch =>
+	bindActionCreators({setStudentLineStatus}, dispatch)
+export default connect(mapStateToProps, mapDispatchToProps)(Interview);
