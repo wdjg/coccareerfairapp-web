@@ -60,13 +60,15 @@ class Interview extends Component {
 		});
 	}
 
-	handleCancelClick() {
+	handleResetClick() {
 		clearInterval(this.incrementer);
 		this.setState({
 			seconds_elapsed: 0,
 			laps: []
 		});
 	}
+
+	//TODO: handleCancelClick to go to previous batch screen
 
 	render() {
 		return (
@@ -82,7 +84,7 @@ class Interview extends Component {
 		          		<div>
 		          			<br />
 		          			<Button className="start-btn" onClick={this.handleStartClick.bind(this)}>Start Interview</Button>
-		          			<Button className="cancel-btn" onClick={this.handleCancelClick.bind(this)}>Cancel Interview</Button>
+		          			<Button className="cancel-btn" onClick={this.handleResetClick.bind(this)}>Cancel Interview</Button>
 		          		</div>
 		          		: 
 		          		<div>
@@ -96,7 +98,7 @@ class Interview extends Component {
 	          			? 
 						<div>
 							<br />
-	          				<Button className="reset-btn" onClick={this.handleCancelClick.bind(this)}>RESET</Button>
+	          				<Button className="reset-btn" onClick={this.handleResetClick.bind(this)}>RESET</Button>
 	          			</div>
 	          			: null
 	        		)}
