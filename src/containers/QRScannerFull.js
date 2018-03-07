@@ -76,7 +76,6 @@ class QRScannerFull extends Component {
 		} else if (this.props.line.status === 'notification') {
 			console.log("SUCCESS: CONFIRM LINE")
 			this.props.setLineStatus(this.props.user.token, this.props.line._id, 'inline');
-			this.props.setLineDetails({});
 			this.setState({ confirm_status: 'inline' })
 		} else if (this.props.line.status === 'preline') {
 			console.log("ERROR: MUST WAIT")
