@@ -5,7 +5,7 @@ import Button from '../../components/Button';
 
 import { connect } from 'react-redux'
 import { bindActionCreators} from 'redux'
-import { setStudentLineStatus } from '../../redux/actions/line'
+import { recruiterSetLineStatus } from '../../redux/actions/line'
 
 
 const formattedSeconds = (sec) =>
@@ -25,22 +25,12 @@ class Interview extends Component {
 		this.incrementer = null;
 	}
 
-	// componentDidMount() {
-	// 	this.props.setStudentLineStatus();
-	// }
-
 	recruiterStart() {
-		this.setState({
-			line_status: "start"
-		})
-		this.props.setStudentLineStatus(this.props.user.token, line_id, this.line_status);
+		this.props.recruiterSetLineStatus(this.props.user.token, line_id, "startRecruiter");
 	}
 
 	recruiterStop() {
-		this.setState({
-			line_status: "stop"
-		})
-		this.props.setStudentLineStatus(this.props.user.token, line_id, this.line_status);
+		this.props.recruiterSetLineStatus(this.props.user.token, line_id, "finishRecruiter");
 	}
 
 	handleStartClick() {
@@ -60,19 +50,13 @@ class Interview extends Component {
 		});
 	}
 
-	handleResetClick() {
-		clearInterval(this.incrementer);
-		this.setState({
-			seconds_elapsed: 0,
-			laps: []
-		});
+	handleCancelClick() {
+		this.props.history.push("batch");
 	}
-
-	//TODO: handleCancelClick to go to previous batch screen
 
 	render() {
 		return (
-			<div className="interview">
+			<div className="Interview">
 				<br />
 				<h1>Wiqas Nassar</h1>
 				<br />
@@ -84,24 +68,16 @@ class Interview extends Component {
 		          		<div>
 		          			<br />
 		          			<Button className="start-btn" onClick={this.handleStartClick.bind(this)}>Start Interview</Button>
-		          			<Button className="cancel-btn" onClick={this.handleResetClick.bind(this)}>Cancel Interview</Button>
+		          			<Button className="cancel-btn" onClick={this.handleCancelClick.bind(this)}>Cancel Interview</Button>
 		          		</div>
 		          		: 
 		          		<div>
 		          			<br />
 		          			<Button className="stop-btn" onClick={this.handleStopClick.bind(this)}>End Interview</Button>
+		          			<Button className="batch-btn" onClick={this.handleCancelClick.bind(this)}>Return To Batch</Button>
 		          		</div>
 		          		
 	          		)}
-
-	        		{(this.state.seconds_elapsed !== 0 && this.incrementer === this.state.last_cleared_incrementer
-	          			? 
-						<div>
-							<br />
-	          				<Button className="reset-btn" onClick={this.handleResetClick.bind(this)}>RESET</Button>
-	          			</div>
-	          			: null
-	        		)}
 				</div>
 			</div>
 		);
@@ -114,5 +90,5 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch =>
-	bindActionCreators({setStudentLineStatus}, dispatch)
+	bindActionCreators({recruiterSetLineStatus}, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(Interview);
