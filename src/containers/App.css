@@ -6,6 +6,13 @@ body {
   font-family: $font-family
 }
 
+h1 {
+	margin: 0 10px;
+	font-weight: 300;
+	color: #292929;
+	font-size: 30px;
+}
+
 .App {
 	height: 100vh;
 	display: -webkit-flex;

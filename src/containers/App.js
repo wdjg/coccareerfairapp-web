@@ -26,7 +26,7 @@ import SearchIcon from '../resources/icon-serach.svg';
 import QRIcon from '../resources/icon-qr.svg';
 
 import { connect } from 'react-redux'
-import { Route, Switch, withRouter, Link } from 'react-router-dom';
+import { Route, Switch, withRouter, Link, Redirect } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { sessionLogin, userLogout } from '../redux/actions/login';
 import { setScannerVisibility } from '../redux/actions/scanner';
@@ -81,6 +81,7 @@ class App extends React.Component {
 			  </nav>
 			  <ConnectedSwitch>
 					<Route path="/login" component={Auth.userIsNotAuth(Login)} />
+					{!auth && <Route exact path="/" component={SearchCompanies}/>}
 					<Route exact path="/" component={Auth.userIsAuth(auth === "recruiter" ? Auth.userIsRecruiter(RecruiterMain) : Auth.userIsStudent(StudentMain))} />	
 					<Route path="/batch" component={Auth.userIsAuth(Auth.userIsRecruiter(RecruiterBatch))} />
 					<Route path="/qr" component={Auth.userIsAuth(Auth.userIsRecruiter(QRDisplay))} />
@@ -88,7 +89,7 @@ class App extends React.Component {
 					<Route path="/profile" component={Auth.userIsAuth(auth === "recruiter" ? Auth.userIsRecruiter(RecruiterProfile) : Auth.userIsStudent(StudentProfile))} />	
 					<Route path="/company/:id/notfound" component={NotFound} />
 					<Route path="/company/:id" render={props => (<CompanyProfile {...props} auth={this.props.user.user_type} />)} />
-					<Route exact path="/search" component={SearchCompanies} />
+					<Route path="/search" component={SearchCompanies} />
 					<Route path="*" component={NotFound} />
 			  </ConnectedSwitch>
 				{this.props.user.user_type && <nav className="bottom-nav">
