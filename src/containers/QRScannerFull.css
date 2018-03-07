@@ -104,3 +104,7 @@
 		}
 	}
 }
+
+.scanner-modal.show .content {
+	bottom: 0;
+}

@@ -3,6 +3,7 @@ import * as CompaniesAPI from '../../api/companies';
 import { updateCompany } from './companies';
 
 export const UPDATE_LINE_DETAILS = 'UPDATE_LINE_DETAILS';
+export const SET_LINE_DETAILS = 'SET_LINE_DETAILS';
 
 /**
  * @param  {details}  object containing line details
@@ -13,9 +14,14 @@ export const updateLineDetails = details => ({
   payload: {details: details},
 });
 
+export const setLineDetails = details => ({
+	type: SET_LINE_DETAILS,
+  payload: {details: details},
+})
+
 export function getLine(token) {
 	return dispatch => {
-		LineAPI.getLine(token).then(res => {
+		return LineAPI.getLine(token).then(res => {
 			if (res.data) {
 				dispatch(updateLineDetails(res.data));
 				dispatch(getLineStats(token, res.data.employer_id));
@@ -56,8 +62,7 @@ export function joinLine(token, employer_id) {
 
 export function setStudentLineStatus(token, line_id, status) {
 	return dispatch => {
-		return LineAPI.recruiterSetLineStatus(token, line_id, status).then(res => {
-			dispatch(updateLineDetails(res.data));
+		return LineAPI.setLineStatus(token, line_id, status).then(res => {
 			return Promise.resolve(res);
 		})
 	}

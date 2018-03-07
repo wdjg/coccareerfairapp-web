@@ -34,9 +34,10 @@ export function getLineStats(token, employer_id) {
 // }
 
 export function joinLine(token, employer_id) {
+	console.log(employer_id)
 	return axios({
-		method: 'get',
-		url: 'https://coccareerfairapp-development.herokuapp.com/api/lines/stats',
+		method: 'post',
+		url: 'https://coccareerfairapp-development.herokuapp.com/api/lines/',
 		headers: {
 			'Content-Type': 'application/json',
 			'Authorization': 'Bearer ' + token,
@@ -50,21 +51,7 @@ export function joinLine(token, employer_id) {
 export function setLineStatus(token, line_id, status) {
 	return axios({
 		method: 'patch',
-		url: 'https://coccareerfairapp-development.herokuapp.com/api/lines/' + line_id + 'status',
-		headers: {
-			'Content-Type': 'application/json',
-			'Authorization': 'Bearer ' + token,
-		},
-		data: {
-			status: status,
-		}
-	})
-}
-
-export function recruiterSetLineStatus(token, line_id, status) {
-	return axios({
-		method: 'patch',
-		url: 'https://coccareerfairapp-development.herokuapp.com/api/lines/' + line_id + 'status',
+		url: 'https://coccareerfairapp-development.herokuapp.com/api/lines/' + line_id + '/status',
 		headers: {
 			'Content-Type': 'application/json',
 			'Authorization': 'Bearer ' + token,

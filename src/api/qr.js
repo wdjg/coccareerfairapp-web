@@ -14,7 +14,7 @@ export function getQRCode(token, employer_id) {
 export function getCompanyFromQR(token, qr_value) {
 	return axios({
 		method: 'get',
-		url: 'https://coccareerfairapp-development.herokuapp.com/api/employers/qr?qr_code_value=' + qr_value,
+		url: 'https://coccareerfairapp-development.herokuapp.com/api/qr?qr_code_value=' + qr_value,
 		headers: {
 			'Content-Type': 'application/json',
 			'Authorization': 'Bearer ' + token,

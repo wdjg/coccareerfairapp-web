@@ -6,7 +6,7 @@ class BottomModal extends Component {
 	render() {
 		return (
 			<div className={classNames("BottomModal", {show: this.props.show}, this.props.className)}>
-				<div className="shadow" onClick={() => this.closeModal()}></div>
+				<div className="shadow" onClick={this.props.closeModal}></div>
 				<div className="content">{this.props.children}</div>
 			</div>
 		);

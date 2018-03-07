@@ -3,7 +3,7 @@ import { PUSH_STUDENTS_TO_BATCH, REMOVE_STUDENTS_FROM_BATCH, SET_BATCH, SET_INTE
 
 const initialState = {
   students: [],
-  interviewStudent: null,
+  interview_student: {},
 }
 
 const batch = (state = initialState, action) => {
@@ -17,9 +17,9 @@ const batch = (state = initialState, action) => {
       });
       return immutableState.toJS();
     case SET_BATCH:
-      return immutableState.set("student", action.payload.students);
+      return immutableState.set("students", action.payload.students).toJS();
     case SET_INTERVIEW_STUDENT:
-      return immutableState.set("interviewStudent", action.payload.student)
+      return immutableState.set("interview_student", action.payload.student).toJS();
     default:
       return state;
   }

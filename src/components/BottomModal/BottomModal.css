@@ -25,4 +25,12 @@
 			bottom: 45px;
 		}
 	}
+	h2 {
+		margin-bottom: 0px;
+	}
+	h1 {
+		text-transform: uppercase;
+		font-weight: 300;
+		margin: 0 0 10px 10px;
+	}
 }
