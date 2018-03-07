@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
@@ -8,12 +7,12 @@ import InterviewModal from '../../components/InterviewModal';
 
 import './RecruiterBatch.css';
 
-const TEST_BATCH = [
-{name: "Valdimar Haraldsson", id: "9532016"},
-{name: "Floopy Doop", id: "AAAAAAAAAARG"},
-{name: "Hermann Jung-Olsen", id: "45634516"},
-{name: "Gudrun Gjukadóttir", id: "67824594"},
-{name: "Blerg Fergusson", id: "8679305"},]
+// const TEST_BATCH = [
+// {name: "Valdimar Haraldsson", id: "9532016"},
+// {name: "Floopy Doop", id: "AAAAAAAAAARG"},
+// {name: "Hermann Jung-Olsen", id: "45634516"},
+// {name: "Gudrun Gjukadóttir", id: "67824594"},
+// {name: "Blerg Fergusson", id: "8679305"},]
 
 class RecruiterBatch extends Component {
 
@@ -86,7 +85,7 @@ class RecruiterBatch extends Component {
 
 // TODO
 const mapStateToProps = state => ({
-	batch: state.batch.batch,
+	batch: state.batch.students,
 	line: {
 		students: 20
 	},

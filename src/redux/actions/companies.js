@@ -29,9 +29,9 @@ export function getCompanies(token) {
 	}
 }
 
-export function getCompany(token, id) {
+export function getCompany(token, employer_id) {
 	return dispatch => {
-		return CompaniesAPI.getCompany(token, id).then(res => {
+		return CompaniesAPI.getCompany(token, employer_id).then(res => {
 			dispatch(updateCompany(res.data));
 			return Promise.resolve(res.data);
 		});

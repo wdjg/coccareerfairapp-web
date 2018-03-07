@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './StudentMain.css';
 
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { getLine } from '../../redux/actions/line';
 
@@ -24,6 +23,10 @@ class StudentMain extends Component {
 		return company ? company : "Not in Line"
 	}
 
+	renderPlace(place) {
+		return place > -1 ? <span>{place} <span className="num-after">th</span></span> : "N/A"
+	}
+
 	render() {
 		return (
 			<div className="StudentMain" onClick={() => this.setState(prev => ({show_camera: true}))}>
@@ -34,7 +37,7 @@ class StudentMain extends Component {
 					</div>
 					<div className="wait">
 						<h2>Place</h2>
-						<div className="data">7<span className="num-after">th</span></div>
+						<div className="data">{this.renderPlace(this.props.line.myPlace)}</div>
 					</div>
 				</div>
 			</div>

@@ -11,12 +11,13 @@ export function getLine(token) {
 	})
 }
 
-export function getLineStats(employer_id) {
+export function getLineStats(token, employer_id) {
 	return axios({
 		method: 'get',
 		url: 'https://coccareerfairapp-development.herokuapp.com/api/lines/stats?employer_id=' + employer_id,
 		headers: {
 			'Content-Type': 'application/json',
+			'Authorization': 'Bearer ' + token,
 		}
 	})
 }

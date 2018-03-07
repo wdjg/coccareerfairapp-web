@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import classNames from 'classnames';
 import './Interview.css';
 import Button from '../../components/Button';
 

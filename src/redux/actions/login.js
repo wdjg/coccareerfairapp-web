@@ -1,4 +1,5 @@
 import * as UserAPI from '../../api/user';
+// import * as CompaniesAPI from '../../api/companies';
 import { updateUser, setUser, setAuthToken } from './user';
 import { routerActions } from 'react-router-redux';
 
@@ -15,7 +16,18 @@ export function sessionLogin() {
 	}
 }
 
-export function userLogin(email, password) {
+export function studentLogin(email, password) {
+	return dispatch => {
+		return UserAPI.login({email: email, password: password}).then(res => {
+			const token = res.data.token
+			sessionStorage.setItem('jwt', token);
+			dispatch(setAuthToken(token));
+			return UserAPI.getUser(token);
+		});
+	}
+}
+
+export function recruiterLogin(email, password) {
 	return dispatch => {
 		return UserAPI.login({email: email, password: password}).then(res => {
 			const token = res.data.token
