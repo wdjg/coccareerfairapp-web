@@ -55,7 +55,11 @@ class QRScannerFull extends Component {
 		// console.log(data)
 		if (!data || this.state.scanning)
 			return;
-		this.setState({ scanning: true });
+		this.setState({ 
+			scanning: true,
+			confirm_status: null,
+			error_status: null, 
+		});
 		this.props.getLine(this.props.user.token).then(res => {
 			return this.props.getCompanyFromQR(this.props.user.token, data);
 		}).then(res => {
