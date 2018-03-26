@@ -14,12 +14,23 @@ module.exports = {
     // var log_stdout = process.stdout;
     // fs.appendFile("e:\\foo.js", "\n\n\n===========\n" + util.inspect(config, {showHidden: false, depth: null,showProxy: true}), () => {});
     const appConfig = razzleHeroku(Object.assign({}, config), {target, dev}, webpack);
-    // appConfig.module.rules.push({
-    //   test: /\.svg$/,
-    //   use: [
-    //     'svg-inline-loader'
-    //   ],
+    // appConfig.module.rules.splice(0, 0, {
+    //   test: /\.(gif|jpe?g|png|ico)$/,
+    //   loader: 'url-loader?limit=10000',
+    //   options: {
+    //     limit: 10000,
+    //     name: 'static/media/[name].[hash:8].[ext]',
+    //   },
     // });
+    // appConfig.module.rules.splice(1, 0, {
+    //   test: /\.(otf|eot|ttf|svg|woff|woff2).*$/,
+    //   loader: 'url-loader?limit=10000',
+    //   options: {
+    //     limit: 10000,
+    //     name: 'static/media/[name].[hash:8].[ext]',
+    //   },
+    // });
+    // console.log(util.inspect(appConfig.module.rules, {showHidden: false, depth: null, showProxy: true}))
     if (target == 'web' && !dev)
       appConfig.module.rules[4].use = ExtractTextPlugin.extract({
       fallback: require.resolve('style-loader'),
@@ -31,6 +42,7 @@ module.exports = {
             minimize: !dev,
           },
         },
+        'url-loader',
         'postcss-loader',
       ],
     });
@@ -48,7 +60,15 @@ module.exports = {
         nested(),
         vars(),
         require('postcss-flexbugs-fixes'),
-        autoprefixer(),
+        autoprefixer({
+          browsers: [
+            '>1%',
+            'last 4 versions',
+            'Firefox ESR',
+            'not ie < 9', // React doesn't support IE8 anyway
+          ],
+          flexbox: 'no-2009',
+        }),
       ];
     return appConfig;
   }
