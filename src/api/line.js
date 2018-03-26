@@ -34,7 +34,6 @@ export function getLineStats(token, employer_id) {
 // }
 
 export function joinLine(token, employer_id) {
-	console.log(employer_id)
 	return axios({
 		method: 'post',
 		url: 'https://coccareerfairapp-development.herokuapp.com/api/lines/',

@@ -1,67 +1,86 @@
 @import '../../constants.css';
 
-.search {
+$search-bar-height: 35px;
+
+.SearchCompanies {
 	position: relative;
-	height: 35px;
-	background: $grey;
-	display: flex;
-	padding-right: 5px;
-	.search-input {
-		margin: 0;
-		background: none;
-		flex: 1;
-		font-size: 16px;
-		padding-left: 10px;
-	}
-	.search__button {
-		position: relative;
+	.search {
+		position: absolute;
+		left: 0;
 		right: 0;
-		width: 25px;
-		height: 100%;
-	}
-	.filter {
+		top: 0;
+		background: $grey;
 		display: flex;
-		justify-content: center;
-		align-items: center;
-		img {
-			width: 22px;
+		padding-right: 5px;
+		height: $search-bar-height;
+		.search-input {
+			margin: 0;
+			background: none;
+			flex: 1;
+			font-size: 16px;
+			padding-left: 10px;
+		}
+		.search__button {
+			position: relative;
+			right: 0;
+			width: 25px;
+			height: 100%;
+		}
+		.filter {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			img {
+				width: 22px;
+			}
 		}
 	}
-	.clear {
-		&:after {
-			background: #5f5f5f;
-			content: '';
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			width: 1.5px;
-			height: 0;
-			border-radius: 1.5px;
-			transition: transform 0.17s cubic-bezier(.46,.02,.04,.99), height 0.17s cubic-bezier(.46,.02,.04,.99);
+
+	.companies {
+		padding-top: $search-bar-height;
+	}
+
+	.company {
+		display: flex;
+		height: 60px;
+		/* background: #6e8; */
+		color: #777;
+		.company__logo {
+
 		}
-		&:before {
-			background: #5f5f5f;
-			content: '';
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			width: 1.5px;
-			height: 0;
-			border-radius: 1.5px;
-			transition: transform 0.17s cubic-bezier(.46,.02,.04,.99), height 0.17s cubic-bezier(.46,.02,.04,.99);
+		.company__content {
+			flex: 1;
+			display: flex;
+			-o-flex-flow: ;
+			flex-flow: column;
+			.company__top {
+				height: 40px;
+				h1 {
+					font-size: 26px;
+					padding-top: 3px;
+				}
+			}
+			.company__bottom {
+				flex: 1;
+				margin-left: 12px;
+				font-size: 12px;
+				line-height: 20px;
+			}
 		}
-		&.active {
-			&:after {
-			height: 55%;
-				transform: translate(-50%, -50%) rotate(-45deg);
-			}
-			&:before {
-			height: 55%;
-				transform: translate(-50%, -50%) rotate(45deg);
-			}
+		.company__arrow {
+			flex: 0;
+			line-height: 60px;
+			color: #aaa;
+			padding: 0 5px 0 0;
 		}
 	}
 }
 
+
+@media screen and (min-width: 680px) {
+	.SearchCompanies {
+		.companies {
+			padding-top: calc($search-bar-height - $content-padding);
+		}
+	}
+}

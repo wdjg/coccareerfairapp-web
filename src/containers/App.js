@@ -1,5 +1,9 @@
 import React from 'react';
+import classNames from 'classnames';
 // import PropTypes from 'prop-types';
+
+import TopBar from '../components/TopBar'
+import MediaQuery from 'react-responsive';
 
 import NotFound from './NotFound';
 import Login from './Login';
@@ -14,22 +18,20 @@ import RecruiterProfile from './RecruiterProfile';
 import Interview from './Interview';
 import SearchCompanies from './SearchCompanies';
 
+import 'antd/lib/style/index.css';
+import 'antd/lib/menu/style/index.css';
 import './App.css';
 import * as Auth from './auth.js';
-import MenuIcon from '../resources/burger-title.svg';
-import CameraIcon from '../resources/icon-camera-alt-dark.svg';
-
-import HomeIcon from '../resources/icon-home.svg';
-import InfoIcon from '../resources/icon-info.svg';
-import UserIcon from '../resources/icon-user.svg';
-import SearchIcon from '../resources/icon-serach.svg';
-import QRIcon from '../resources/icon-qr.svg';
+import SmoothCollapse from 'react-smooth-collapse';
 
 import { connect } from 'react-redux'
-import { Route, Switch, withRouter, Link, Redirect } from 'react-router-dom';
+import { Route, Switch, withRouter, Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { sessionLogin, userLogout } from '../redux/actions/login';
 import { setScannerVisibility } from '../redux/actions/scanner';
+import { Menu } from 'antd';
+import { MobileScreen, DesktopScreen } from 'react-responsive-redux'
+import '../resources/style.css';
 
 const ConnectedSwitch = connect(state => ({
   location: state.location
@@ -37,7 +39,21 @@ const ConnectedSwitch = connect(state => ({
 
 class App extends React.Component {
 
+	constructor(props) {
+	  super(props);
+	
+	  this.state = {
+	  	show_navs: true,
+	  	show_menu: false,
+	  	menu_current: '/search'
+	  };
+	  this.last_scroll = 0;
+	  this.scroll_content = null;
+	}
+
 	componentDidMount() {
+		this.setState({ menu_current: this.props.location.pathname });
+		this.scroll_content.addEventListener('scroll', this.handleScroll.bind(this));
 		if (!window.location.href.includes('https')) {
 			
 		}
@@ -45,57 +61,140 @@ class App extends React.Component {
 			this.props.sessionLogin();
 	}
 
+	componentWillReceiveProps(next) {
+		this.setState({ menu_current: next.location.pathname });
+	}
+
 	renderBottomNavButtons(buttons) {
 		return buttons.map((button, index) =>(
-			<div key={index} onClick={button.function} className="bottom-nav__btn"><img src={button.icon} alt={button.path}/></div>
+			<div key={index} onClick={() => console.log(button.text)} className="bottom-nav__btn">
+				<i className={button.icon}></i>
+			</div>
 		));
+	}
+
+	renderMenuButtons(buttons) {
+		return buttons.map((button, index) =>(
+			<Menu.Item key={button.to} click={button.onClick} className="menu-button">
+				<Link to={button.to}><i className={button.icon}></i> {button.text}</Link>
+			</Menu.Item>
+		));
+	}
+
+	componentWillUnmount() {
+    this.scroll_content.removeEventListener('scroll', this.handleScroll.bind(this));
+	}
+
+	handleScroll(event) {
+		const d_scroll = event.srcElement.scrollTop - this.last_scroll;
+		if (d_scroll > 10) {
+			this.last_scroll = event.srcElement.scrollTop;
+	    this.setState({ show_navs: false });
+		} else if (d_scroll < -5) {
+			this.last_scroll = event.srcElement.scrollTop;
+	    this.setState({ show_navs: true });
+		}
+	}
+
+	handleMenuClick(e) {
+		console.log(e)
+		// e.item.onClick();
+    // this.setState({
+    //   menu_current: e.key,
+    // });
+  }
+
+	setMenuState(val) {
+		if (val === undefined)
+			val = false;
+		this.setState({ show_menu: val });
 	}
 
 	render() {
 		let auth = this.props.user.user_type;
-		const studentButtons = [
-			{function: () => this.props.history.replace('/'), icon: HomeIcon},
-			{function: () => this.props.history.replace('/search'), icon: SearchIcon},
-			{function: () => this.props.history.replace('/profile'), icon: UserIcon},
-			{function: () => this.props.setScannerVisibility(true), icon: CameraIcon},
-			{function: () => this.props.history.replace('/info'), icon: InfoIcon},
+		const student_buttons = [
+			{onClick: () => this.props.history.replace('/'), icon: "icon-home", text: "Home"},
+			{onClick: () => this.props.history.replace('/search'), icon: "icon-search", text: "Search"},
+			{onClick: () => this.props.history.replace('/profile'), icon: "icon-user", text: "Profile"},
+			{onClick: () => this.props.setScannerVisibility(true), icon: "icon-camera-alt", text: "QR Scanner"},
+			{onClick: () => this.props.history.replace('/info'), icon: "icon-info", text: "About"},
 		];
-		const recruiterButtons = [
-			{function: () => this.props.history.replace('/'), icon: HomeIcon},
-			{function: () => this.props.history.replace('/search'), icon: SearchIcon},
-			{function: () => this.props.history.replace('/profile'), icon: UserIcon},
-			{function: () => this.props.history.replace('/qr'), icon: QRIcon},
-			{function: () => this.props.history.replace('/info'), icon: InfoIcon},
+		const recruiter_buttons = [
+			{onClick: () => this.props.history.replace('/'), icon: "icon-home", text: "Home"},
+			{onClick: () => this.props.history.replace('/search'), icon: "icon-search", text: "Search"},
+			{onClick: () => this.props.history.replace('/profile'), icon: "icon-user", text: "Profile"},
+			{onClick: () => this.props.history.replace('/qr'), icon: "icon-qr", text: "QR Code"},
+			{onClick: () => this.props.history.replace('/info'), icon: "icon-info", text: "About"},
 		];
-		// console.log(auth)
-		// {this.props.user.user_type === "student" && <img className="camera" src={CameraIcon} alt="camera" onClick={() => this.props.setScannerVisibility(true)}/>}
+		const unregistered_buttons = [
+			{onClick: () => this.props.history.replace('/'), icon: "icon-search", text: "Search", to: '/'},
+			{onClick: () => this.props.history.replace('/info'), icon: "icon-info", text: "About", to: '/info'},
+		];
+		let top_buttons = [];
+		if (auth) {
+			top_buttons = [];
+		} else {
+			top_buttons = [
+				{onClick: () => this.props.history.replace('/login'), content: "Login"},
+			];
+		}
 		return (
 			<div className="App">
-				<nav className="top-nav">
-					<div className="top-nav__item"><img className="burger" src={MenuIcon} alt="menu"/></div>
-					<div className="top-nav__item title"></div>
-					<div className="top-nav__item right">
-						{auth ? <div className="logout" onClick={this.props.userLogout}>Logout</div> :
-							<Link className="logout" to="/login">Login</Link>}
+				<DesktopScreen>
+					<Menu
+		        onClick={this.handleMenuClick.bind(this)}
+		        selectedKeys={[this.state.menu_current]}
+		        mode="horizontal">
+		        {this.renderMenuButtons(auth === undefined ? unregistered_buttons : (auth === "recruiter" ? recruiter_buttons : student_buttons))}
+		      </Menu>
+				</DesktopScreen>
+				<MobileScreen>
+					<SmoothCollapse
+						expanded={this.state.show_navs}
+						heightTransition="0.3s cubic-bezier(.46,.02,.04,.99)"
+						className="top-bar-hider">
+						<TopBar buttons={top_buttons} onBurgerClick={() => this.setMenuState(true)} />
+					</SmoothCollapse>
+				</MobileScreen>
+				<div className="main">
+					<DesktopScreen>
+						<div className="sidebar"></div>
+					</DesktopScreen>
+					<div className="content-container" ref={ref => {this.scroll_content = ref}}>
+					  <ConnectedSwitch>
+							<Route path="/login" component={Auth.userIsNotAuth(Login)} />
+							{!auth && <Route exact path="/" component={SearchCompanies}/>}
+							<Route exact path="/" component={Auth.userIsAuth(auth === "recruiter" ? Auth.userIsRecruiter(RecruiterMain) : Auth.userIsStudent(StudentMain))} />	
+							<Route path="/batch" component={Auth.userIsAuth(Auth.userIsRecruiter(RecruiterBatch))} />
+							<Route path="/qr" component={Auth.userIsAuth(Auth.userIsRecruiter(QRDisplay))} />
+							<Route path="/interview" component={Interview} />	
+							<Route path="/profile" component={Auth.userIsAuth(auth === "recruiter" ? Auth.userIsRecruiter(RecruiterProfile) : Auth.userIsStudent(StudentProfile))} />	
+							<Route path="/company/:id/notfound" component={NotFound} />
+							<Route path="/company/:id" render={props => (<CompanyProfile {...props} auth={this.props.user.user_type} />)} />
+							<Route path="/search" component={SearchCompanies} />
+							<Route path="*" component={NotFound} />
+					  </ConnectedSwitch>
 					</div>
-			  </nav>
-			  <ConnectedSwitch>
-					<Route path="/login" component={Auth.userIsNotAuth(Login)} />
-					{!auth && <Route exact path="/" component={SearchCompanies}/>}
-					<Route exact path="/" component={Auth.userIsAuth(auth === "recruiter" ? Auth.userIsRecruiter(RecruiterMain) : Auth.userIsStudent(StudentMain))} />	
-					<Route path="/batch" component={Auth.userIsAuth(Auth.userIsRecruiter(RecruiterBatch))} />
-					<Route path="/qr" component={Auth.userIsAuth(Auth.userIsRecruiter(QRDisplay))} />
-					<Route path="/interview" component={Interview} />	
-					<Route path="/profile" component={Auth.userIsAuth(auth === "recruiter" ? Auth.userIsRecruiter(RecruiterProfile) : Auth.userIsStudent(StudentProfile))} />	
-					<Route path="/company/:id/notfound" component={NotFound} />
-					<Route path="/company/:id" render={props => (<CompanyProfile {...props} auth={this.props.user.user_type} />)} />
-					<Route path="/search" component={SearchCompanies} />
-					<Route path="*" component={NotFound} />
-			  </ConnectedSwitch>
-				{this.props.user.user_type && <nav className="bottom-nav">
-					{this.renderBottomNavButtons(auth === "recruiter" ? recruiterButtons : studentButtons)}
-			  </nav>}
+				</div>
+				
+				
+				{this.props.user.user_type && <MediaQuery query="(max-device-width: 1224px)">
+					<SmoothCollapse
+						expanded={this.state.show_navs}
+						heightTransition="0.3s cubic-bezier(.46,.02,.04,.99)"
+						className="bottom-bar-hider">
+						<nav className="bottom-nav">
+							{this.renderBottomNavButtons(auth === "recruiter" ? recruiter_buttons : student_buttons)}
+				  	</nav>
+		  		</SmoothCollapse>
+		  	</MediaQuery>}			
 				<QRScannerFull onExit={() => this.props.setScannerVisibility(false)} visible={this.props.scannerVisible}/>
+				<div 
+					className={classNames("shade", {show: this.state.show_menu})}
+					onClick={() => this.setMenuState(false)}></div>
+				<div className={classNames("menu", {show: this.state.show_menu})}>
+					
+				</div>
 		  </div>
 	  )
 	}

@@ -52,7 +52,6 @@ class QRScannerFull extends Component {
 	}
 
 	scanSuccess(data) {
-		// console.log(data)
 		if (!data || this.state.scanning)
 			return;
 		this.setState({ 
@@ -98,7 +97,6 @@ class QRScannerFull extends Component {
 
 
 	render() {
-		console.log(this.state)
 		const can_inline = this.props.line.status === 'notification';
 		return (
 			<Transition in={this.props.visible} timeout={400} unmountOnExit={true} className="QRScannerFull">
