@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux'
-import { reducer as responsiveReducer } from 'react-responsive-redux'
+import { responsiveStateReducer } from 'redux-responsive'
 
 import user from './user';
 import batch from './batch';
@@ -11,7 +11,7 @@ import line from './line';
 const rootReducer = combineReducers({
   user, batch, companies, scanner, line,
   router: routerReducer,
-  responsive: responsiveReducer,
+  browser: responsiveStateReducer,
 });
 
 export default rootReducer;

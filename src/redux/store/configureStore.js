@@ -1,15 +1,19 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
 import logger from 'redux-logger'
 import { routerMiddleware } from 'react-router-redux'
+import { responsiveStoreEnhancer } from 'redux-responsive'
 
 const configureStore = (preloadedState, history) => {
   const middleware = [thunk, routerMiddleware(history), logger];
   const store = createStore(
     rootReducer,
     preloadedState,
-    applyMiddleware(...middleware)
+    compose(
+      responsiveStoreEnhancer,
+      applyMiddleware(...middleware),
+    )
   );
 
   if (module.hot) {
