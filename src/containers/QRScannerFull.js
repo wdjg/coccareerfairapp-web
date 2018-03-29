@@ -6,11 +6,12 @@ import Transition from 'react-transition-group/Transition';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 
-import QRConfirmationModal from '../components/QRConfirmationModal';
+import Button from '../components/Button';
+import BottomModal from '../components/BottomModal';
+import SmoothCollapse from 'react-smooth-collapse'
 
-import * as LineAPI from '../api/line';
-import * as QRAPI from '../api/qr';
-import { getLine } from '../redux/actions/line';
+import { getCompanyFromQR } from '../redux/actions/qr';
+import { getLine, joinLine, setLineStatus, setLineDetails } from '../redux/actions/line';
 
 import './QRScannerFull.css';
 
@@ -39,7 +40,10 @@ class QRScannerFull extends Component {
 
 		this.state = {
 			company: null,
+			scanning: false,
 			show_modal: false,
+			confirm_status: null,
+			error_status: null,
 		}
 	}
 
@@ -47,19 +51,42 @@ class QRScannerFull extends Component {
 		console.log(err);
 	}
 
-	componentWillReceiveProps(next) {
-		if (next.visible && next.token)
-			this.props.getLine(next.token);
+	scanSuccess(data) {
+		if (!data || this.state.scanning)
+			return;
+		this.setState({ 
+			scanning: true,
+			confirm_status: null,
+			error_status: null, 
+		});
+		this.props.getLine(this.props.user.token).then(res => {
+			return this.props.getCompanyFromQR(this.props.user.token, data);
+		}).then(res => {
+			this.setState({ company: res.data, show_modal: true, scanning: false })
+		})
 	}
 
-	scanSuccess(data) {
-		if (!data)
-			return;
-		QRAPI.getCompanyFromQR(this.props.token, data).then(res => {
-			this.setState({ company: res.data, show_modal: true })
-		}).catch(err => {
-			console.log(err);
-		})
+	handleConfirm(employer_id) {
+		console.log("CONFIRMED");
+		if (this.props.line.employer_id && this.props.line.employer_id !== employer_id) {
+			console.log("ERROR: OTHER LINE")
+			this.setState({ error_status: "otherline" });
+		} else if (!this.props.line.status) {
+			console.log("SUCCESS: JOIN LINE")
+			this.props.joinLine(this.props.user.token, employer_id).then(res => {
+				this.setState({ confirm_status: res.data.status })
+			});
+		} else if (this.props.line.status === 'notification') {
+			console.log("SUCCESS: CONFIRM LINE")
+			this.props.setLineStatus(this.props.user.token, this.props.line._id, 'inline');
+			this.setState({ confirm_status: 'inline' })
+		} else if (this.props.line.status === 'preline') {
+			console.log("ERROR: MUST WAIT")
+			this.setState({ error_status: "mustwait" });
+		} else if (this.props.line.status === 'inline') {
+			console.log("ERROR: ALREADY IN LINE");
+			this.setState({ error_status: "alreadyin" });
+		}
 	}
 
 	closeModal(leave=false) {
@@ -70,37 +97,58 @@ class QRScannerFull extends Component {
 
 
 	render() {
+		const can_inline = this.props.line.status === 'notification';
 		return (
 			<Transition in={this.props.visible} timeout={400} unmountOnExit={true} className="QRScannerFull">
-			 	{state => (
-			 		<div className="qr-container" style={{...containerTransition[state]}}>
-				 	<QrReader
+				{state => (
+					<div className="qr-container" style={{...containerTransition[state]}}>
+					<QrReader
 						className="qr-scanner"
-	          			delay={300}
-	          			onError={this.scanError.bind(this)}
-	          			onScan={this.scanSuccess.bind(this)}
-	          			showViewFinder={false}
-	          		/>
+						delay={300}
+						onError={this.scanError.bind(this)}
+						onScan={this.scanSuccess.bind(this)}
+						showViewFinder={false}
+					/>
 					<div className="finder" style={{...finderTransition[state]}}>
 						<div className="corner tl"></div>
 						<div className="corner tr"></div>
 						<div className="corner bl"></div>
 						<div className="corner br"></div>
 					</div>
-					<div className={classNames("modal", {show: this.state.show_modal})}>
-					<div className="shadow" onClick={() => this.closeModal()}></div>
-					<div className="content">
-						{this.state.company && <QRConfirmationModal
-							name={this.state.company.name}
-							employerID={this.state.company._id}
-							lineID={this.props.line._id}
-							status={this.props.line.status}
-							token={this.props.token}
-							closeModal={() => this.closeModal()}/>}
-					</div>
-				</div>
+					<BottomModal className="scanner-modal" show={this.state.show_modal}>
+						{this.state.company && <div>
+							<h2 className="join-title">{can_inline ? 'Confirm Line Entry' : 'Join Line'}:</h2>
+							<h1 className="name">{this.state.company.name}</h1>
+							<SmoothCollapse expanded={Boolean(this.state.confirm_status)} heightTransition="0.3s cubic-bezier(.46,.02,.04,.99)">
+								{this.state.confirm_status === 'inline' && <div className="confirm-msg inline">You can join the batch now!</div>}
+								{this.state.confirm_status === 'preline' && <div className="confirm-msg preline">OK, not wait for a notification</div>}
+							</SmoothCollapse>
+							<SmoothCollapse expanded={Boolean(this.state.error_status)} heightTransition="0.3s cubic-bezier(.46,.02,.04,.99)">
+								{this.state.error_status === 'mustwait' && <div className="error-msg mustwait">You must wait to recieve a notification</div>}
+								{this.state.error_status === 'otherline' && <div className="error-msg otherline">You're already in a line</div>}
+								{this.state.error_status === 'alreadyin' && <div className="error-msg alreadyin">You're already in line</div>}
+							</SmoothCollapse>
+							{(!this.state.confirm_status && !this.state.error_status) ? <div className="buttons">
+								<Button 
+									className="btn confirm"
+									onClick={() => this.handleConfirm(this.state.company._id)}>
+									{can_inline ? 'Confirm' : 'Join'}
+								</Button>
+								<Button
+									className="btn cancel"
+									onClick={() => this.closeModal(false)}>
+									Cancel
+								</Button>
+							</div> :
+							<Button
+								className="btn cancel"
+								onClick={() => this.closeModal(false)}>
+								{this.state.error_status ? "Retry" : "Close"}
+							</Button>}
+						</div>}
+					</BottomModal>
 					<div className={classNames("exit", {active: state === 'entering' || state === 'entered'})} onClick={this.props.onExit}></div>
-			 	</div>)}
+				</div>)}
 			</Transition>
 		);
 	}
@@ -108,9 +156,11 @@ class QRScannerFull extends Component {
 
 const mapStateToProps = state => ({
 	line: state.line,
+	user: state.user,
+	companies: state.companies,
 })
 
 const mapDispatchToProps = dispatch => 
-	bindActionCreators({ getLine }, dispatch);
+	bindActionCreators({ getLine, joinLine, setLineStatus, getCompanyFromQR, setLineDetails }, dispatch);
 
-export default connect(null, mapDispatchToProps)(QRScannerFull);
+export default connect(mapStateToProps, mapDispatchToProps)(QRScannerFull);

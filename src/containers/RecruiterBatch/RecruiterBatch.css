@@ -52,35 +52,6 @@ h2 {
 	transition: opacity 0.5s cubic-bezier(.46,.02,.04,.99);
 }
 
-.modal {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	pointer-events: none;
-	.content {
-		position: absolute;
-		pointer-events: auto;
-		background: #fff;
-		left: 0;
-		right: 0;
-		padding: 10px;
-		bottom: -100%;
-		transition: bottom 0.5s cubic-bezier(.46,.02,.04,.99);
-		padding-bottom: 5vh;
-	}
-	&.show {
-		.shadow {
-			opacity: 1;
-			pointer-events: auto;
-		}
-		.content {
-			bottom: 45px;
-		}
-	}
-}
-
 @media screen and (min-width: 520px) {
 	.batch {
 		/* display: inline-block; */

@@ -1,0 +1,33 @@
+@import '../../constants.css';
+
+.TopBar {
+	background: $black;
+  height: $top-bar-height;
+  display: flex;
+  min-height: $top-bar-height;
+  .TopBar__item {
+		flex: 1;
+		line-height: $top-bar-height;
+		display: flex;
+		&.right {
+			justify-content: flex-end;
+			margin-right: $top-bar-margin;
+		}
+		&.left {
+			margin-left: $top-bar-margin;
+		}
+		&.title {
+			text-align: center;
+			color: $white;
+			font-size: 16px;
+			font-weight: 700;
+		}
+  }
+  .burger {
+  	height: 16px;
+  	margin: 18px 0;
+  }
+  .TopBar__button {
+		color: #fff;
+  }
+}

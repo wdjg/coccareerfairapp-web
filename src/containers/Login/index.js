@@ -12,8 +12,9 @@ import { Formik } from 'formik';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { updateUser } from '../../redux/actions/user';
-import { userLogin } from '../../redux/actions/login';
+import { studentLogin, recruiterLogin } from '../../redux/actions/login';
 import { studentRegister, recruiterRegister } from '../../redux/actions/register';
+import { getCompany } from '../../redux/actions/companies';
 
 const loginTabs = [{id: 'student', label: 'Student'}, {id: 'recruiter', label: 'Recruiter'}];
 
@@ -58,7 +59,7 @@ class Login extends Component {
 
 		} else {
 			console.log("LOGIN: student");
-			this.props.userLogin(values.email.trim(), values.password).then(res => {
+			this.props.studentLogin(values.email.trim(), values.password).then(res => {
 				setSubmitting(false);
 				this.props.updateUser(res.data)
 			}).catch(err => {
@@ -73,7 +74,7 @@ class Login extends Component {
 			console.log("REGISTER: recruiter");
 			this.props.recruiterRegister(values.name, values.email.trim(), values.password, values.passcode).then(res => {
 				setSubmitting(false);
-				this.props.updateUser(res.data)
+				this.props.updateUser(res.data);
 			}).catch(err => {
 				setSubmitting(false);
 				setErrors(transformAPIError(err.response.data.message));
@@ -81,9 +82,9 @@ class Login extends Component {
 
 		} else {
 			console.log("LOGIN: recruiter");
-			this.props.userLogin(values.email.trim(), values.password).then(res => {
+			this.props.recruiterLogin(values.email.trim(), values.password).then(res => {
 				setSubmitting(false);
-				this.props.updateUser(res.data)
+				this.props.updateUser(res.data);
 			}).catch(err => {
 				setSubmitting(false);
 				setErrors(transformAPIError(err.response.data.message));
@@ -264,7 +265,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-	bindActionCreators({ updateUser, userLogin, studentRegister, recruiterRegister }, dispatch);
+	bindActionCreators({ updateUser, studentLogin, recruiterLogin, studentRegister, recruiterRegister, getCompany }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
 

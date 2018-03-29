@@ -3,7 +3,7 @@ import axios from 'axios';
 export function getQRCode(token, employer_id) {
 	return axios({
 		method: 'get',
-		url: 'https://coccareerfairapp-development.herokuapp.com/api/employers/' + employer_id + '/qr',
+		url: 'https://coccareerfairapp-development.herokuapp.com/api/qr?employer_id=' + employer_id,
 		headers: {
 			'Content-Type': 'application/json',
 			'Authorization': 'Bearer ' + token,
@@ -11,16 +11,13 @@ export function getQRCode(token, employer_id) {
 	})
 }
 
-export function getCompanyFromQR(token, qrValue) {
+export function getCompanyFromQR(token, qr_value) {
 	return axios({
-		method: 'post',
-		url: 'https://coccareerfairapp-development.herokuapp.com/api/employers/qr',
+		method: 'get',
+		url: 'https://coccareerfairapp-development.herokuapp.com/api/qr?qr_code_value=' + qr_value,
 		headers: {
 			'Content-Type': 'application/json',
 			'Authorization': 'Bearer ' + token,
 		},
-		data: {
-			value: qrValue
-		}
 	})
 }

@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import './CompanyProfile.css';
 
 import EditableInfo from '../../components/EditableInfo';
+
+import { getCompany } from '../../redux/actions/companies'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
 
 
 class CompanyProfile extends Component {
@@ -32,11 +35,15 @@ class CompanyProfile extends Component {
 
 	componentDidMount() {
 		const { match: { params } } = this.props;
-		const company = this.props.companies.find(e => e.url === params.id)
-		if (company)
-			this.setState({company: company});
-		else
-			this.props.history.push('notfound')
+		this.props.getCompany(this.props.user.token, params.id).then(res => {
+			console.log(this.props.companies);
+			console.log(params.id);
+			const company = this.props.companies.find(e => e._id === params.id)
+			if (company)
+				this.setState({company: company});
+			else
+				this.props.history.push(params.id + '/notfound')
+		})
 	}
 
 	render() {
@@ -67,4 +74,7 @@ const mapStateToProps = state => ({
 	companies: state.companies,
 });
 
-export default connect(mapStateToProps)(CompanyProfile);
+const mapDispatchToProps = dispatch => 
+	bindActionCreators({ getCompany }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(CompanyProfile);

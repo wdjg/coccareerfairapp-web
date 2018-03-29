@@ -34,23 +34,23 @@ export const setInterviewStudent = student => ({
 });
 
 /**
- * @param  {batch}    array of student objects
+ * @param  {students}    array of student objects
  * @return {function} reducer action
  */
-export const setBatch = batch => ({
+export const setBatch = students => ({
   type: SET_BATCH,
-  payload: {batch: batch},
+  payload: {students: students},
 });
 
 export function getBatch(token, employer_id) {
 	return dispatch => {
 		return BatchAPI.getBatch(token, employer_id).then(res => {
-			setBatch(res.data);
+			dispatch(setBatch(res.data.users));
 		});
 	}
 }
 
-export function setInterviewStatus(token, line_id, status) {
+export function setStudentLineStatus(token, line_id, status) {
 	return dispatch => {
 		return LineAPI.setLineStatus(token, line_id, status);
 	}

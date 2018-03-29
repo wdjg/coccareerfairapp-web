@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
-import classNames from 'classnames';
-import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import InterviewModal from '../../components/InterviewModal';
+import { getBatch, setInterviewStudent } from '../../redux/actions/batch';
+
+import BottomModal from '../../components/BottomModal';
+import Button from '../../components/Button';
 
 import './RecruiterBatch.css';
 
-const TEST_BATCH = [
-{name: "Valdimar Haraldsson", id: "9532016"},
-{name: "Floopy Doop", id: "AAAAAAAAAARG"},
-{name: "Hermann Jung-Olsen", id: "45634516"},
-{name: "Gudrun Gjukadóttir", id: "67824594"},
-{name: "Blerg Fergusson", id: "8679305"},]
+// const TEST_BATCH = [
+// {name: "Valdimar Haraldsson", id: "9532016"},
+// {name: "Floopy Doop", id: "AAAAAAAAAARG"},
+// {name: "Hermann Jung-Olsen", id: "45634516"},
+// {name: "Gudrun Gjukadóttir", id: "67824594"},
+// {name: "Blerg Fergusson", id: "8679305"},]
 
 class RecruiterBatch extends Component {
 
@@ -22,12 +24,17 @@ class RecruiterBatch extends Component {
 
 		this.state = {
 			modal_student: null,
-			show_modal: false
+			show_modal: false,
 	  };
 	}
 
 	componentDidMount() {
-		
+		this.props.getBatch(this.props.user.token, this.props.user.employer_id);
+	}
+
+	beginInterview(student) {
+		this.props.setInterviewStudent(student);
+		this.props.history.push("interview");
 	}
 
 	closeModal() {
@@ -35,12 +42,11 @@ class RecruiterBatch extends Component {
 	}
 
 	openStudentBatchModal(student) {
-		console.log("MODAL: " + student.name + " id: " + student.id);
+		console.log("MODAL: " + student.name + " id: " + student._id);
 		this.setState({modal_student: student, show_modal: true})
 	}
 
 	renderStudents() {
-		// return this.props.batch.map((entry, index) => (
 		return this.props.batch.map((entry, index) => (
 			<li className="batch__item" key={index} onClick={() => this.openStudentBatchModal(entry)}>
 				{entry.name}
@@ -65,32 +71,37 @@ class RecruiterBatch extends Component {
 				<ul className="batch">
 					{this.renderStudents()}
 				</ul>
-				<div className={classNames("modal", {show: this.state.show_modal})}>
-					<div className="shadow" onClick={() => this.closeModal()}></div>
-					<div className="content">
-						{this.state.modal_student && <InterviewModal
-							name={this.state.modal_student.name}
-							id={this.state.modal_student.id}
-							closeModal={() => this.closeModal()}/>}
-					</div>
-				</div>
+				<BottomModal show={this.state.show_modal} closeModal={() => this.closeModal()}>
+					{this.state.modal_student && <div>
+						<h2 className="interview-title">Interview With:</h2>
+						<h1 className="name">{this.state.modal_student.name}</h1>
+						<div className="buttons">
+							<Button 
+								className="btn begin"
+								onClick={() => this.beginInterview(this.state.modal_student)}>
+								Begin
+							</Button>
+							<Button
+								className="btn cancel"
+								onClick={this.closeModal.bind(this)}>
+								Cancel
+							</Button>
+						</div>
+					</div>}
+				</BottomModal>
 			</div>
 		);
 	}
 }
 
-
-				// <Link className="qr-link btn" to="/qr">
-				// 	Tap to show company QR Code
-				// </Link>
-
-// TODO
 const mapStateToProps = state => ({
-	batch: state.batch.batch,
-	line: {
-		students: 20
-	},
+	user: state.user,
+	batch: state.batch.students,
 	interviewTime: 5.34,
+	interview_student: state.batch.interview_student,
 });
 
-export default connect(mapStateToProps)(RecruiterBatch);
+const mapDispatchToProps = dispatch => 
+	bindActionCreators({ getBatch, setInterviewStudent }, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(RecruiterBatch);

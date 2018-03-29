@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import './SearchCompanies.css';
-import classNames from 'classnames';
+
+import { Icon } from 'antd';
+import InputClear from '../../components/InputClear';
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
+import { Link } from 'react-router-dom';
 
 import { getCompanies } from '../../redux/actions/companies';
 import BurgerFilter from '../../resources/burger-filter.svg'
@@ -23,7 +26,6 @@ class SearchCompanies extends Component {
 	}
 
 	renderCompanies(companies, textFilter) {
-		console.log(companies);
 		return companies.filter(company => {
   		let valid = company.name.toLowerCase().includes(textFilter.toLowerCase());
   		// if(this.state.day >= 0) valid &= company.day == this.state.day;
@@ -50,7 +52,7 @@ class SearchCompanies extends Component {
 						value={this.state.search}
 						ref={ref => {this.searchInput = ref}}
 						onChange={e => this.setState({ search: e.target.value })}/>
-					<div className={classNames("search__button clear", {active: this.state.search})} onClick={() => this.onSearchClear()}></div>
+					<InputClear className="search__button" active={this.state.search} onClick={() => this.onSearchClear()} />
 					<div className="search__button filter"><img src={BurgerFilter} alt=""/></div>
 				</div>
 				<div className="companies">
@@ -72,8 +74,16 @@ const mapDispatchToProps = dispatch =>
 export default connect(mapStateToProps, mapDispatchToProps)(SearchCompanies);
 
 const Company = ({...props, index}) => (
-	<div key={index} className="company">
-		<h1>{props.name}</h1>
-		<div className="select">></div>
-	</div>
+	<Link key={index} className="company" to={"company/" + props._id}>
+		<div className="company__logo"></div>
+		<div className="company__content">
+			<div className="company__top">
+				<h1>{props.name}</h1>
+			</div>
+			<div className="company__bottom">
+				<span className="company__line">In line: {2}</span>
+			</div>
+		</div>
+		<div className="company__arrow"><Icon type="right" style={{ fontSize: 20}} /></div>
+	</Link>
 );

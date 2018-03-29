@@ -1,9 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
 
-$black: #1d1d1e;
+$black: #1f1f1f; /*1d1d1e*/
 $grey: rgb(226, 226, 226);
 $white: #fff;
-$primary: #f24e33;
+$primary: #ea2;/* f24e33 */
 
 $font-family: 'Lato', sans-serif;
 /* #b7b7bc; */
+
+$content-padding: 10px;
+$top-bar-height: 50px;
+$top-bar-margin: 12px;
+
+body {
+	background: $white;
+}

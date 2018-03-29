@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import classNames from 'classnames';
 import './Interview.css';
 import Button from '../../components/Button';
 
@@ -8,10 +7,9 @@ import { bindActionCreators} from 'redux'
 import { recruiterSetLineStatus } from '../../redux/actions/line'
 
 
+
 const formattedSeconds = (sec) =>
 	Math.floor(sec / 60) + ':' + ('0' + sec % 60).slice(-2)
-
-const line_id = 0
 
 class Interview extends Component {
 	constructor(props) {
@@ -26,11 +24,18 @@ class Interview extends Component {
 	}
 
 	recruiterStart() {
-		this.props.recruiterSetLineStatus(this.props.user.token, line_id, "startRecruiter");
+		this.setState({
+			line_status: "start"
+		})
+		this.props.setStudentLineStatus(this.props.user.token, this.props.interview_student.line_id, "startrecruiter");
 	}
 
 	recruiterStop() {
-		this.props.recruiterSetLineStatus(this.props.user.token, line_id, "finishRecruiter");
+		this.setState({
+			line_status: "stop"
+		})
+		this.props.setStudentLineStatus(this.props.user.token, this.props.interview_student.line_id, "finishrecruiter");
+		this.props.history.push("batch");
 	}
 
 	handleStartClick() {
@@ -58,7 +63,7 @@ class Interview extends Component {
 		return (
 			<div className="Interview">
 				<br />
-				<h1>Wiqas Nassar</h1>
+				<h1>{this.props.interview_student.name}</h1>
 				<br />
 				<br />
 				<div className="stopwatch">
@@ -87,8 +92,14 @@ class Interview extends Component {
 const mapStateToProps = state => ({
 	user: state.user,
 	line: state.line,
+	interview_student: state.batch.interview_student
 })
 
 const mapDispatchToProps = dispatch =>
+<<<<<<< HEAD
 	bindActionCreators({recruiterSetLineStatus}, dispatch)
+=======
+	bindActionCreators({setStudentLineStatus}, dispatch)
+
+>>>>>>> 6a4f515537bb319f0b558d72aad24c96c9e6962f
 export default connect(mapStateToProps, mapDispatchToProps)(Interview);

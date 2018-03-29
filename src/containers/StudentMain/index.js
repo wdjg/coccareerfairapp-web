@@ -2,9 +2,23 @@ import React, { Component } from 'react';
 import './StudentMain.css';
 
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { getLine } from '../../redux/actions/line';
+
+const ordinal = i => {
+	var j = i % 10,
+		k = i % 100;
+	if (j === 1 && k !== 11) {
+		return "st";
+	}
+	if (j === 2 && k !== 12) {
+		return "nd";
+	}
+	if (j === 3 && k !== 13) {
+		return "rd";
+	}
+	return "th";
+}
 
 class StudentMain extends Component {
 
@@ -12,16 +26,27 @@ class StudentMain extends Component {
 		super(props);
 		this.state = {
 			show_camera: false,
-			company: null,
+			company: {},
 		}
 	}
 
 	componentDidMount() {
-		this.props.getLine(this.props.user.token);
+		this.props.getLine(this.props.user.token).then(res => {
+			if (!res)
+				return;
+			const company = this.props.companies.find(e => e._id === res.data.employer_id)
+			if (company)
+				this.setState({company: company});
+		});
+
 	}
 
 	renderCompany(company) {
 		return company ? company : "Not in Line"
+	}
+
+	renderPlace(place) {
+		return place > -1 ? (<span><span>{place}</span><span className="num-after">{ordinal(place)}</span></span>) : "N/A"
 	}
 
 	render() {
@@ -30,11 +55,11 @@ class StudentMain extends Component {
 				<div className="line-details">
 					<div className="company">
 						<h2>In Line</h2>
-						<div className="data">{this.renderCompany(this.props.company)}</div>
+						<div className="data">{this.renderCompany(this.state.company.name)}</div>
 					</div>
 					<div className="wait">
 						<h2>Place</h2>
-						<div className="data">7<span className="num-after">th</span></div>
+						<div className="data place">{this.renderPlace(this.props.line.myPlace)}</div>
 					</div>
 				</div>
 			</div>
@@ -45,6 +70,7 @@ class StudentMain extends Component {
 const mapStateToProps = state => ({
 	user: state.user,
 	line: state.line,
+	companies: state.companies,
 });
 
 const mapDispatchToProps = dispatch => 

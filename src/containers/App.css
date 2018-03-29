@@ -1,59 +1,76 @@
 @import '../constants.css';
 
+@font-face {
+
+}
+
 body {
   margin: 0;
   padding: 0;
   font-family: $font-family
 }
 
+h1 {
+	margin: 0 10px;
+	font-weight: 300;
+	color: $black;
+	font-size: 30px;
+}
+
 .App {
 	height: 100vh;
-	display: -webkit-flex;
-	display: -moz-flex;
-	display: -ms-flex;
-	display: -o-flex;
 	display: flex;
-	-webkit-flex-flow: column;
-	-moz-flex-flow: column;
-	-ms-flex-flow: column;
-	-o-flex-flow: column;
 	flex-flow: column;
 }
 
-.top-nav {
+.menu {
+	height: 100vh;
+	width: 250px;
+	position: fixed;
+	left: -260px;
+	background: #fff;
+	z-index: 10;
+	transition: left 0.55s cubic-bezier(.46,.02,.04,.99), box-shadow 0.55s cubic-bezier(.46,.02,.04,.99);
+	&.show {
+		left: 0;
+		box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.1);
+	}
+}
+
+.sidebar {
+	width: 20%;
+	height: 100vh;
+	max-width: 272px;
 	background: $black;
-  height: 70px;
-  display: flex;
-  .top-nav__item {
-		flex: 1;
-		line-height: 70px;
-		display: flex;
-		&.right {
-			justify-content: flex-end;
-		}
-		&.title {
-			text-align: center;
-			color: $white;
-			font-size: 16px;
-			font-weight: 700;
-		}
-  }
-  .burger {
-  	height: 20px;
-  	margin: 25px 15px;
-  }
-  .camera {
-  	width: 25px;
-		margin-right: 15px;
-  }
+}
+
+.main {
+	flex: 1;
+	/* height: 100vh; */
+	display: flex;
+	/* flex-flow: column; */
+}
+
+.shade {
+	background: none;
+	position: fixed;
+	z-index: 9;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	transition: background 0.55s ease;
+	pointer-events: none;
+	&.show {
+		background: rgba(0,0,0,0.4);
+		pointer-events: auto;
+	}
 }
 
 .bottom-nav {
 	background: $grey;
   height: 45px;
   width: 100%;
-  position: fixed;
-  bottom: 0;
 }
 
 .logout {
@@ -61,7 +78,7 @@ body {
 	cursor: pointer;
 	user-select: none;
 	float: right;
-	margin-right: 10px;
+	margin-right: 12px;
 	text-decoration: none;
 }
 
@@ -80,9 +97,45 @@ body {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		img {
+		i {
 			width: 30px;
 			margin: 0 auto;
+			font-size: 26px;
+		}
+	}
+}
+
+.content-container {
+	flex: 1;
+	overflow: auto;
+}
+
+.bottom-bar-nav {
+	position: fixed;
+	bottom: 0;
+}
+
+@media screen and (min-width: 680px) {
+	.main .content-container > div {
+		padding: 10px;
+	}
+}
+
+.ant-menu {
+	background: $black;
+	color: $white;
+	border-bottom-color: $black;
+	a {
+		color: $white !important;	
+	}
+	.ant-menu-item {
+		box-sizing: border-box !important;
+	}
+	.ant-menu-item-selected, .ant-menu-item-active {
+		color: $primary !important;
+		border-bottom-color: $primary !important;
+		a {
+			color: $primary !important;	
 		}
 	}
 }

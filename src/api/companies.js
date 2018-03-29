@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-export function getCompany(token, id) {
+export function getCompany(token, employer_id) {
 	return axios({
 		method: 'get',
-		url: 'https://coccareerfairapp-development.herokuapp.com/api/employers/' + id,
+		url: 'https://coccareerfairapp-development.herokuapp.com/api/employers/' + employer_id,
 		headers: {
 			'Content-Type': 'application/json',
 			'Authorization': 'Bearer ' + token,

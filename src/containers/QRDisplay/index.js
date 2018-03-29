@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import QRCode from 'qrcode.react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 
 import './QRDisplay.css'
