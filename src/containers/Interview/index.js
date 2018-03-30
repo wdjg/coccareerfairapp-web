@@ -96,10 +96,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch =>
-<<<<<<< HEAD
 	bindActionCreators({recruiterSetLineStatus}, dispatch)
-=======
-	bindActionCreators({setStudentLineStatus}, dispatch)
 
->>>>>>> 6a4f515537bb319f0b558d72aad24c96c9e6962f
 export default connect(mapStateToProps, mapDispatchToProps)(Interview);

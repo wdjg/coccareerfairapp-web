@@ -17,6 +17,7 @@ import QRDisplay from './QRDisplay';
 import RecruiterProfile from './RecruiterProfile';
 import Interview from './Interview';
 import SearchCompanies from './SearchCompanies';
+import MapScreen from './MapScreen';
 
 import 'antd/lib/style/index.css';
 import 'antd/lib/menu/style/index.css';
@@ -182,6 +183,7 @@ class App extends React.Component {
 							<Route path="/company/:id/notfound" component={NotFound} />
 							<Route path="/company/:id" render={props => (<CompanyProfile {...props} auth={this.props.user.user_type} />)} />
 							<Route path="/search" component={SearchCompanies} />
+							<Route path="/map" component={MapScreen} />
 							<Route path="*" component={NotFound} />
 					  </ConnectedSwitch>
 					</div>
