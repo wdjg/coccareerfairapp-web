@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './MapScreen.css';
 
 import { connect } from 'react-redux'
-import { bindActionCreators} from 'redux'
+//import { bindActionCreators} from 'redux'
 
 class MapScreen extends Component {
 	constructor(props) {
@@ -38,7 +38,7 @@ class MapScreen extends Component {
     if (imagePreviewUrl) {
       $imagePreview = (<img src={imagePreviewUrl} />);
     } else {
-      $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
+      $imagePreview = (<div className="previewText">Please select a Map Image</div>);
     }
 
     return (
@@ -47,9 +47,6 @@ class MapScreen extends Component {
           <input className="fileInput" 
             type="file" 
             onChange={(e)=>this._handleImageChange(e)} />
-          <button className="submitButton" 
-            type="submit" 
-            onClick={(e)=>this._handleSubmit(e)}>Upload Image</button>
         </form>
         <div className="imgPreview">
           {$imagePreview}
@@ -58,3 +55,9 @@ class MapScreen extends Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+	user: state.user,
+});
+
+export default connect(mapStateToProps)(MapScreen);

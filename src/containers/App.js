@@ -175,7 +175,7 @@ class App extends React.Component {
 					  <ConnectedSwitch>
 							<Route path="/login" component={Auth.userIsNotAuth(Login)} />
 							{!auth && <Route exact path="/" component={SearchCompanies}/>}
-							<Route exact path="/" component={checkUser()} />	
+							<Route exact path="/" component={this.checkUser()} />	
 							<Route path="/batch" component={Auth.userIsAuth(Auth.userIsRecruiter(RecruiterBatch))} />
 							<Route path="/qr" component={Auth.userIsAuth(Auth.userIsRecruiter(QRDisplay))} />
 							<Route path="/interview" component={Interview} />	

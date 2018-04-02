@@ -36,10 +36,10 @@ server
       </Provider>
     );
 
-server
-  .get('./testImage.jpg', (req, res) => {
-    res.sendfile(path.resolve('./uploads/testImage.jpg'));
-    });
+// server
+//   .get('./testImage.jpg', (req, res) => {
+//     res.sendfile(path.resolve('./uploads/testImage.jpg'));
+//     });
 
     // Grab the initial state from our Redux store
     const finalState = store.getState();
