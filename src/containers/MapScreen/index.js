@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import './MapScreen.css';
 
 import { connect } from 'react-redux'
-//import { bindActionCreators} from 'redux'
+import ReactImageZoom from 'react-image-zoom'
+import DefaultImage from '../../resources/def-image.svg'
 
 class MapScreen extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {file: '', impagePrviewUrl: ''};
+		this.state = {file: '', imagePreviewUrl: ''};
 	}
 
   _handleSubmit(e) {
@@ -34,11 +35,11 @@ class MapScreen extends Component {
 
   render() {
     let {imagePreviewUrl} = this.state;
-    let $imagePreview = null;
+    let imagePreview = null;
     if (imagePreviewUrl) {
-      $imagePreview = (<img src={imagePreviewUrl} />);
+      imagePreview = (<img src={imagePreviewUrl} />);
     } else {
-      $imagePreview = (<div className="previewText">Please select a Map Image</div>);
+      imagePreview = (<div className="defaultImage"><img src={DefaultImage} alt=""/></div>);
     }
 
     return (
@@ -49,7 +50,7 @@ class MapScreen extends Component {
             onChange={(e)=>this._handleImageChange(e)} />
         </form>
         <div className="imgPreview">
-          {$imagePreview}
+          {imagePreview}
         </div>
       </div>
     )
@@ -58,6 +59,10 @@ class MapScreen extends Component {
 
 const mapStateToProps = state => ({
 	user: state.user,
+	width: 750,
+	height: 550,
+	zoomWidth: 100,
+	img: this.imagePreview,
 });
 
 export default connect(mapStateToProps)(MapScreen);

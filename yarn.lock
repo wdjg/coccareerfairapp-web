@@ -4022,6 +4022,10 @@ js-base64@^2.1.9:
   version "2.1.9"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.1.9.tgz#f0e80ae039a4bd654b5f281fc93f04a914a7fcce"
 
+js-image-zoom@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/js-image-zoom/-/js-image-zoom-0.5.0.tgz#5f149ab44ca53e723b54f7eb41fe2c5f91a6af5a"
+
 js-tokens@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.1.tgz#08e9f132484a2c45a30907e9dc4d5567b7f114d7"
@@ -6182,6 +6186,13 @@ react-icons@^2.2.7:
   resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-2.2.7.tgz#d7860826b258557510dac10680abea5ca23cf650"
   dependencies:
     react-icon-base "2.1.0"
+
+react-image-zoom@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/react-image-zoom/-/react-image-zoom-0.7.0.tgz#c69b68237657e56f36895ddfe19b7e5365880e1c"
+  dependencies:
+    js-image-zoom "^0.5.0"
+    prop-types "^15.5.6"
 
 react-lazy-load@^3.0.12:
   version "3.0.13"
