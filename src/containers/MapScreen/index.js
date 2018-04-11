@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './MapScreen.css';
 
 import { connect } from 'react-redux'
-import ReactImageZoom from 'react-image-zoom'
+import {PinchView} from 'react-pinch-zoom-pan'
 import DefaultImage from '../../resources/def-image.svg'
 
 class MapScreen extends Component {
@@ -39,7 +39,10 @@ class MapScreen extends Component {
     if (imagePreviewUrl) {
       imagePreview = (<img src={imagePreviewUrl} />);
     } else {
-      imagePreview = (<div className="defaultImage"><img src={DefaultImage} alt=""/></div>);
+      imagePreview = (
+        <div className="defaultImage">
+          <img src={DefaultImage} alt=""/>
+        </div>);
     }
 
     return (
@@ -51,6 +54,13 @@ class MapScreen extends Component {
         </form>
         <div className="imgPreview">
           {imagePreview}
+          <PinchView maxScale={4} containerRatio={((400 / 600) * 100)}>
+            <img src={imagePreviewUrl} style={{
+              margin: 'auto',
+              width: '100%',
+              height: 'auto'
+            }} />
+          </PinchView>
         </div>
       </div>
     )
@@ -61,7 +71,7 @@ const mapStateToProps = state => ({
 	user: state.user,
 	width: 750,
 	height: 550,
-	zoomWidth: 100,
+	//zoomWidth: 100,
 	img: this.imagePreview,
 });
 

@@ -31,6 +31,7 @@
     "react-height": "^3.0.0",
     "react-icons": "^2.2.7",
     "react-image-zoom": "^0.7.0",
+    "react-pinch-zoom-pan": "^1.4.5",
     "react-qr-reader": "^2.0.1",
     "react-redux": "^5.0.6",
     "react-responsive": "^4.1.0",

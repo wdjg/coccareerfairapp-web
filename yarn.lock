@@ -4382,7 +4382,7 @@ lodash.restparam@^3.0.0:
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/lodash.restparam/-/lodash.restparam-3.6.1.tgz#936a4e309ef330a7645ed4145986c85ae5b20805"
 
-lodash.throttle@^4.0.0:
+lodash.throttle@^4.0.0, lodash.throttle@^4.0.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
 
@@ -6203,6 +6203,19 @@ react-lazy-load@^3.0.12:
     lodash.throttle "^4.0.0"
     prop-types "^15.5.8"
 
+react-pinch-zoom-pan@^1.4.5:
+  version "1.4.5"
+  resolved "https://registry.yarnpkg.com/react-pinch-zoom-pan/-/react-pinch-zoom-pan-1.4.5.tgz#da0db9e8d793acc92ea76ab751e2299c671b5486"
+  dependencies:
+    lodash.throttle "^4.0.1"
+    prop-types "^15.5.4"
+    react-prefixr "^0.1.0"
+    rxjs "^5.4.0"
+
+react-prefixr@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/react-prefixr/-/react-prefixr-0.1.0.tgz#94107665211ba9557e1c3ed162349cc4af88aa23"
+
 react-qr-reader@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-qr-reader/-/react-qr-reader-2.0.1.tgz#f7be785e8c880d7e68423fc129802994f70b6b58"
@@ -6667,6 +6680,12 @@ rx-lite-aggregates@^4.0.8:
 rx-lite@*, rx-lite@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/rx-lite/-/rx-lite-4.0.8.tgz#0b1e11af8bc44836f04a6407e92da42467b79444"
+
+rxjs@^5.4.0:
+  version "5.5.8"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.5.8.tgz#b2b0809a57614ad6254c03d7446dea0d83ca3791"
+  dependencies:
+    symbol-observable "1.0.1"
 
 safe-buffer@5.1.1, safe-buffer@^5.1.0, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.1"
@@ -7187,6 +7206,10 @@ svgo@^0.7.0:
     mkdirp "~0.5.1"
     sax "~1.2.1"
     whet.extend "~0.9.9"
+
+symbol-observable@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.0.1.tgz#8340fc4702c3122df5d22288f88283f513d3fdd4"
 
 symbol-observable@1.0.4:
   version "1.0.4"
