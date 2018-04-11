@@ -22,10 +22,6 @@ class Interview extends Component {
 		this.incrementer = null;
 	}
 
-	// componentDidMount() {
-	// 	this.props.setStudentLineStatus();
-	// }
-
 	recruiterStart() {
 		this.setState({
 			line_status: "start"
@@ -58,19 +54,13 @@ class Interview extends Component {
 		});
 	}
 
-	handleResetClick() {
-		clearInterval(this.incrementer);
-		this.setState({
-			seconds_elapsed: 0,
-			laps: []
-		});
+	handleCancelClick() {
+		this.props.history.push("batch");
 	}
-
-	//TODO: handleCancelClick to go to previous batch screen
 
 	render() {
 		return (
-			<div className="interview">
+			<div className="Interview">
 				<br />
 				<h1>{this.props.interview_student.name}</h1>
 				<br />
@@ -82,24 +72,16 @@ class Interview extends Component {
 		          		<div>
 		          			<br />
 		          			<Button className="start-btn" onClick={this.handleStartClick.bind(this)}>Start Interview</Button>
-		          			<Button className="cancel-btn" onClick={this.handleResetClick.bind(this)}>Cancel Interview</Button>
+		          			<Button className="cancel-btn" onClick={this.handleCancelClick.bind(this)}>Cancel Interview</Button>
 		          		</div>
 		          		: 
 		          		<div>
 		          			<br />
 		          			<Button className="stop-btn" onClick={this.handleStopClick.bind(this)}>End Interview</Button>
+		          			<Button className="batch-btn" onClick={this.handleCancelClick.bind(this)}>Return To Batch</Button>
 		          		</div>
 		          		
 	          		)}
-
-	        		{(this.state.seconds_elapsed !== 0 && this.incrementer === this.state.last_cleared_incrementer
-	          			? 
-						<div>
-							<br />
-	          				<Button className="reset-btn" onClick={this.handleResetClick.bind(this)}>RESET</Button>
-	          			</div>
-	          			: null
-	        		)}
 				</div>
 			</div>
 		);
