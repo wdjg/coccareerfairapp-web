@@ -4,12 +4,16 @@ import './SearchCompanies.css';
 import { Icon } from 'antd';
 import InputClear from '../../components/InputClear';
 
+import { Icon } from 'antd';
+import InputClear from '../../components/InputClear';
+import Filter from '../../components/Filter';
+
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 
 import { getCompanies } from '../../redux/actions/companies';
-import BurgerFilter from '../../resources/burger-filter.svg'
+import BurgerFilter from '../../resources/burger-filter.svg';
 
 class SearchCompanies extends Component {
 
@@ -17,7 +21,8 @@ class SearchCompanies extends Component {
 	  super(props);
 	
 	  this.state = {
-	  	search: ''
+	  	search: '',
+	  	showFilter: false,
 	  };
 	}
 
@@ -41,6 +46,10 @@ class SearchCompanies extends Component {
 		this.searchInput.focus();
 	}
 
+	onFilterClick() {
+		this.setState(prev => ({ showFilter: !prev.showFilter }));
+	}
+
 	render() {
 		return (
 			<div className="SearchCompanies">
@@ -52,11 +61,20 @@ class SearchCompanies extends Component {
 						value={this.state.search}
 						ref={ref => {this.searchInput = ref}}
 						onChange={e => this.setState({ search: e.target.value })}/>
-					<InputClear className="search__button" active={this.state.search} onClick={() => this.onSearchClear()} />
-					<div className="search__button filter"><img src={BurgerFilter} alt=""/></div>
+					<InputClear 
+						className="search__button"
+						active={this.state.search} onClick={this.onSearchClear.bind(this)} />
+					<div
+						className="search__button filter"
+						onClick={this.onFilterClick.bind(this)}><img src={BurgerFilter} alt=""/></div>
 				</div>
-				<div className="companies">
-					{this.renderCompanies(this.props.companies, this.state.search)}
+				<div className="content">
+					<div className={classNames("filter", {show: this.state.showFilter})}>
+						<Filter></Filter>
+					</div>
+					<div className="companies">
+						{this.renderCompanies(this.props.companies, this.state.search)}
+					</div>
 				</div>
 			</div>
 		);
@@ -66,6 +84,7 @@ class SearchCompanies extends Component {
 const mapStateToProps = state => ({
 	user: state.user,
 	companies: state.companies,
+	filter: state.filter,
 });
 
 const mapDispatchToProps = dispatch => 

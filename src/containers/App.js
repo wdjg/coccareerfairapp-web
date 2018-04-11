@@ -3,7 +3,6 @@ import classNames from 'classnames';
 // import PropTypes from 'prop-types';
 
 import TopBar from '../components/TopBar'
-import MediaQuery from 'react-responsive';
 
 import NotFound from './NotFound';
 import Login from './Login';
@@ -31,7 +30,6 @@ import { bindActionCreators } from 'redux';
 import { sessionLogin, userLogout } from '../redux/actions/login';
 import { setScannerVisibility } from '../redux/actions/scanner';
 import { Menu } from 'antd';
-import { MobileScreen, DesktopScreen } from 'react-responsive-redux'
 import '../resources/style.css';
 
 const ConnectedSwitch = connect(state => ({
@@ -120,7 +118,6 @@ class App extends React.Component {
 			return Auth.userIsAdmin(SearchCompanies);
 		}
 	}
-
 	render() {
 		let auth = this.props.user.user_type;
 		const student_buttons = [
@@ -151,26 +148,20 @@ class App extends React.Component {
 		}
 		return (
 			<div className="App">
-				<DesktopScreen>
-					<Menu
-		        onClick={this.handleMenuClick.bind(this)}
-		        selectedKeys={[this.state.menu_current]}
-		        mode="horizontal">
-		        {this.renderMenuButtons(auth === undefined ? unregistered_buttons : (auth === "recruiter" ? recruiter_buttons : student_buttons))}
-		      </Menu>
-				</DesktopScreen>
-				<MobileScreen>
-					<SmoothCollapse
-						expanded={this.state.show_navs}
-						heightTransition="0.3s cubic-bezier(.46,.02,.04,.99)"
-						className="top-bar-hider">
-						<TopBar buttons={top_buttons} onBurgerClick={() => this.setMenuState(true)} />
-					</SmoothCollapse>
-				</MobileScreen>
+				{this.props.browser.greaterThan.extraSmall && <Menu
+	        onClick={this.handleMenuClick.bind(this)}
+	        selectedKeys={[this.state.menu_current]}
+	        mode="horizontal">
+	        {this.renderMenuButtons(auth === undefined ? unregistered_buttons : (auth === "recruiter" ? recruiter_buttons : student_buttons))}
+	      </Menu>}
+				{this.props.browser.is.extraSmall && <SmoothCollapse
+					expanded={this.state.show_navs}
+					heightTransition="0.3s cubic-bezier(.46,.02,.04,.99)"
+					className="top-bar-hider">
+					<TopBar buttons={top_buttons} onBurgerClick={() => this.setMenuState(true)} />
+				</SmoothCollapse>}
 				<div className="main">
-					<DesktopScreen>
-						<div className="sidebar"></div>
-					</DesktopScreen>
+					{this.props.browser.greaterThan.extraSmall && <div className="sidebar"></div>}
 					<div className="content-container" ref={ref => {this.scroll_content = ref}}>
 					  <ConnectedSwitch>
 							<Route path="/login" component={Auth.userIsNotAuth(Login)} />
@@ -188,9 +179,7 @@ class App extends React.Component {
 					  </ConnectedSwitch>
 					</div>
 				</div>
-				
-				
-				{this.props.user.user_type && <MediaQuery query="(max-device-width: 1224px)">
+				{(this.props.user.user_type && this.props.browser.is.extraSmall) &&
 					<SmoothCollapse
 						expanded={this.state.show_navs}
 						heightTransition="0.3s cubic-bezier(.46,.02,.04,.99)"
@@ -198,8 +187,7 @@ class App extends React.Component {
 						<nav className="bottom-nav">
 							{this.renderBottomNavButtons(auth === "recruiter" ? recruiter_buttons : student_buttons)}
 				  	</nav>
-		  		</SmoothCollapse>
-		  	</MediaQuery>}			
+		  		</SmoothCollapse>}			
 				<QRScannerFull onExit={() => this.props.setScannerVisibility(false)} visible={this.props.scannerVisible}/>
 				<div 
 					className={classNames("shade", {show: this.state.show_menu})}
@@ -215,6 +203,7 @@ class App extends React.Component {
 const mapStateToProps = state => ({
 	user: state.user,
 	scannerVisible: state.scanner.visible,
+	browser: state.browser,
 });
 
 const mapDispatchToProps = dispatch =>

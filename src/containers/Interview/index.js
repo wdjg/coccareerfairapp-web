@@ -4,8 +4,7 @@ import Button from '../../components/Button';
 
 import { connect } from 'react-redux'
 import { bindActionCreators} from 'redux'
-import { recruiterSetLineStatus } from '../../redux/actions/line'
-
+import { setStudentLineStatus } from '../../redux/actions/batch'
 
 
 const formattedSeconds = (sec) =>
@@ -96,6 +95,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch =>
-	bindActionCreators({recruiterSetLineStatus}, dispatch)
+	bindActionCreators({setStudentLineStatus}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Interview);

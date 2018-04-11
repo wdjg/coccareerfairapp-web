@@ -38,8 +38,7 @@ h1 {
 }
 
 .sidebar {
-	width: 20%;
-	height: 100vh;
+	width: 200px;
 	max-width: 272px;
 	background: $black;
 }

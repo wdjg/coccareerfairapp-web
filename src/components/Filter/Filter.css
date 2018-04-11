@@ -1,0 +1,8 @@
+.Filter {
+  .entry {
+    padding: 0 10px;
+    .entry__select {
+      width: 100%;
+    }
+  }
+}
