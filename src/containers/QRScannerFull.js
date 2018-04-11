@@ -121,10 +121,10 @@ class QRScannerFull extends Component {
 							<h1 className="name">{this.state.company.name}</h1>
 							<SmoothCollapse expanded={Boolean(this.state.confirm_status)} heightTransition="0.3s cubic-bezier(.46,.02,.04,.99)">
 								{this.state.confirm_status === 'inline' && <div className="confirm-msg inline">You can join the batch now!</div>}
-								{this.state.confirm_status === 'preline' && <div className="confirm-msg preline">OK, not wait for a notification</div>}
+								{this.state.confirm_status === 'preline' && <div className="confirm-msg preline">OK, now wait for a notification</div>}
 							</SmoothCollapse>
 							<SmoothCollapse expanded={Boolean(this.state.error_status)} heightTransition="0.3s cubic-bezier(.46,.02,.04,.99)">
-								{this.state.error_status === 'mustwait' && <div className="error-msg mustwait">You must wait to recieve a notification</div>}
+								{this.state.error_status === 'mustwait' && <div className="error-msg mustwait">You must wait to receive a notification</div>}
 								{this.state.error_status === 'otherline' && <div className="error-msg otherline">You're already in a line</div>}
 								{this.state.error_status === 'alreadyin' && <div className="error-msg alreadyin">You're already in line</div>}
 							</SmoothCollapse>

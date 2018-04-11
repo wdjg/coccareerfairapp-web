@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
 import logger from 'redux-logger'
 import { routerMiddleware } from 'react-router-redux'
-import { responsiveStoreEnhancer } from 'redux-responsive'
+import { createResponsiveStoreEnhancer } from 'redux-responsive'
 
 const configureStore = (preloadedState, history) => {
   const middleware = [thunk, routerMiddleware(history), logger];
@@ -11,7 +11,7 @@ const configureStore = (preloadedState, history) => {
     rootReducer,
     preloadedState,
     compose(
-      responsiveStoreEnhancer,
+      createResponsiveStoreEnhancer({calculateInitialState: false}),
       applyMiddleware(...middleware),
     )
   );

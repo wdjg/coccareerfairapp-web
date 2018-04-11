@@ -256,7 +256,7 @@ class TabWindow extends Component {
 			<div className={classNames(this.props.className, "windows__window", this.props.id, {hidden: this.props.hide})}>
 				{this.props.children}
 			</div>
-			);
+		);
 	}
 }
 
