@@ -38,12 +38,11 @@
     color: #4bd761;
     margin-right: 20px; 
   }
-  .stop-btn  { color: #fd3d2a }
-  .cancel-btn  { color: #fd3d2a }
-  .reset-btn { 
-    color: #000000;
-    font-style: bold;
-    font-weight: 900; 
+  .stop-btn  { 
+    color: #fd3d2a;
+    margin-right: 20px;
   }
+  .batch-btn { color: #000000 }
+  .cancel-btn  { color: #fd3d2a }
   
 }

@@ -16,6 +16,7 @@ import QRDisplay from './QRDisplay';
 import RecruiterProfile from './RecruiterProfile';
 import Interview from './Interview';
 import SearchCompanies from './SearchCompanies';
+import MapScreen from './MapScreen';
 
 import 'antd/lib/style/index.css';
 import 'antd/lib/menu/style/index.css';
@@ -108,6 +109,15 @@ class App extends React.Component {
 		this.setState({ show_menu: val });
 	}
 
+	checkUser() {
+		if (this.props.user.user_type === "student") {
+			return Auth.userIsStudent(StudentMain);
+		} else if (this.props.user.user_type === "recruiter") {
+			return Auth.userIsRecruiter(RecruiterMain);
+		} else if (this.props.user.user_type === "admin") {
+			return Auth.userIsAdmin(SearchCompanies);
+		}
+	}
 	render() {
 		let auth = this.props.user.user_type;
 		const student_buttons = [
@@ -156,7 +166,7 @@ class App extends React.Component {
 					  <ConnectedSwitch>
 							<Route path="/login" component={Auth.userIsNotAuth(Login)} />
 							{!auth && <Route exact path="/" component={SearchCompanies}/>}
-							<Route exact path="/" component={Auth.userIsAuth(auth === "recruiter" ? Auth.userIsRecruiter(RecruiterMain) : Auth.userIsStudent(StudentMain))} />	
+							<Route exact path="/" component={this.checkUser()} />	
 							<Route path="/batch" component={Auth.userIsAuth(Auth.userIsRecruiter(RecruiterBatch))} />
 							<Route path="/qr" component={Auth.userIsAuth(Auth.userIsRecruiter(QRDisplay))} />
 							<Route path="/interview" component={Interview} />	
@@ -164,12 +174,11 @@ class App extends React.Component {
 							<Route path="/company/:id/notfound" component={NotFound} />
 							<Route path="/company/:id" render={props => (<CompanyProfile {...props} auth={this.props.user.user_type} />)} />
 							<Route path="/search" component={SearchCompanies} />
+							<Route path="/map" component={MapScreen} />
 							<Route path="*" component={NotFound} />
 					  </ConnectedSwitch>
 					</div>
 				</div>
-				
-				
 				{(this.props.user.user_type && this.props.browser.is.extraSmall) &&
 					<SmoothCollapse
 						expanded={this.state.show_navs}

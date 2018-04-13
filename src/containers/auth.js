@@ -19,6 +19,13 @@ export const userIsRecruiter = connectedRouterRedirect ({
   wrapperDisplayName: 'UserIsRecruiter',
 })
 
+export const userIsAdmin = connectedRouterRedirect ({
+  redirectPath: '/',
+  allowRedirectBack: false,
+  authenticatedSelector: state => Boolean(state.user.user_type) && state.user.user_type === "admin",
+  wrapperDisplayName: 'UserIsAdmin',  
+})
+
 export const userIsAuth = connectedRouterRedirect ({
   redirectPath: '/login',
   allowRedirectBack: true,
