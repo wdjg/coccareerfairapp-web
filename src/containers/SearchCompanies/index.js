@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './SearchCompanies.css';
+import classNames from 'classnames'
 
 import { Icon } from 'antd';
 import InputClear from '../../components/InputClear';
