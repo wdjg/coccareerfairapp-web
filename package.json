@@ -2,6 +2,9 @@
   "name": "my-razzle-app",
   "version": "0.1.0",
   "license": "MIT",
+  "engines": {
+    "node": "8.9.4"
+  },
   "scripts": {
     "dev": "razzle start",
     "build": "razzle build",
