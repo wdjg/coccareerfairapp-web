@@ -3,9 +3,6 @@ import './SearchCompanies.css';
 
 import { Icon } from 'antd';
 import InputClear from '../../components/InputClear';
-
-import { Icon } from 'antd';
-import InputClear from '../../components/InputClear';
 import Filter from '../../components/Filter';
 
 import { connect } from 'react-redux'
