@@ -4,7 +4,7 @@ import './Filter.css';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 
-import { setFilter, setFilterKey } from '../../redux/actions/filter';
+import { setFilterKey } from '../../redux/actions/searchfilter';
 
 import { Select } from 'antd';
 import 'antd/lib/select/style/index.css'
@@ -63,9 +63,10 @@ class Filter extends Component {
 		return filters.map((item, index) => (
 			<FilterSelect
 				label={item.label}
-				key={item.key}
+				name={item.key}
 				handleChange={this.handleSelect.bind(this)}
 				options={item.options}
+				key={index}
 				state={this.props.filter}/>
 		));
 	}
@@ -80,25 +81,25 @@ class Filter extends Component {
 	}
 }
 
-const FilterSelect = ({label, key, handleChange, options, state}) => (
+const FilterSelect = ({label, name, handleChange, options, state}) => (
 	<div className="entry">
 		<h2 className="entry__title">{label}</h2>
 		<Select
 			mode="multiple"
 			className="entry__select"
 			placeholder={"Please select " + label.toLowerCase()}
-			onChange={val => handleChange(key, val)}
-			value={state[key]}>
+			onChange={val => handleChange(name, val)}
+			value={state[name]}>
 			{options.map((item, index) => (<Option key={index}>{item}</Option>))}
 		</Select>
 	</div>
 )
 
 const mapStateToProps = state => ({
-	filter: state.filter,
+	filter: state.searchfilter,
 });
 
 const mapDispatchToProps = dispatch =>
-	bindActionCreators({ setFilter, setFilterKey }, dispatch) 
+	bindActionCreators({ setFilterKey }, dispatch) 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filter);

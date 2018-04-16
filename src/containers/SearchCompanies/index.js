@@ -11,6 +11,8 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 
 import { getCompanies } from '../../redux/actions/companies';
+import { setNavContent } from '../../redux/actions/navbar';
+import { setFilterKey } from '../../redux/actions/searchfilter'
 import BurgerFilter from '../../resources/burger-filter.svg';
 
 class SearchCompanies extends Component {
@@ -19,13 +21,17 @@ class SearchCompanies extends Component {
 	  super(props);
 	
 	  this.state = {
-	  	search: '',
 	  	showFilter: false,
 	  };
 	}
 
 	componentDidMount() {
 		this.props.getCompanies(this.props.user.token);
+		this.props.setNavContent(<SearchBar/>);
+	}
+
+	componentWillUnmount() {
+		this.props.setNavContent(null);
 	}
 
 	renderCompanies(companies, textFilter) {
@@ -39,11 +45,6 @@ class SearchCompanies extends Component {
     }).map((company, index) => Company({...company, index: index}))
 	}
 
-	onSearchClear() {
-		this.setState({ search: '' });
-		this.searchInput.focus();
-	}
-
 	onFilterClick() {
 		this.setState(prev => ({ showFilter: !prev.showFilter }));
 	}
@@ -51,27 +52,27 @@ class SearchCompanies extends Component {
 	render() {
 		return (
 			<div className="SearchCompanies">
-				<div className="search">
+				{this.props.browser.is.extraSmall && <div className="search">
 					<input
 						type="text"
 						className="search-input"
 						placeholder="Search"
-						value={this.state.search}
+						value={this.props.filter.search}
 						ref={ref => {this.searchInput = ref}}
-						onChange={e => this.setState({ search: e.target.value })}/>
+						onChange={e => this.props.setFilterKey('search', e.target.value)}/>
 					<InputClear 
 						className="search__button"
-						active={this.state.search} onClick={this.onSearchClear.bind(this)} />
+						active={this.props.filter.search} onClick={this.onSearchClear.bind(this)} />
 					<div
 						className="search__button filter"
 						onClick={this.onFilterClick.bind(this)}><img src={BurgerFilter} alt=""/></div>
-				</div>
+				</div>}
 				<div className="content">
 					<div className={classNames("filter", {show: this.state.showFilter})}>
 						<Filter></Filter>
 					</div>
 					<div className="companies">
-						{this.renderCompanies(this.props.companies, this.state.search)}
+						{this.renderCompanies(this.props.companies, this.props.filter.search)}
 					</div>
 				</div>
 			</div>
@@ -82,11 +83,12 @@ class SearchCompanies extends Component {
 const mapStateToProps = state => ({
 	user: state.user,
 	companies: state.companies,
-	filter: state.filter,
+	filter: state.searchfilter,
+	browser: state.browser,
 });
 
 const mapDispatchToProps = dispatch => 
-	bindActionCreators({ getCompanies }, dispatch);
+	bindActionCreators({ getCompanies, setNavContent, setFilterKey }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchCompanies);
 
@@ -104,3 +106,30 @@ const Company = ({...props, index}) => (
 		<div className="company__arrow"><Icon type="right" style={{ fontSize: 20}} /></div>
 	</Link>
 );
+
+
+class SearchBar extends Component {
+	onSearchClear() {
+		this.props.setFilterKey('search','')
+		this.searchInput.focus();
+	}
+	render() {
+		return (
+			<div className="topbar-search">
+				<input
+					type="text"
+					className="search-input"
+					placeholder="Search Companies"
+					value={this.props.filter.search}
+					ref={ref => {this.searchInput = ref}}
+					onChange={e => this.props.setFilterKey('search', e.target.value)}/>
+				<InputClear 
+					className="search__button"
+					active={this.props.filter.search} onClick={this.onSearchClear.bind(this)} />
+			</div>
+		);
+	}
+}
+
+SearchBar = connect(state => ({ filter: state.searchfilter }), 
+	dispatch => bindActionCreators({ setFilterKey }, dispatch))(SearchBar)

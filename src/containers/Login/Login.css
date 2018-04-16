@@ -37,7 +37,8 @@
     line-height: 40px;
     position: relative;
     text-transform: uppercase;
-    color: #eee;
+    color: #fff;
+    /* font-weight: 400; */
     &:after {
       content: '';
       position: absolute;
@@ -102,14 +103,14 @@
 input {
   border: 0;
   outline: none;
-  background: #e2e2e2;
+  background: #55555533;
   padding: 5px;
   margin: 3px;
   color: #333;
   font-family: $font-family;
   box-sizing:border-box;
   &::placeholder {
-    color: #999;
+    color:  #55555577;
   }
 }
 

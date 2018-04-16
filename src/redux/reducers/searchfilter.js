@@ -1,9 +1,11 @@
 import { fromJS } from 'immutable';
-import { SET_FILTER_KEY, SET_FILTER } from '../actions/filter';
+import { SET_FILTER_KEY, SET_FILTER } from '../actions/searchfilter';
 
-const initialState = {}
+const initialState = {
+	search: ''
+}
 
-const filter = (state = initialState, action) => {
+const searchfilter = (state=initialState, action) => {
 	let immutableState = fromJS(state);
 	switch (action.type) {
 		case SET_FILTER_KEY:
@@ -15,4 +17,4 @@ const filter = (state = initialState, action) => {
 	}
 };
 
-export default filter;
+export default searchfilter;

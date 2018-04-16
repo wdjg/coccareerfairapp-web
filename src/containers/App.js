@@ -1,40 +1,20 @@
 import React from 'react';
 import classNames from 'classnames';
-// import PropTypes from 'prop-types';
 
 import TopBar from '../components/TopBar'
+import Routes from './routes.js'
 
-import NotFound from './NotFound';
-import Login from './Login';
-import StudentMain from './StudentMain';
-import StudentProfile from './StudentProfile';
-import QRScannerFull from './QRScannerFull';
-import CompanyProfile from './CompanyProfile';
-import RecruiterMain from './RecruiterMain';
-import RecruiterBatch from './RecruiterBatch';
-import QRDisplay from './QRDisplay';
-import RecruiterProfile from './RecruiterProfile';
-import Interview from './Interview';
-import SearchCompanies from './SearchCompanies';
-import MapScreen from './MapScreen';
-
-import 'antd/lib/style/index.css';
-import 'antd/lib/menu/style/index.css';
 import './App.css';
-import * as Auth from './auth.js';
 import SmoothCollapse from 'react-smooth-collapse';
 
 import { connect } from 'react-redux'
-import { Route, Switch, withRouter, Link } from 'react-router-dom';
+import { withRouter, } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { sessionLogin, userLogout } from '../redux/actions/login';
 import { setScannerVisibility } from '../redux/actions/scanner';
-import { Menu } from 'antd';
-import '../resources/style.css';
+import '../resources/icon-styles.css';
 
-const ConnectedSwitch = connect(state => ({
-  location: state.location
-}))(Switch);
+import logo from '../resources/jacket-logo.svg';
 
 class App extends React.Component {
 
@@ -52,7 +32,7 @@ class App extends React.Component {
 
 	componentDidMount() {
 		this.setState({ menu_current: this.props.location.pathname });
-		this.scroll_content.addEventListener('scroll', this.handleScroll.bind(this));
+		// this.scroll_content.addEventListener('scroll', this.handleScroll.bind(this));
 		if (!window.location.href.includes('https')) {
 			
 		}
@@ -74,9 +54,13 @@ class App extends React.Component {
 
 	renderMenuButtons(buttons) {
 		return buttons.map((button, index) =>(
-			<Menu.Item key={button.to} click={button.onClick} className="menu-button">
-				<Link to={button.to}><i className={button.icon}></i> {button.text}</Link>
-			</Menu.Item>
+			<li 
+				className={classNames("nav__menu-item", {menu_current: })}
+				key={button.to}
+				onClick={button.onClick}>
+				<i className={classNames("menu-item__icon", button.icon)}></i>
+				<div className="menu-item__label">button.text</div>
+			</li>
 		));
 	}
 
@@ -103,21 +87,6 @@ class App extends React.Component {
     // });
   }
 
-	setMenuState(val) {
-		if (val === undefined)
-			val = false;
-		this.setState({ show_menu: val });
-	}
-
-	checkUser() {
-		if (this.props.user.user_type === "student") {
-			return Auth.userIsStudent(StudentMain);
-		} else if (this.props.user.user_type === "recruiter") {
-			return Auth.userIsRecruiter(RecruiterMain);
-		} else if (this.props.user.user_type === "admin") {
-			return Auth.userIsAdmin(SearchCompanies);
-		}
-	}
 	render() {
 		let auth = this.props.user.user_type;
 		const student_buttons = [
@@ -146,54 +115,25 @@ class App extends React.Component {
 				{onClick: () => this.props.history.replace('/login'), content: "Login"},
 			];
 		}
+		// <img src={logo} alt=""/>
 		return (
 			<div className="App">
-				{this.props.browser.greaterThan.extraSmall && <Menu
-	        onClick={this.handleMenuClick.bind(this)}
-	        selectedKeys={[this.state.menu_current]}
-	        mode="horizontal">
-	        {this.renderMenuButtons(auth === undefined ? unregistered_buttons : (auth === "recruiter" ? recruiter_buttons : student_buttons))}
-	      </Menu>}
-				{this.props.browser.is.extraSmall && <SmoothCollapse
-					expanded={this.state.show_navs}
-					heightTransition="0.3s cubic-bezier(.46,.02,.04,.99)"
-					className="top-bar-hider">
-					<TopBar buttons={top_buttons} onBurgerClick={() => this.setMenuState(true)} />
-				</SmoothCollapse>}
-				<div className="main">
-					{this.props.browser.greaterThan.extraSmall && <div className="sidebar"></div>}
-					<div className="content-container" ref={ref => {this.scroll_content = ref}}>
-					  <ConnectedSwitch>
-							<Route path="/login" component={Auth.userIsNotAuth(Login)} />
-							{!auth && <Route exact path="/" component={SearchCompanies}/>}
-							<Route exact path="/" component={this.checkUser()} />	
-							<Route path="/batch" component={Auth.userIsAuth(Auth.userIsRecruiter(RecruiterBatch))} />
-							<Route path="/qr" component={Auth.userIsAuth(Auth.userIsRecruiter(QRDisplay))} />
-							<Route path="/interview" component={Interview} />	
-							<Route path="/profile" component={Auth.userIsAuth(auth === "recruiter" ? Auth.userIsRecruiter(RecruiterProfile) : Auth.userIsStudent(StudentProfile))} />	
-							<Route path="/company/:id/notfound" component={NotFound} />
-							<Route path="/company/:id" render={props => (<CompanyProfile {...props} auth={this.props.user.user_type} />)} />
-							<Route path="/search" component={SearchCompanies} />
-							<Route path="/map" component={MapScreen} />
-							<Route path="*" component={NotFound} />
-					  </ConnectedSwitch>
+				<nav className="side-nav">
+					<div className="logo"></div>
+					<div className="nav__content">
+						<ul className="nav__menu-items">{this.renderMenuButtons(auth === undefined ? unregistered_buttons : (auth === "recruiter" ? recruiter_buttons : student_buttons))}</ul>
 					</div>
-				</div>
-				{(this.props.user.user_type && this.props.browser.is.extraSmall) &&
-					<SmoothCollapse
-						expanded={this.state.show_navs}
-						heightTransition="0.3s cubic-bezier(.46,.02,.04,.99)"
-						className="bottom-bar-hider">
-						<nav className="bottom-nav">
-							{this.renderBottomNavButtons(auth === "recruiter" ? recruiter_buttons : student_buttons)}
-				  	</nav>
-		  		</SmoothCollapse>}			
-				<QRScannerFull onExit={() => this.props.setScannerVisibility(false)} visible={this.props.scannerVisible}/>
-				<div 
-					className={classNames("shade", {show: this.state.show_menu})}
-					onClick={() => this.setMenuState(false)}></div>
-				<div className={classNames("menu", {show: this.state.show_menu})}>
-					
+				</nav>
+				<div className="content">
+					<div className="content__topbar">
+						<div className="topbar__content">{this.props.navbar}</div>
+						<div className="topbar__buttons">
+							<div className="button login"><span onClick={() => this.props.history.replace('/login')}>Login</span></div>
+						</div>
+					</div>
+					<div className="content__container" ref={ref => {this.scroll_content = ref}}>
+						<Routes auth={this.props.user.user_type}/>
+					</div>
 				</div>
 		  </div>
 	  )
@@ -204,6 +144,7 @@ const mapStateToProps = state => ({
 	user: state.user,
 	scannerVisible: state.scanner.visible,
 	browser: state.browser,
+	navbar: state.navbar,
 });
 
 const mapDispatchToProps = dispatch =>
