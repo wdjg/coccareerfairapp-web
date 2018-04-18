@@ -20,7 +20,8 @@ class SearchCompanies extends Component {
 	  super(props);
 	
 	  this.state = {
-	  	showFilter: false,
+	  	show_filter: false,
+	  	hovered_company: undefined,
 	  };
 	}
 
@@ -41,23 +42,31 @@ class SearchCompanies extends Component {
   		return valid;
   	}).sort((a, b) =>  {
       return a.name.localeCompare(b.name);  //TODO sorting
-    }).map((company, index) => Company({...company, index: index}))
+    }).map((company, index) => Company({
+    	...company, 
+    	index: index, 
+    	setCompanyHover: this.setCompanyHover.bind(this), 
+    	hoverState: this.state.hovered_company}))
 	}
 
 	onFilterClick() {
-		this.setState(prev => ({ showFilter: !prev.showFilter }));
+		this.setState(prev => ({ show_filter: !prev.show_filter }));
+	}
+
+	setCompanyHover(val) {
+		this.setState({ hovered_company: val })
 	}
 
 	render() {
 		return (
 			<div className="SearchCompanies">
 				<div className="content">
-					<div className={classNames("filter", {
-						show: this.props.browser.greaterThan.extraSmall || this.state.showFilter})}>
-						<Filter></Filter>
-					</div>
 					<div className="companies">
 						{this.renderCompanies(this.props.companies, this.props.filter.search)}
+					</div>
+					<div className={classNames("filter", {
+						show: this.props.browser.greaterThan.extraSmall || this.state.show_filter})}>
+						<Filter></Filter>
 					</div>
 				</div>
 			</div>
@@ -77,20 +86,31 @@ const mapDispatchToProps = dispatch =>
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchCompanies);
 
-const Company = ({...props, index}) => (
-	<Link key={index} className="company" to={"company/" + props._id}>
-		<div className="company__logo" style={{background: props.color}}></div>
+const Company = ({...props, index, setCompanyHover, hoverState}) => (
+	<div key={index} className={classNames("company", {hovered: hoverState === props._id})}>
+		<Link
+			className="company__logo"
+			style={{background: props.color}}
+			to={"company/" + props._id}
+			onMouseEnter={() => setCompanyHover(props._id)}
+			onMouseLeave={() => setCompanyHover(null)}>
+			<div className="logo__inspect"><i className="icon-search"></i></div>
+		</Link>
 		<div className="company__content">
-			<div className="company__top">
+			<Link 
+				className="company__top"
+				to={"company/" + props._id}
+				onMouseEnter={() => setCompanyHover(props._id)}
+				onMouseLeave={() => setCompanyHover(null)}>
 				<h1>{props.name}</h1>
-			</div>
+			</Link>
 			<div className="company__bottom">
 				<div className="company__type">Type</div>
 				<div className="company__line">In line: {2}</div>
 			</div>
 		</div>
 		<div className="company__arrow"></div>
-	</Link>
+	</div>
 );
 
 

@@ -6,6 +6,7 @@ import Routes from './routes.js'
 import LoadingBar from 'react-redux-loading-bar'
 import { showLoading } from 'react-redux-loading-bar'
 
+import 'antd/lib/style/index.css'
 import './App.css';
 import SmoothCollapse from 'react-smooth-collapse';
 
@@ -90,31 +91,32 @@ class App extends React.Component {
   }
 
 	render() {
+		console.log(this.props)
 		let auth = this.props.user.user_type;
 		const student_buttons = [
-			{onClick: () => this.props.history.replace('/'), icon: "icon-home", text: "Home"},
-			{onClick: () => this.props.history.replace('/search'), icon: "icon-search", text: "Search"},
-			{onClick: () => this.props.history.replace('/profile'), icon: "icon-user", text: "Profile"},
+			{onClick: () => this.props.history.push('/'), icon: "icon-home", text: "Home"},
+			{onClick: () => this.props.history.push('/search'), icon: "icon-search", text: "Search"},
+			{onClick: () => this.props.history.push('/profile'), icon: "icon-user", text: "Profile"},
 			{onClick: () => this.props.setScannerVisibility(true), icon: "icon-camera-alt", text: "QR Scanner"},
-			{onClick: () => this.props.history.replace('/info'), icon: "icon-info", text: "About"},
+			{onClick: () => this.props.history.push('/info'), icon: "icon-info", text: "About"},
 		];
 		const recruiter_buttons = [
-			{onClick: () => this.props.history.replace('/'), icon: "icon-home", text: "Home"},
-			{onClick: () => this.props.history.replace('/search'), icon: "icon-search", text: "Search"},
-			{onClick: () => this.props.history.replace('/profile'), icon: "icon-user", text: "Profile"},
-			{onClick: () => this.props.history.replace('/qr'), icon: "icon-qr", text: "QR Code"},
-			{onClick: () => this.props.history.replace('/info'), icon: "icon-info", text: "About"},
+			{onClick: () => this.props.history.push('/'), icon: "icon-home", text: "Home"},
+			{onClick: () => this.props.history.push('/search'), icon: "icon-search", text: "Search"},
+			{onClick: () => this.props.history.push('/profile'), icon: "icon-user", text: "Profile"},
+			{onClick: () => this.props.history.push('/qr'), icon: "icon-qr", text: "QR Code"},
+			{onClick: () => this.props.history.push('/info'), icon: "icon-info", text: "About"},
 		];
 		const unregistered_buttons = [
-			{onClick: () => this.props.history.replace('/'), icon: "icon-search", text: "Search", to: '/'},
-			{onClick: () => this.props.history.replace('/info'), icon: "icon-info", text: "About", to: '/info'},
+			{onClick: () => this.props.history.push('/'), icon: "icon-search", text: "Search", to: '/'},
+			{onClick: () => this.props.history.push('/info'), icon: "icon-info", text: "About", to: '/info'},
 		];
 		let top_buttons = [];
 		if (auth) {
 			top_buttons = [];
 		} else {
 			top_buttons = [
-				{onClick: () => this.props.history.replace('/login'), content: "Login"},
+				{onClick: () => this.props.history.push('/login'), content: "Login"},
 			];
 		}
 		// <img src={logo} alt=""/>

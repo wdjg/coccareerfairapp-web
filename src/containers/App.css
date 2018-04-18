@@ -12,7 +12,7 @@ body {
 	height: 100%;
   margin: 0;
   padding: 0;
-  font-family: $font-family;
+  /* font-family: $font-family; */
   /* background: $background; */
   & > div {
   	width: 100%;

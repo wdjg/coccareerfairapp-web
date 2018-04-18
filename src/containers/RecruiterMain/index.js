@@ -12,10 +12,10 @@ class RecruiterMain extends Component {
 				<div className="welcome">Welcome {this.props.user.name}!</div>
 				<div className="recruiter-buttons">
 					<div className="company">
-						<Button onClick={() => this.props.history.replace('company/' + this.props.user.employer_id)}>Your Company's profile</Button>
+						<Button onClick={() => this.props.history.push('company/' + this.props.user.employer_id)}>Your Company's profile</Button>
 					</div>
 					<div className="batch">
-						<Button onClick={() => this.props.history.replace('batch')}>Your Virtual Line</Button>
+						<Button onClick={() => this.props.history.push('batch')}>Your Virtual Line</Button>
 					</div>
 				</div>
 			</div>

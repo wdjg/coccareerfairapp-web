@@ -9,10 +9,9 @@ const util = require('util');
 
 module.exports = {
   modify: (config, {target, dev}, webpack) => {
-    // var fs = require('fs');
-    // var log_file = fs.createWriteStream('e:/foo.js', {flags : 'w'});
-    // var log_stdout = process.stdout;
-    // fs.appendFile("e:\\foo.js", "\n\n\n===========\n" + util.inspect(config, {showHidden: false, depth: null,showProxy: true}), () => {});
+    var fs = require('fs');
+    var log_file = fs.createWriteStream('e:/foo.js', {flags : 'w'});
+    var log_stdout = process.stdout;
     const appConfig = razzleHeroku(Object.assign({}, config), {target, dev}, webpack);
     // appConfig.module.rules.splice(0, 0, {
     //   test: /\.(gif|jpe?g|png|ico)$/,
@@ -85,6 +84,7 @@ module.exports = {
           flexbox: 'no-2009',
         }),
       ];
+    fs.appendFile("e:\\web\\foo.js", "\n\n\n===========\n" + util.inspect(appConfig, {showHidden: false, depth: null,showProxy: true}), () => {});
     return appConfig;
   }
 }
