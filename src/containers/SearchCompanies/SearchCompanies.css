@@ -5,6 +5,7 @@ $search-bar-height: 35px;
 .SearchCompanies {
 	position: relative;
 	height: 100%;
+	width: 100% !important;
 	display: flex;
 	flex-flow: column;
 
@@ -14,50 +15,21 @@ $search-bar-height: 35px;
 		overflow: hidden;
 	}
 
-	.search {
-		left: 0;
-		right: 0;
-		background: $grey;
-		display: flex;
-		padding-right: 5px;
-		height: $search-bar-height;
-		flex: 0 0 $search-bar-height;
-		z-index: 100;
-		.search-input {
-			margin: 0;
-			background: none;
-			flex: 1;
-			font-size: 16px;
-			padding-left: 10px;
-		}
-		.search__button {
-			position: relative;
-			right: 0;
-			width: 25px;
-			height: 100%;
-		}
-		.filter {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			img {
-				width: 22px;
-			}
-		}
-	}
-
 	.companies {
 		overflow: auto;
 	}
 
 	.company {
 		display: flex;
-		height: 60px;
+		/* height: 60px; */
+		margin: 0 0 12px 12px;
 		/* background: #6e8; */
 		color: #777;
 		text-decoration: none;
 		.company__logo {
-
+			width: 120px;
+			height: 120px;
+			/* linear-gradient(to bottom right, #fee148, #fc2); */
 		}
 		.company__content {
 			flex: 1;
@@ -97,6 +69,7 @@ $search-bar-height: 35px;
 		transition: left 0.45s cubic-bezier(.33,.01,.27,.98);
 		box-shadow: 0 0 50px rgba(0,0,0,0.125);
 		padding-top: 15px;
+		z-index: 100;
 		&.show {
 			left: 0;
 		}
@@ -109,15 +82,21 @@ $search-bar-height: 35px;
 		.companies {
 			padding-top: $content-padding;
 		}
+		.filter.show {
+			left: auto !important;
+			right: 0;
+			box-shadow: none;
+			width: 300px;
+		}
 	}
 }
 
-.topbar-search {
+.search.topbar {
 	width: 100%;
 	height: 100%;
-	display: flex;
 	align-items: center;
 	max-width: 1000px;
+	display: flex;
 	input {
 		width: 100%;
 		/* height: 80%; */
@@ -129,7 +108,7 @@ $search-bar-height: 35px;
 		border-bottom: solid 1px rgba(20,20,0,0.1);
 		transition: border-bottom 0.3s cubic-bezier(.33,.01,.27,.98);
 		&:focus {
-			border-bottom-color: rgba(20,20,0,0.3);
+			border-bottom-color: $text-dark;
 		}
 	}
 	.search__button {

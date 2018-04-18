@@ -3,7 +3,7 @@ import axios from 'axios';
 export function getLine(token) {
 	return axios({
 		method: 'get',
-		url: 'https://coccareerfairapp-development.herokuapp.com/api/lines',
+		url: 'https://coccareerfairapp-development.herokuapp.com/api/lines/auth',
 		headers: {
 			'Content-Type': 'application/json',
 			'Authorization': 'Bearer ' + token,
@@ -14,7 +14,7 @@ export function getLine(token) {
 export function getLineStats(token, employer_id) {
 	return axios({
 		method: 'get',
-		url: 'https://coccareerfairapp-development.herokuapp.com/api/lines/stats?employer_id=' + employer_id,
+		url: 'https://coccareerfairapp-development.herokuapp.com/api/lines/auth/stats?employer_id=' + employer_id,
 		headers: {
 			'Content-Type': 'application/json',
 			'Authorization': 'Bearer ' + token,

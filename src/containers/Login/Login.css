@@ -1,174 +1,187 @@
 @import '../../constants.css';
 
 .Login {
-  form {
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    padding-top: 20px;
-  }
-  .error-input {
-    width: 50%;
-    input {
-      width: 100%;
-      margin: 3px 0;
-    }
-    .Warning {
-      white-space: nowrap
-    }
-  }
-  .loading {
-    margin-top: 15px;
-  }
+	form {
+		display: flex;
+		flex-flow: column;
+		align-items: center;
+		justify-content: center;
+		margin: 0 auto;
+		padding-top: 20px;
+	}
+	.error-input {
+		width: 70%;
+		transition: width 0.5s cubic-bezier(.46,.02,.04,.99);
+		input {
+			width: 100%;
+			margin: 3px 0;
+		}
+		.Warning {
+			white-space: nowrap
+		}
+	}
+	.loading {
+		margin-top: 15px;
+	}
 }
 
 .tabs__labels {
-  display: flex;
-  background: $black;
-  padding: 0 5%;
+	display: flex;
+	/* background: $black; */
+	padding: 0 5%;
 
-  transition: padding 0.5s cubic-bezier(.46,.02,.04,.99);
-  .labels__label {
-    flex: 1;
-    text-align: center;
-    height: 40px;
-    line-height: 40px;
-    position: relative;
-    text-transform: uppercase;
-    color: #fff;
-    /* font-weight: 400; */
-    &:after {
-      content: '';
-      position: absolute;
-      bottom: 15%;
-      left: 50%;
-      height: 3px;
-      width: 0;
-      background: $primary;
-      transform: translateX(-50%);
-      opacity: 0;
-      border-radius: 3px;
-      transition: opacity 0.25s cubic-bezier(.46,.02,.04,.99), width 0.25s cubic-bezier(.46,.02,.04,.99);
-    }
-    &:hover:after {
-      opacity: 1;
-      width: 8%;
-    }
-    &.selected:after {
-      opacity: 1;
-      width: 20%;
-    }
-  }
+	transition: padding 0.5s cubic-bezier(.46,.02,.04,.99);
+	.labels__label {
+		flex: 1;
+		text-align: center;
+		height: 40px;
+		line-height: 40px;
+		position: relative;
+		text-transform: uppercase;
+		color: $text-dark;
+		/* font-weight: 400; */
+		&:after {
+			content: '';
+			position: absolute;
+			bottom: 15%;
+			left: 50%;
+			height: 3px;
+			width: 0;
+			background: $primary;
+			transform: translateX(-50%);
+			opacity: 0;
+			border-radius: 3px;
+			transition: opacity 0.25s cubic-bezier(.46,.02,.04,.99), width 0.25s cubic-bezier(.46,.02,.04,.99);
+		}
+		&:hover:after {
+			opacity: 1;
+			width: 8%;
+		}
+		&.selected:after {
+			opacity: 1;
+			width: 20%;
+		}
+	}
 }
 
 .tabs__windows {
-  display: flex;
-  transition: padding 0.5s cubic-bezier(.46,.02,.04,.99);
-  .windows__window {
-    flex: 1;
-    transition: flex 0.5s cubic-bezier(.46,.02,.04,.99);
-    width: 0;
-    overflow: hidden;
-  }
+	display: flex;
+	transition: padding 0.5s cubic-bezier(.46,.02,.04,.99);
+	.windows__window {
+		flex: 1;
+		transition: flex 0.5s cubic-bezier(.46,.02,.04,.99);
+		width: 0;
+		overflow: hidden;
+	}
 }
 
 .login-content {
-  /* width: 50%;
-  margin: 0 25%; */
-  transition: all 0.5s cubic-bezier(.46,.02,.04,.99);
+	/* width: 50%;
+	margin: 0 25%; */
+	transition: all 0.5s cubic-bezier(.46,.02,.04,.99);
 }
 
 .selectable {
-  user-select: none;
+	user-select: none;
 }
 
 .btn-sub {
-  font-size: 13px;
-  margin: 3px;
-  color: #555;
-  white-space: nowrap;
-  padding: 3px;
-  cursor: pointer;
-  &:active {
-    background: #ddd;
-  }
+	font-size: 13px;
+	margin: 3px;
+	color: #555;
+	white-space: nowrap;
+	padding: 3px;
+	cursor: pointer;
+	&:active {
+		background: #ddd;
+	}
 }
 
 .spacer {
-  height: 20px;
+	height: 20px;
 }
 
 input {
-  border: 0;
-  outline: none;
-  background: #55555533;
-  padding: 5px;
-  margin: 3px;
-  color: #333;
-  font-family: $font-family;
-  box-sizing:border-box;
-  &::placeholder {
-    color:  #55555577;
-  }
+	border: 0;
+	outline: none;
+	background: #55555533;
+	padding: 5px;
+	margin: 3px;
+	color: #333;
+	font-family: $font-family;
+	box-sizing:border-box;
+	&::placeholder {
+		color:  #55555577;
+	}
 }
 
 .Login input {
-  transition: width 0.5s cubic-bezier(.46,.02,.04,.99);
-  
+	transition: width 0.5s cubic-bezier(.46,.02,.04,.99);
+	
 }
 
 @media screen and (max-width: 680px) {
-  .Login {
-    .windows__window.hidden {
-      flex: 0;
-    }
-  }
+	.Login {
+		.windows__window.hidden {
+			flex: 0;
+		}
+		.error-input {
+			width: 50%;
+		}
+	}
 }
 
 
 @media screen and (min-width: 680px) {
-  .Login {
-    .windows__window.hidden {
-      flex: 1;
-    }
+	.Login {
+		.windows__window.hidden {
+			flex: 1;
+		}
 
-    .labels__label:after {
-      display: none;
-    }
+		.labels__label:after {
+			display: none;
+		}
 
-    .tabs__labels {
-      padding: 0 10%;
-    }
+		.tabs__labels {
+			padding: 0 10%;
+		}
 
-    .labels__label {
-      cursor: auto;
-    }
+		.labels__label {
+			cursor: auto;
+		}
 
-    .login-content {
-      width: 90%;
-      margin: 0 5%;
-    }
+		.login-content {
+			width: 90%;
+			margin: 0 5%;
+		}
 
-    .tabs__windows {
-      padding: 0 10%;
-    }
+		.tabs__windows {
+			padding: 0 10%;
+		}
 
-    .warning {
-      width: 100%;
-    }
-  }
+		.warning {
+			width: 100%;
+		}
+	}
 }
 
-@media screen and (min-width: 1120px) {
-  .Login {
-    .tabs__labels {
-      padding: 0 calc(50% - 400px);
-    }
+@media screen and (min-width: 800px) {
+	.Login {
+		.tabs__labels {
+			padding: 0 calc(50% - 400px);
+		}
 
-    .tabs__windows {
-      padding: 0 calc(50% - 400px);
-    }
-  }
+		.tabs__windows {
+			padding: 0 calc(50% - 400px);
+		}
+		.error-input {
+			width: 50%;
+		}
+	}
+}
+
+@media screen and (max-width: 900px) {
+	.Login {
+		width: 100%;
+	}
 }

@@ -3,6 +3,8 @@ import classNames from 'classnames';
 
 import TopBar from '../components/TopBar'
 import Routes from './routes.js'
+import LoadingBar from 'react-redux-loading-bar'
+import { showLoading } from 'react-redux-loading-bar'
 
 import './App.css';
 import SmoothCollapse from 'react-smooth-collapse';
@@ -55,11 +57,11 @@ class App extends React.Component {
 	renderMenuButtons(buttons) {
 		return buttons.map((button, index) =>(
 			<li 
-				className={classNames("nav__menu-item", {menu_current: })}
+				className={classNames("nav__menu-item", {active: this.state.menu_current === button.to})}
 				key={button.to}
 				onClick={button.onClick}>
 				<i className={classNames("menu-item__icon", button.icon)}></i>
-				<div className="menu-item__label">button.text</div>
+				<span className="menu-item__label">{button.text}</span>
 			</li>
 		));
 	}
@@ -148,6 +150,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-	bindActionCreators({ sessionLogin, userLogout, setScannerVisibility }, dispatch);
+	bindActionCreators({ sessionLogin, userLogout, setScannerVisibility, showLoading }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

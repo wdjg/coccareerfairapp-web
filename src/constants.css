@@ -1,10 +1,19 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700,900');
 
 /* $black: #1f1f1f; /*1d1d1e*/
-$black: #4e4b4a; /*1d1d1e*/
+/* $black: #4e4b4a;
 $grey: rgb(226, 226, 226);
 $white: #fff;
-$primary: #ea2;/* f24e33 */
+$primary: #ea2; *//* f24e33 */
+
+$black: #2d2d2d;
+$white: #fff;
+$grey: #fff;
+$nav-width: 90px;
+$primary: #f3c148;
+$text-light: #9e989a;
+$text-dark: #423f3c;
+$side-nav-width: 155px;
 
 $font-family: 'Roboto', sans-serif;
 /* #b7b7bc; */
@@ -12,6 +21,8 @@ $font-family: 'Roboto', sans-serif;
 $content-padding: 10px;
 $top-bar-height: 50px;
 $top-bar-margin: 12px;
+
+$snazzy-ease: cubic-bezier(.46,.02,.04,.99);
 
 body {
 	background: $white;

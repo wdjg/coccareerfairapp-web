@@ -6505,6 +6505,13 @@ react-qr-reader@^2.0.1:
     prop-types "^15.5.8"
     webrtc-adapter "^6.1.1"
 
+react-redux-loading-bar@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/react-redux-loading-bar/-/react-redux-loading-bar-4.0.3.tgz#05db3444ba925d9129fd7d6cdb6998c49468133e"
+  dependencies:
+    prop-types "^15.5.6"
+    react-lifecycles-compat "^3.0.2"
+
 react-redux@^5.0.6:
   version "5.0.7"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.0.7.tgz#0dc1076d9afb4670f993ffaef44b8f8c1155a4c8"

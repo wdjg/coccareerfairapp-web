@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './SearchCompanies.css';
 import classNames from 'classnames'
 
-import { Icon } from 'antd';
 import InputClear from '../../components/InputClear';
 import Filter from '../../components/Filter';
 
@@ -27,7 +26,7 @@ class SearchCompanies extends Component {
 
 	componentDidMount() {
 		this.props.getCompanies(this.props.user.token);
-		this.props.setNavContent(<SearchBar/>);
+		this.props.setNavContent(<SearchBar topbar onFilterClick={this.onFilterClick.bind(this)}/>);
 	}
 
 	componentWillUnmount() {
@@ -52,23 +51,9 @@ class SearchCompanies extends Component {
 	render() {
 		return (
 			<div className="SearchCompanies">
-				{this.props.browser.is.extraSmall && <div className="search">
-					<input
-						type="text"
-						className="search-input"
-						placeholder="Search"
-						value={this.props.filter.search}
-						ref={ref => {this.searchInput = ref}}
-						onChange={e => this.props.setFilterKey('search', e.target.value)}/>
-					<InputClear 
-						className="search__button"
-						active={this.props.filter.search} onClick={this.onSearchClear.bind(this)} />
-					<div
-						className="search__button filter"
-						onClick={this.onFilterClick.bind(this)}><img src={BurgerFilter} alt=""/></div>
-				</div>}
 				<div className="content">
-					<div className={classNames("filter", {show: this.state.showFilter})}>
+					<div className={classNames("filter", {
+						show: this.props.browser.greaterThan.extraSmall || this.state.showFilter})}>
 						<Filter></Filter>
 					</div>
 					<div className="companies">
@@ -94,16 +79,17 @@ export default connect(mapStateToProps, mapDispatchToProps)(SearchCompanies);
 
 const Company = ({...props, index}) => (
 	<Link key={index} className="company" to={"company/" + props._id}>
-		<div className="company__logo"></div>
+		<div className="company__logo" style={{background: props.color}}></div>
 		<div className="company__content">
 			<div className="company__top">
 				<h1>{props.name}</h1>
 			</div>
 			<div className="company__bottom">
-				<span className="company__line">In line: {2}</span>
+				<div className="company__type">Type</div>
+				<div className="company__line">In line: {2}</div>
 			</div>
 		</div>
-		<div className="company__arrow"><Icon type="right" style={{ fontSize: 20}} /></div>
+		<div className="company__arrow"></div>
 	</Link>
 );
 
@@ -115,7 +101,7 @@ class SearchBar extends Component {
 	}
 	render() {
 		return (
-			<div className="topbar-search">
+			<div className={classNames("search", {topbar: this.props.topbar})}>
 				<input
 					type="text"
 					className="search-input"
@@ -126,10 +112,13 @@ class SearchBar extends Component {
 				<InputClear 
 					className="search__button"
 					active={this.props.filter.search} onClick={this.onSearchClear.bind(this)} />
+				{this.props.browser.is.extraSmall && <div
+					className="search__button filter"
+					onClick={this.props.onFilterClick}><img src={BurgerFilter} alt=""/></div>}
 			</div>
 		);
 	}
 }
 
-SearchBar = connect(state => ({ filter: state.searchfilter }), 
+SearchBar = connect(state => ({ filter: state.searchfilter, browser: state.browser }), 
 	dispatch => bindActionCreators({ setFilterKey }, dispatch))(SearchBar)

@@ -72,7 +72,6 @@ class Filter extends Component {
 	}
 
 	render() {
-		console.log(this.props.filter)
 		return (
 			<div className="Filter">
 				{this.renderFilters()}

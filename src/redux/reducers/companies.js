@@ -3,6 +3,17 @@ import { SET_COMPANIES, UPDATE_COMPANY } from '../actions/companies';
 
 const initialState = []
 
+function rand(min, max) {
+    return min + Math.random() * (max - min);
+}
+
+function get_random_color() {
+    var h = rand(1, 360);
+    var s = rand(70, 90);
+    var l = rand(60, 80);
+    return 'hsl(' + h + ',' + s + '%,' + l + '%)';
+}
+
 const companies = (state = initialState, action) => {
 	let immutableState = fromJS(state);
 	switch (action.type) {
@@ -13,7 +24,7 @@ const companies = (state = initialState, action) => {
 			else
 				return immutableState.push(action.payload.company).toJS();
 		case SET_COMPANIES:
-			return action.payload.companies;
+			return action.payload.companies.map(company => ({...company, color: get_random_color()}));
 		default:
 			return state;
 	}

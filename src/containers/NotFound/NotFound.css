@@ -1,4 +1,8 @@
+@import '../../constants.css';
+
 .NotFound {
+	width: calc(100% - $side-nav-width);
+	transition: width 0.5s cubic-bezier(.46,.02,.04,.99);
 	h2 {
 		text-align: center;
 		margin: 20px;
@@ -26,5 +30,11 @@
 			-o-transform: translate(-50%, -50%);
 			transform: translate(-50%, -50%);
 		}
+	}
+}
+
+@media screen and (max-width: 900px) {
+	.NotFound {
+		width: 100%;
 	}
 }
