@@ -97,7 +97,7 @@ $search-bar-height: 35px;
 @media screen and (min-width: 680px) {
 	.SearchCompanies {
 		.companies {
-			padding-top: $content-padding;
+			padding-top: 10px;
 			flex: 1;
 		}
 		.content {
@@ -143,6 +143,9 @@ $search-bar-height: 35px;
 
 @media screen and (max-width: 480px) {
 	.SearchCompanies {
+		.companies {
+			padding-top: 10px;
+		}
 		.company {
 			height: 60px;
 			margin: 0 0 8px 0;

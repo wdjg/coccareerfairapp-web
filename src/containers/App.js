@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import TopBar from '../components/TopBar'
+import Button from '../components/Button'
 import Modal from '../components/Modal'
 import QRScannerFull from './QRScannerFull'
 import Routes from './routes.js'
@@ -25,22 +26,23 @@ import * as Auth from './auth.js';
 import { withRouter } from 'react-router-dom';
 
 
-// import logo from '../resources/jacket-logo.svg';
+import logo from '../resources/jacket-logo.svg';
 
 class App extends React.Component {
 
 	constructor(props) {
-	  super(props);
+		super(props);
 	
-	  this.state = {
-	  	show_navs: true,
-	  	show_menu: false,
-	  	notification_modal: false,
-	  	dismissed_nitification: false,
-	  };
-	  this.last_scroll = 0;
-	  this.scroll_content = null;
-	  this.checkLineInterval = null;
+		this.state = {
+			show_navs: true,
+			show_menu: false,
+			notification_modal: false,
+			dismissed_notification: false,
+			line_company: {}
+		};
+		this.last_scroll = 0;
+		this.scroll_content = null;
+		this.checkLineInterval = null;
 	}
 
 	componentDidMount() {
@@ -65,7 +67,11 @@ class App extends React.Component {
 	componentWillReceiveProps(next) {
 		if (this.props.line !== next.line) {
 			if (next.line.status === 'inline') {
-				this.setState({ notification_modal: true });
+				const company = next.companies.find(e => e._id === this.props.line.employer_id)
+				this.setState({
+					notification_modal: !this.state.dismissed_notification, 
+					line_company: company ? company : {}
+				});
 			}
 		}
 		if (this.props.user.user_type !== next.user.user_type) {
@@ -108,40 +114,40 @@ class App extends React.Component {
 	}
 
 	renderTopNavButtons(buttons) {
-  	return buttons.map((button, index) => (
-  		<div key={index} className="button">
-  			{button.content ? <span key={index} onClick={() => button.onClick()}>{button.content}</span> :
-  				<i className={button.icon}></i>}
+		return buttons.map((button, index) => (
+			<div key={index} className="button">
+				{button.content ? <span key={index} onClick={() => button.onClick()}>{button.content}</span> :
+					<i className={button.icon}></i>}
 			</div>
 		));
-  }
+	}
 
 	componentWillUnmount() {
-    this.scroll_content.removeEventListener('scroll', this.handleScroll.bind(this));
+		this.scroll_content.removeEventListener('scroll', this.handleScroll.bind(this));
 	}
 
 	handleScroll(event) {
 		const d_scroll = event.srcElement.scrollTop - this.last_scroll;
 		if (d_scroll > 10) {
 			this.last_scroll = event.srcElement.scrollTop;
-	    this.setState({ show_navs: false });
+			this.setState({ show_navs: false });
 		} else if (d_scroll < -5) {
 			this.last_scroll = event.srcElement.scrollTop;
-	    this.setState({ show_navs: true });
+			this.setState({ show_navs: true });
 		}
 	}
 
 	notificationClose() {
-		this.setState({ dismissed_nitification: true, notification_modal: false })
+		this.setState({ dismissed_notification: true, notification_modal: false })
 	}
 
 	handleMenuClick(e) {
 		console.log(e)
 		// e.item.onClick();
-    // this.setState({
-    //   menu_current: e.key,
-    // });
-  }
+		// this.setState({
+		//   menu_current: e.key,
+		// });
+	}
 
 	render() {
 		let auth = this.props.user.user_type;
@@ -165,49 +171,62 @@ class App extends React.Component {
 		];
 		// <img src={logo} alt=""/>
 		return (
-			this.props.browser.greaterThan.extraSmall ? (<div className="App">
-				<Modal shade show={this.state.notification_modal} closeModal={()=>this.setState({notification_modal: false})}>A</Modal>
-				<nav className="side-nav">
-					<div className="logo"></div>
-					<div className="nav__content">
-						<ul className="nav__menu-items">{this.renderSideMenuButtons(auth === undefined ? unregistered_buttons : (auth === "recruiter" ? recruiter_buttons : student_buttons))}</ul>
-					</div>
-				</nav>
-				<div className="content">
-					<div className="content__topbar">
-						<div className="topbar__content">{this.props.navbar.content}</div>
-						<div className="topbar__buttons">{this.renderTopNavButtons(this.props.navbar.buttons)}</div>
-					</div>
-					<div className="content__container" ref={ref => {this.scroll_content = ref}}>
-						<Routes auth={this.props.user.user_type}/>
-					</div>
-				</div>
+			<div className="App">
+				<Modal 
+					shade
+					show={this.state.notification_modal}
+					closeModal={()=>this.notificationClose()}
+					className="line-notication">
+					<h1>You're up!</h1>
+					<p>{this.state.line_company.name} is ready for you, head over to the line labelled <b>virtual line</b></p>
+					<Button onClick={()=>this.notificationClose()}>Close</Button>
+				</Modal>
+				{this.props.browser.greaterThan.extraSmall ? (
+						<div className="desktop">
+							<nav className="side-nav">
+								<div className="logo"><img src={logo} alt="Jacket"/></div>
+								<div className="nav__content">
+									<ul className="nav__menu-items">{this.renderSideMenuButtons(auth === undefined ? unregistered_buttons : (auth === "recruiter" ? recruiter_buttons : student_buttons))}</ul>
+								</div>
+							</nav>
+							<div className="content">
+								<div className="content__topbar">
+									<div className="topbar__content">{this.props.navbar.content}</div>
+									<div className="topbar__buttons">{this.renderTopNavButtons(this.props.navbar.buttons)}</div>
+								</div>
+								<div className="content__container" ref={ref => {this.scroll_content = ref}}>
+									<Routes auth={this.props.user.user_type}/>
+								</div>
+							</div>
+						</div>
+					) : (
+						<div className="mobile">
+							<SmoothCollapse
+								expanded={this.state.show_navs}
+								heightTransition="0.3s cubic-bezier(.46,.02,.04,.99)"
+								className="top-bar-hider">
+								<TopBar buttons={this.props.navbar.buttons} onBurgerClick={() => this.setMenuState(true)} />
+							</SmoothCollapse>
+							{this.props.navbar.content && <div className="topbar__content">{this.props.navbar.content}</div>}
+							<div className="content__container" ref={ref => {this.scroll_content = ref}}>
+								<Routes auth={this.props.user.user_type}/>
+							</div>
+							<SmoothCollapse
+								expanded={this.state.show_navs && Boolean(auth)}
+								heightTransition="0.3s cubic-bezier(.46,.02,.04,.99)"
+								className="bottom-bar-hider">
+								<nav className="bottom-nav">
+									{this.renderBottomNavButtons(auth === "recruiter" ? recruiter_buttons : student_buttons)}
+								</nav>
+							</SmoothCollapse>
+						</div>
+					) 
+				}
 				<QRScannerFull onExit={() => this.props.setScannerVisibility(false)} visible={this.props.scannerVisible}/>
-		  </div>) : 
-		  (<div className="App">
-				<SmoothCollapse
-					expanded={this.state.show_navs}
-					heightTransition="0.3s cubic-bezier(.46,.02,.04,.99)"
-					className="top-bar-hider">
-					<TopBar buttons={this.props.navbar.buttons} onBurgerClick={() => this.setMenuState(true)} />
-				</SmoothCollapse>
-				<div className="content__container" ref={ref => {this.scroll_content = ref}}>
-					<Routes auth={this.props.user.user_type}/>
-				</div>
-				<SmoothCollapse
-					expanded={this.state.show_navs && auth}
-					heightTransition="0.3s cubic-bezier(.46,.02,.04,.99)"
-					className="bottom-bar-hider">
-					<nav className="bottom-nav">
-						{this.renderBottomNavButtons(auth === "recruiter" ? recruiter_buttons : student_buttons)}
-			  	</nav>
-	  		</SmoothCollapse>
-	  		<QRScannerFull onExit={() => this.props.setScannerVisibility(false)} visible={this.props.scannerVisible}/>
-		  </div>)
-	  )
+			</div>
+		)
 	}
 }
-
 
 
 const mapStateToProps = state => ({
@@ -216,6 +235,7 @@ const mapStateToProps = state => ({
 	browser: state.browser,
 	navbar: state.navbar,
 	line: state.line,
+	companies: state.companies,
 });
 
 const mapDispatchToProps = dispatch =>

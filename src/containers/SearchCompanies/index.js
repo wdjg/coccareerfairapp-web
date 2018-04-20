@@ -66,14 +66,14 @@ class SearchCompanies extends Component {
 					</div>
 					<div className={classNames("filter", {
 						show: this.props.browser.greaterThan.extraSmall || this.state.show_filter})}>
-						<Filter></Filter>
+						
 					</div>
 				</div>
 			</div>
 		);
 	}
 }
-
+// <Filter></Filter>
 const mapStateToProps = state => ({
 	user: state.user,
 	companies: state.companies,
@@ -132,13 +132,13 @@ class SearchBar extends Component {
 				<InputClear 
 					className="search__button"
 					active={this.props.filter.search} onClick={this.onSearchClear.bind(this)} />
-				{this.props.browser.is.extraSmall && <div
-					className="search__button filter"
-					onClick={this.props.onFilterClick}><img src={BurgerFilter} alt=""/></div>}
+				
 			</div>
 		);
 	}
 }
-
+// {this.props.browser.is.extraSmall && <div
+// 					className="search__button filter"
+// 					onClick={this.props.onFilterClick}><img src={BurgerFilter} alt=""/></div>}
 SearchBar = connect(state => ({ filter: state.searchfilter, browser: state.browser }), 
 	dispatch => bindActionCreators({ setFilterKey }, dispatch))(SearchBar)
