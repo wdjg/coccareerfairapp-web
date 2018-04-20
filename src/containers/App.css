@@ -41,6 +41,7 @@ h1 {
 	height: 100vh;
 	width: 100vw;
 	position: fixed;
+	z-index: 500;
 }
 
 /* $dark: #4e4b4a; */
@@ -180,5 +181,40 @@ h1 {
 @media screen and (max-width: 900px) {
 	.content__container > div {
 		width: 100%;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.App {
+		display: flex;
+		flex-flow: column;
+	}
+}
+.top-bar-hider {
+	width: 100%;
+}
+
+.bottom-bar-hider {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+}
+
+.bottom-nav {
+	display: flex;
+	background: $grey;
+	height: 45px;
+	.bottom-nav__btn {
+		height: 100%;
+		flex: 1;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		i {
+			width: 30px;
+			margin: 0 auto;
+			font-size: 26px;
+		}
 	}
 }

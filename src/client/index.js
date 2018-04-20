@@ -11,7 +11,6 @@ import App from '../containers/App';
 
 const history = createHistory();
 const store = configureStore(window.__PRELOADED_STATE__, history);
-
 hydrate(
   <Provider store={store}>
   	<ConnectedRouter history={history}>

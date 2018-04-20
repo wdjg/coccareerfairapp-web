@@ -37,11 +37,11 @@ class MapScreen extends Component {
     let {imagePreviewUrl} = this.state;
     let imagePreview = null;
     if (imagePreviewUrl) {
-      imagePreview = (<img src={imagePreviewUrl} />);
+      imagePreview = (<img src={imagePreviewUrl} alt="Map"/>);
     } else {
       imagePreview = (
         <div className="defaultImage">
-          <img src={DefaultImage} alt=""/>
+          <img src={DefaultImage} alt="Map"/>
         </div>);
     }
 
@@ -59,7 +59,7 @@ class MapScreen extends Component {
               margin: 'auto',
               width: '100%',
               height: 'auto'
-            }} />
+            }} alt="Map"/>
           </PinchView>
         </div>
       </div>

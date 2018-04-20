@@ -1,12 +1,15 @@
 import { fromJS } from 'immutable';
-import { SET_NAV_CONTENT } from '../actions/navbar';
+import { SET_NAV_CONTENT, SET_NAV_BUTTONS } from '../actions/navbar';
 
-const initialState = null;
+const initialState = {buttons: []};
 
 const navbar = (state = initialState, action) => {
+	let immutableState = fromJS(state)
 	switch (action.type) {
 		case SET_NAV_CONTENT:
-			return action.payload.content
+			return immutableState.set("content", action.payload.content).toJS();
+		case SET_NAV_BUTTONS:
+			return immutableState.set("buttons", action.payload.buttons).toJS();
 		default:
 			return state;
 	}

@@ -26,7 +26,6 @@ server
     // Create a new Redux store instance
     const store = configureStore(preloadedState, history);
     store.dispatch(push(req.url));
-
     // Render the component to a string
     const markup = renderToString(
       <Provider store={store}>

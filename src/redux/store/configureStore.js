@@ -6,7 +6,7 @@ import { routerMiddleware } from 'react-router-redux'
 import { createResponsiveStoreEnhancer } from 'redux-responsive'
 
 const configureStore = (preloadedState, history) => {
-  const middleware = [routerMiddleware(history), thunk, logger];
+  const middleware = [thunk, routerMiddleware(history), logger];
   const store = createStore(
     rootReducer,
     preloadedState,

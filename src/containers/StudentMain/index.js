@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './StudentMain.css';
 
+import SearchCompanies from '../SearchCompanies'
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getLine } from '../../redux/actions/line';
@@ -31,6 +33,7 @@ class StudentMain extends Component {
 	}
 
 	componentDidMount() {
+		console.log(1)
 		this.props.getLine(this.props.user.token).then(res => {
 			if (!res)
 				return;

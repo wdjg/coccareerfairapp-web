@@ -15,14 +15,14 @@ import MapScreen from './MapScreen';
 
 import * as Auth from './auth.js';
 
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 
 const ConnectedSwitch = connect(state => ({
 	location: state.location
 }))(Switch);
 
-export default class Routes extends React.Component {
+class Routes extends React.Component {
 	checkUser() {
 		if (this.props.auth === "student") {
 			return Auth.userIsStudent(StudentMain);
@@ -52,3 +52,5 @@ export default class Routes extends React.Component {
 		)
 	}
 }
+
+export default withRouter(Routes)

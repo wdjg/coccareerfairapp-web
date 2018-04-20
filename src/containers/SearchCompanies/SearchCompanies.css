@@ -49,10 +49,10 @@ $search-bar-height: 35px;
 			-o-flex-flow: ;
 			flex-flow: column;
 			.company__top {
-				height: 40px;
+				height: 38px;
 				h1 {
 					font-size: 26px;
-					padding-top: 3px;
+					/* padding-top: 3px; */
 				}
 			}
 			.company__bottom {
@@ -138,5 +138,25 @@ $search-bar-height: 35px;
 		right: 75px;
 		width: 35px;
 		height: 35px;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.SearchCompanies {
+		.company {
+			height: 60px;
+			margin: 0 0 8px 0;
+			.company__content .company__top h1 {
+				position: absolute;
+				font-size: 7vw;
+			}
+			.company__logo {
+				width: 60px;
+				height: 60px;
+			}
+			.company__bottom {
+				display: flex;
+			}
+		}
 	}
 }

@@ -3,7 +3,9 @@ import './CompanyProfile.css';
 
 import EditableInfo from '../../components/EditableInfo';
 
-import { getCompany } from '../../redux/actions/companies'
+import { getCompany } from '../../redux/actions/companies';
+import { setNavButtons } from '../../redux/actions/navbar';
+import { userLogout } from '../../redux/actions/login';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 
@@ -17,6 +19,16 @@ class CompanyProfile extends Component {
 			is_editing: false,
 			edits: {},
 		}
+	}
+
+	startEdit() {
+		this.setState({ is_editing: true });
+		this.props.setNavButtons([
+			{ onClick: () => this.props.userLogout(), content: "Login" },
+			{ onClick: () => this.makeEdit(), content: "Save" },
+			{ onClick: () => this.cancelEdit(), content: "Cancel" },
+			// {onClick: () => this.setState({ is_editing: true }), icon: "icon-edit"},
+		]);
 	}
 
 	makeEdit(key, value) {
@@ -34,6 +46,12 @@ class CompanyProfile extends Component {
 	}
 
 	componentDidMount() {
+		if (this.props.user.user_type === 'recruiter')
+			this.props.setNavButtons([
+				{onClick: () => this.props.userLogout(), content: "Login"},
+				{onClick: () => this.startEdit(), content: "Edit"},
+				// {onClick: () => this.setState({ is_editing: true }), icon: "icon-edit"},
+			]);
 		const { match: { params } } = this.props;
 		this.props.getCompany(this.props.user.token, params.id).then(res => {
 			console.log(this.props.companies);
@@ -46,15 +64,16 @@ class CompanyProfile extends Component {
 		})
 	}
 
+	componentWillUnmount() {
+		if (this.props.user.user_type === 'recruiter')
+			this.props.setNavButtons([
+				{onClick: () => this.props.userLogout(), content: "Login"},
+			])
+	}
+
 	render() {
 		return (
 			<div className="CompanyProfile">
-				{(!this.state.is_editing && this.props.auth === 'recruiter')
-					&& <div className="btn" onClick={() => this.setState({is_editing: true})}>Edit</div>}
-				{this.state.is_editing && <div className="edit-buttons">
-					<div className="edit-buttons__save btn" onClick={() => this.saveEdits()}>Save</div>
-					<div className="edit-buttons__cancel btn" onClick={() => this.cancelEdit()}>Cancel</div>
-				</div>}
 				<EditableInfo
 					edit={this.state.is_editing}
 					placeholder="Company Name"
@@ -75,6 +94,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => 
-	bindActionCreators({ getCompany }, dispatch);
+	bindActionCreators({ getCompany, setNavButtons, userLogout }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(CompanyProfile);
