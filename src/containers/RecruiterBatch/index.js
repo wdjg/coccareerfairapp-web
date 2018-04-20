@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 
 import { getBatch, setInterviewStudent } from '../../redux/actions/batch';
 
-import BottomModal from '../../components/BottomModal';
+import Modal from '../../components/Modal';
 import Button from '../../components/Button';
 
 import './RecruiterBatch.css';
@@ -29,7 +29,7 @@ class RecruiterBatch extends Component {
 	}
 
 	componentDidMount() {
-		this.props.getBatch(this.props.user.token, this.props.user.employer_id);
+		
 	}
 
 	beginInterview(student) {
@@ -62,16 +62,16 @@ class RecruiterBatch extends Component {
 		return (
 			<div className="RecruiterBatch">
 				<div className="stats">
-					<div className="stat__entry interview-time">
+					{/*<div className="stat__entry interview-time">
 						<h2>Average Interview Length</h2>
 						<div className="data">{this.renderInterviewTime(this.props.interviewTime)}min</div>
-					</div>
+					</div>*/}
 				</div>
-				<h2>Batch</h2>
+				<h2>Students on Deck</h2>
 				<ul className="batch">
 					{this.renderStudents()}
 				</ul>
-				<BottomModal show={this.state.show_modal} closeModal={() => this.closeModal()}>
+				<Modal shade show={this.state.show_modal} closeModal={() => this.closeModal()}>
 					{this.state.modal_student && <div>
 						<h2 className="interview-title">Interview With:</h2>
 						<h1 className="name">{this.state.modal_student.name}</h1>
@@ -88,7 +88,7 @@ class RecruiterBatch extends Component {
 							</Button>
 						</div>
 					</div>}
-				</BottomModal>
+				</Modal>
 			</div>
 		);
 	}

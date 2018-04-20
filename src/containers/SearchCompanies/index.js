@@ -106,7 +106,7 @@ const Company = ({...props, index, setCompanyHover, hoverState}) => (
 			</Link>
 			<div className="company__bottom">
 				<div className="company__type">Type</div>
-				<div className="company__line">In line: {2}</div>
+				{props.line_stats && <div className="company__line">In line: {props.line_stats.size}</div>}
 			</div>
 		</div>
 		<div className="company__arrow"></div>

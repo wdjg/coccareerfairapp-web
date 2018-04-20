@@ -29,6 +29,7 @@
     "react": "16.2.0",
     "react-dom": "16.2.0",
     "react-height": "^3.0.0",
+    "react-https-redirect": "^1.0.10",
     "react-icons": "^2.2.7",
     "react-image-zoom": "^0.7.0",
     "react-pinch-zoom-pan": "^1.4.5",

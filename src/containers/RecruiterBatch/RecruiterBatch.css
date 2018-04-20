@@ -5,6 +5,13 @@
 	border-bottom: 1px #ddd solid;
 }
 
+.RecruiterBatch {
+	.Modal__content {
+		background: #fff;
+		padding: 15px;
+	}
+}
+
 h2 {
 	text-transform: uppercase;
 	font-size: 12px;

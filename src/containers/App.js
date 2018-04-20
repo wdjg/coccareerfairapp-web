@@ -16,6 +16,8 @@ import { connect } from 'react-redux'
 // import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { sessionLogin, userLogout } from '../redux/actions/login';
+import { getBatch } from '../redux/actions/batch';
+import { updateUser } from '../redux/actions/user';
 import { getLine } from '../redux/actions/line';
 import { setScannerVisibility } from '../redux/actions/scanner';
 import { setNavButtons } from '../redux/actions/navbar';
@@ -42,7 +44,7 @@ class App extends React.Component {
 		};
 		this.last_scroll = 0;
 		this.scroll_content = null;
-		this.checkLineInterval = null;
+		this.queryInterval = null;
 	}
 
 	componentDidMount() {
@@ -55,10 +57,18 @@ class App extends React.Component {
 		}
 		if (!this.props.user.user_type)
 			this.props.sessionLogin().then(user => {
-				if (user && !this.checkLineInterval) {
-					this.props.getLine(user.token);
-					this.checkLineInterval = setInterval(() => {
+				if (user && !this.queryInterval) {
+					if (user.user_type === 'student')
 						this.props.getLine(user.token);
+					else if (user.user_type === 'recruiter')
+						this.props.getBatch(user.token, user.employer_id);
+					this.queryInterval = setInterval(() => {
+						if (!this.state.notification_modal) {
+							if (user.user_type === 'student')
+								this.props.getLine(user.token);
+							else if (user.user_type === 'recruiter')
+								this.props.getBatch(user.token, user.employer_id);
+						}
 					}, 2000);
 				}
 			});
@@ -69,7 +79,7 @@ class App extends React.Component {
 			if (next.line.status === 'inline') {
 				const company = next.companies.find(e => e._id === this.props.line.employer_id)
 				this.setState({
-					notification_modal: !this.state.dismissed_notification, 
+					notification_modal: !next.user.dismissed_notification, 
 					line_company: company ? company : {}
 				});
 			}
@@ -84,10 +94,14 @@ class App extends React.Component {
 					{onClick: () => this.props.userLogout(), content: "Logout"},
 				]);
 			}
-			if (this.props.user.token && !this.checkLineInterval) {
-				this.props.getLine(this.props.user.token);
-				this.checkLineInterval = setInterval(() => {
-					this.props.getLine(this.props.user.token)
+			if (this.props.user.token && !this.queryInterval) {
+				this.queryInterval = setInterval(() => {
+					if (!this.state.notification_modal) {
+						if (this.props.user.user_type === 'student')
+							this.props.getLine(this.props.user.token);
+						else if (this.props.user.user_type === 'recruiter')
+							this.props.getBatch(this.props.user.token, this.props.user.employer_id);
+					}
 				}, 2000);
 			}
 		}
@@ -138,7 +152,8 @@ class App extends React.Component {
 	}
 
 	notificationClose() {
-		this.setState({ dismissed_notification: true, notification_modal: false })
+		this.props.updateUser({ dismissed_notification: true })
+		this.setState({ notification_modal: false })
 	}
 
 	handleMenuClick(e) {
@@ -154,14 +169,14 @@ class App extends React.Component {
 		const student_buttons = [
 			{onClick: () => this.props.history.push('/'), icon: "icon-home", text: "Home", to: '/'},
 			{onClick: () => this.props.history.push('/search'), icon: "icon-search", text: "Search", to: '/search'},
-			{onClick: () => this.props.history.push('/profile'), icon: "icon-user", text: "Profile", to: '/profile'},
+			// {onClick: () => this.props.history.push('/profile'), icon: "icon-user", text: "Profile", to: '/profile'},
 			{onClick: () => this.props.setScannerVisibility(true), icon: "icon-camera-alt", text: "QR Scanner", to: '/qr'},
 			{onClick: () => this.props.history.push('/info'), icon: "icon-info", text: "About", to: '/info'},
 		];
 		const recruiter_buttons = [
 			{onClick: () => this.props.history.push('/'), icon: "icon-home", text: "Home", to: '/'},
 			{onClick: () => this.props.history.push('/search'), icon: "icon-search", text: "Search", to: '/search'},
-			{onClick: () => this.props.history.push('/profile'), icon: "icon-user", text: "Profile", to: '/profile'},
+			// {onClick: () => this.props.history.push('/profile'), icon: "icon-user", text: "Profile", to: '/profile'},
 			{onClick: () => this.props.history.push('/qr'), icon: "icon-qr", text: "QR Code", to: '/qr'},
 			{onClick: () => this.props.history.push('/info'), icon: "icon-info", text: "About", to: '/info'},
 		];
@@ -184,7 +199,7 @@ class App extends React.Component {
 				{this.props.browser.greaterThan.extraSmall ? (
 						<div className="desktop">
 							<nav className="side-nav">
-								<div className="logo"><img src={logo} alt="Jacket"/></div>
+								<div className="logo"><img src={logo} alt="Jacket" onClick={() => this.props.history.push('/')}/></div>
 								<div className="nav__content">
 									<ul className="nav__menu-items">{this.renderSideMenuButtons(auth === undefined ? unregistered_buttons : (auth === "recruiter" ? recruiter_buttons : student_buttons))}</ul>
 								</div>
@@ -239,6 +254,14 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-	bindActionCreators({ sessionLogin, userLogout, setScannerVisibility, showLoading, setNavButtons, getLine }, dispatch);
+	bindActionCreators({ 
+		sessionLogin, 
+		userLogout, 
+		setScannerVisibility, 
+		showLoading,
+		setNavButtons, 
+		getLine, 
+		updateUser,
+		getBatch }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

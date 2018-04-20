@@ -27,7 +27,7 @@ class Routes extends React.Component {
 		if (this.props.auth === "student") {
 			return Auth.userIsStudent(StudentMain);
 		} else if (this.props.auth === "recruiter") {
-			return Auth.userIsRecruiter(RecruiterMain);
+			return Auth.userIsRecruiter(RecruiterBatch);
 		} else if (this.props.auth === "admin") {
 			return Auth.userIsAdmin(SearchCompanies);
 		}

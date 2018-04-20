@@ -81,7 +81,7 @@ h1 {
 	}
 	.content {
 		flex: 1;
-		display: flex;
+		/* display: flex; */
 		flex-flow: column;
 		.content__topbar {
 			background: #fff;
