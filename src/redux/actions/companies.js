@@ -1,4 +1,5 @@
 import * as CompaniesAPI from '../../api/companies';
+import * as LineAPI from '../../api/line';
 
 export const SET_COMPANIES = 'SET_COMPANIES';
 export const UPDATE_COMPANY = 'UPDATE_COMPANY';
@@ -24,7 +25,19 @@ export const updateCompany = company => ({
 export function getCompanies(token) {
 	return dispatch => {
 		return CompaniesAPI.getAllCompanies(token).then(res => {
-			dispatch(setCompanies(res.data.employers));
+			if (token) {
+				let promises = []
+				res.data.employers.forEach(employer => {
+					promises.push(LineAPI.getLineStats(token, employer._id).then(res => {
+						return {...employer, line_stats: res.data};
+					}).catch(err => console.log(err)));
+				});
+				Promise.all(promises).then(employers => {
+					dispatch(setCompanies(employers));
+				});
+			} else {
+				dispatch(setCompanies(res.data.employers));
+			}
 		});
 	}
 }

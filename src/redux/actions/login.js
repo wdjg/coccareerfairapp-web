@@ -6,12 +6,14 @@ import { routerActions } from 'react-router-redux';
 export function sessionLogin() {
 	return dispatch => {
 		const token = sessionStorage.getItem('jwt');
-		if (!token) 
-			return;
+		if (!token) {
+			return Promise.resolve(null);
+		}
 
 		dispatch(setAuthToken(token));
-		UserAPI.getUser(token).then(res => {
-			return dispatch(updateUser(res.data));
+		return UserAPI.getUser(token).then(res => {
+			dispatch(updateUser(res.data));
+			return Promise.resolve(res.data);
 		}).catch(err => console.log(err));
 	}
 }

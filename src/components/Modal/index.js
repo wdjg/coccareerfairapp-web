@@ -3,7 +3,9 @@ import classNames from 'classnames';
 
 import SmoothCollapse from 'react-smooth-collapse';
 
-class App extends React.Component {
+import './Modal.css'
+
+export default class Modal extends React.Component {
 	constructor(props) {
 	  super(props);
 	  this.state = {
@@ -35,10 +37,9 @@ class App extends React.Component {
 					className={classNames("Modal", this.props.className, {show: this.state.show})}
 					style={{transition: 'opacity ' + speed + ' ' + ease}}>
 				{this.props.shade && <div className="Modal__shade" onClick={this.props.closeModal}></div>}
-				<SmoothCollapse className="Modal__content">
+				<SmoothCollapse className="Modal__content" expanded={this.state.show}>
 					{this.props.children}
 				</SmoothCollapse>	
- 			</div>)
-		);
+ 			</div>);
 	}
 }

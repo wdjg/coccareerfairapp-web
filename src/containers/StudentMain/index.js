@@ -33,15 +33,11 @@ class StudentMain extends Component {
 	}
 
 	componentDidMount() {
-		console.log(1)
-		this.props.getLine(this.props.user.token).then(res => {
-			if (!res)
-				return;
-			const company = this.props.companies.find(e => e._id === res.data.employer_id)
+		if (this.props.line) {
+			const company = this.props.companies.find(e => e._id === this.props.line.employer_id)
 			if (company)
 				this.setState({company: company});
-		});
-
+		}
 	}
 
 	renderCompany(company) {

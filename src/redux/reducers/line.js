@@ -1,7 +1,8 @@
 import { fromJS } from 'immutable';
 import { UPDATE_LINE_DETAILS, SET_LINE_DETAILS } from '../actions/line';
 
-const initialState = {}
+const initialState = {
+}
 
 const batch = (state = initialState, action) => {
   let immutableState = fromJS(state);

@@ -24,15 +24,14 @@ export function getLine(token) {
 		return LineAPI.getLine(token).then(res => {
 			const line_res = res;
 			if (res.data && res.data.lines.length > 0) {
-				dispatch(updateLineDetails(res.data.lines[0]));
-				// res.data.lines.forEach(line => dispatch(updateLineDetails(line)));
-				// res.data.lines.forEach(line => dispatch(getLineStats(token, line.employer_id)));
-				// return CompaniesAPI.getCompany(token, res.data.employer_id).then(res => {
-				// 	if (!res.data)
-				// 		throw Error("Company doesn't exist (this is probably because you reset the company id after you joined the line)");
-				// 	dispatch(updateCompany(res.data));
-				// 	return Promise.resolve(line_res);
-				// });
+				dispatch(updateLineDetails(line_res.data.lines[0]));
+				return CompaniesAPI.getCompany(token, res.data.lines[0].employer_id).then(res => {
+					if (!res.data)
+						throw Error("Company doesn't exist (this is probably because you reset the company id after you joined the line)");
+					// dispatch(updateCompany(res.data));
+					dispatch(getLineStats(token, line_res.data.lines[0].employer_id))
+					return Promise.resolve(line_res.data.lines[0]);
+				});
 			} else {
 				dispatch(setLineDetails({}));
 				return Promise.resolve(null);	

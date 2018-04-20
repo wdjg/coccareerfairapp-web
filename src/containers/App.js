@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import TopBar from '../components/TopBar'
+import Modal from '../components/Modal'
 import QRScannerFull from './QRScannerFull'
 import Routes from './routes.js'
 import { showLoading } from 'react-redux-loading-bar'
@@ -14,44 +15,19 @@ import { connect } from 'react-redux'
 // import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { sessionLogin, userLogout } from '../redux/actions/login';
+import { getLine } from '../redux/actions/line';
 import { setScannerVisibility } from '../redux/actions/scanner';
 import { setNavButtons } from '../redux/actions/navbar';
 import '../resources/icon-styles.css';
 
-import NotFound from './NotFound';
-import Login from './Login';
-import StudentMain from './StudentMain';
-import StudentProfile from './StudentProfile';
-import CompanyProfile from './CompanyProfile';
-import RecruiterMain from './RecruiterMain';
-import RecruiterBatch from './RecruiterBatch';
-import QRDisplay from './QRDisplay';
-import RecruiterProfile from './RecruiterProfile';
-import Interview from './Interview';
-import SearchCompanies from './SearchCompanies';
-import MapScreen from './MapScreen';
-
 import * as Auth from './auth.js';
 
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
-
-const ConnectedSwitch = connect(state => ({
-	location: state.location
-}))(Switch);
 
 // import logo from '../resources/jacket-logo.svg';
 
 class App extends React.Component {
-	checkUser() {
-		if (this.props.auth === "student") {
-			return Auth.userIsStudent(StudentMain);
-		} else if (this.props.auth === "recruiter") {
-			return Auth.userIsRecruiter(RecruiterMain);
-		} else if (this.props.auth === "admin") {
-			return Auth.userIsAdmin(SearchCompanies);
-		}
-	}
 
 	constructor(props) {
 	  super(props);
@@ -59,14 +35,15 @@ class App extends React.Component {
 	  this.state = {
 	  	show_navs: true,
 	  	show_menu: false,
-	  	menu_current: '/search'
+	  	notification_modal: false,
+	  	dismissed_nitification: false,
 	  };
 	  this.last_scroll = 0;
 	  this.scroll_content = null;
+	  this.checkLineInterval = null;
 	}
 
 	componentDidMount() {
-		this.setState({ menu_current: this.props.location.pathname });
 		this.props.setNavButtons([
 			{onClick: () => this.props.history.push('/login'), content: "Login"},
 		]);
@@ -75,11 +52,22 @@ class App extends React.Component {
 			
 		}
 		if (!this.props.user.user_type)
-			this.props.sessionLogin();
+			this.props.sessionLogin().then(user => {
+				if (user && !this.checkLineInterval) {
+					this.props.getLine(user.token);
+					this.checkLineInterval = setInterval(() => {
+						this.props.getLine(user.token);
+					}, 2000);
+				}
+			});
 	}
 
 	componentWillReceiveProps(next) {
-		this.setState({ menu_current: next.location.pathname });
+		if (this.props.line !== next.line) {
+			if (next.line.status === 'inline') {
+				this.setState({ notification_modal: true });
+			}
+		}
 		if (this.props.user.user_type !== next.user.user_type) {
 			if (!next.user.user_type) {
 				this.props.setNavButtons([
@@ -89,6 +77,12 @@ class App extends React.Component {
 				this.props.setNavButtons([
 					{onClick: () => this.props.userLogout(), content: "Logout"},
 				]);
+			}
+			if (this.props.user.token && !this.checkLineInterval) {
+				this.props.getLine(this.props.user.token);
+				this.checkLineInterval = setInterval(() => {
+					this.props.getLine(this.props.user.token)
+				}, 2000);
 			}
 		}
 	}
@@ -104,8 +98,8 @@ class App extends React.Component {
 	renderSideMenuButtons(buttons) {
 		return buttons.map((button, index) =>(
 			<li 
-				className={classNames("nav__menu-item", {active: this.state.menu_current === button.to})}
-				key={button.to}
+				className={classNames("nav__menu-item", {active: this.props.location.pathname === button.to})}
+				key={index}
 				onClick={button.onClick}>
 				<i className={classNames("menu-item__icon", button.icon)}></i>
 				<span className="menu-item__label">{button.text}</span>
@@ -137,6 +131,10 @@ class App extends React.Component {
 		}
 	}
 
+	notificationClose() {
+		this.setState({ dismissed_nitification: true, notification_modal: false })
+	}
+
 	handleMenuClick(e) {
 		console.log(e)
 		// e.item.onClick();
@@ -148,18 +146,18 @@ class App extends React.Component {
 	render() {
 		let auth = this.props.user.user_type;
 		const student_buttons = [
-			{onClick: () => this.props.history.push('/'), icon: "icon-home", text: "Home"},
-			{onClick: () => this.props.history.push('/search'), icon: "icon-search", text: "Search"},
-			{onClick: () => this.props.history.push('/profile'), icon: "icon-user", text: "Profile"},
-			{onClick: () => this.props.setScannerVisibility(true), icon: "icon-camera-alt", text: "QR Scanner"},
-			{onClick: () => this.props.history.push('/info'), icon: "icon-info", text: "About"},
+			{onClick: () => this.props.history.push('/'), icon: "icon-home", text: "Home", to: '/'},
+			{onClick: () => this.props.history.push('/search'), icon: "icon-search", text: "Search", to: '/search'},
+			{onClick: () => this.props.history.push('/profile'), icon: "icon-user", text: "Profile", to: '/profile'},
+			{onClick: () => this.props.setScannerVisibility(true), icon: "icon-camera-alt", text: "QR Scanner", to: '/qr'},
+			{onClick: () => this.props.history.push('/info'), icon: "icon-info", text: "About", to: '/info'},
 		];
 		const recruiter_buttons = [
-			{onClick: () => this.props.history.push('/'), icon: "icon-home", text: "Home"},
-			{onClick: () => this.props.history.push('/search'), icon: "icon-search", text: "Search"},
-			{onClick: () => this.props.history.push('/profile'), icon: "icon-user", text: "Profile"},
-			{onClick: () => this.props.history.push('/qr'), icon: "icon-qr", text: "QR Code"},
-			{onClick: () => this.props.history.push('/info'), icon: "icon-info", text: "About"},
+			{onClick: () => this.props.history.push('/'), icon: "icon-home", text: "Home", to: '/'},
+			{onClick: () => this.props.history.push('/search'), icon: "icon-search", text: "Search", to: '/search'},
+			{onClick: () => this.props.history.push('/profile'), icon: "icon-user", text: "Profile", to: '/profile'},
+			{onClick: () => this.props.history.push('/qr'), icon: "icon-qr", text: "QR Code", to: '/qr'},
+			{onClick: () => this.props.history.push('/info'), icon: "icon-info", text: "About", to: '/info'},
 		];
 		const unregistered_buttons = [
 			{onClick: () => this.props.history.push('/'), icon: "icon-search", text: "Search", to: '/'},
@@ -168,6 +166,7 @@ class App extends React.Component {
 		// <img src={logo} alt=""/>
 		return (
 			this.props.browser.greaterThan.extraSmall ? (<div className="App">
+				<Modal shade show={this.state.notification_modal} closeModal={()=>this.setState({notification_modal: false})}>A</Modal>
 				<nav className="side-nav">
 					<div className="logo"></div>
 					<div className="nav__content">
@@ -216,9 +215,10 @@ const mapStateToProps = state => ({
 	scannerVisible: state.scanner.visible,
 	browser: state.browser,
 	navbar: state.navbar,
+	line: state.line,
 });
 
 const mapDispatchToProps = dispatch =>
-	bindActionCreators({ sessionLogin, userLogout, setScannerVisibility, showLoading, setNavButtons }, dispatch);
+	bindActionCreators({ sessionLogin, userLogout, setScannerVisibility, showLoading, setNavButtons, getLine }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
