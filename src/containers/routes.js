@@ -12,6 +12,7 @@ import RecruiterProfile from './RecruiterProfile';
 import Interview from './Interview';
 import SearchCompanies from './SearchCompanies';
 import MapScreen from './MapScreen';
+import Info from './Info';
 
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux'
@@ -35,6 +36,7 @@ class Routes extends React.Component {
 				<Route path="/company/:id" render={props => (<CompanyProfile {...props} auth={this.props.auth} />)} />
 				<Route path="/search" component={SearchCompanies} />
 				<Route path="/map" component={MapScreen} />
+				<Route path="/info" component={Info} />
 				<Route path="*" component={NotFound} />
 			</ConnectedSwitch>
 		)
