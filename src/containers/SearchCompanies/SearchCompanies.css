@@ -8,7 +8,9 @@ $search-bar-height: 35px;
 	width: 100% !important;
 	display: flex;
 	flex-flow: column;
-
+	.Loading {
+		margin: 20px 40px;
+	}
 	.content {
 		flex: 1;
 		position: relative;
@@ -29,6 +31,7 @@ $search-bar-height: 35px;
 		.company__logo {
 			width: 120px;
 			height: 120px;
+			text-decoration: none;
 			/* linear-gradient(to bottom right, #fee148, #fc2); */
 			.logo__inspect {
 				width: 100%;
@@ -50,6 +53,7 @@ $search-bar-height: 35px;
 			flex-flow: column;
 			.company__top {
 				height: 38px;
+				text-decoration: none;
 				h1 {
 					font-size: 26px;
 					/* padding-top: 3px; */

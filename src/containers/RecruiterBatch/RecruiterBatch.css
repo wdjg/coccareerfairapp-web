@@ -1,23 +1,44 @@
-.batch {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-	border-bottom: 1px #ddd solid;
-}
-
+@import '../../constants.css';
 .RecruiterBatch {
-	.Modal__content {
-		background: #fff;
+	.Modal__content > div {
+		background: #fff !important;
 		padding: 15px;
+		min-width: 300px;
+		.buttons {
+			margin-top: 10px;
+			width: 100%;
+			display: flex;
+			.Button {
+				flex: 1;
+				margin: 0 5px;
+			}
+		}
+	}
+	h3 {
+		text-align: center;
+		margin: 20px 0;
+		color: #888;
+		font-weight: 400;
+	}
+	.batch {
+		list-style: none;
+		padding-left: 20px;
+		margin: 0;
+		.Loading {
+			margin: 20px 46px;
+		}
+		/* border-bottom: 1px #ddd solid; */
+	}
+	h2 {
+		text-transform: uppercase;
+		font-size: 12px;
+		margin: 5px 10px;
+		color: #292929;
+		padding-left: 20px;
 	}
 }
 
-h2 {
-	text-transform: uppercase;
-	font-size: 12px;
-	margin: 5px 10px;
-	color: #292929;
-}
+
 
 .stat__entry {
 	h2 {
@@ -33,17 +54,34 @@ h2 {
 }
 
 .batch__item {
-	border-top: 1px #ddd solid;
+	/* border-top: 1px #ddd solid; */
 	/* background: #eee; */
 	color: #777;
 	font-weight: 300;
 	font-size: 16px;
-	padding: 5px 0;
-	text-align: center;
+	padding: 5px 10px;
+	text-align: left;
 	cursor: pointer;
 	font-size: 20px;
+	position: relative;
+	&:after {
+		content: '';
+		position: absolute;
+		top: 15px;
+		left: -10px;
+		width: 0; 
+	  height: 0; 
+	  border-top: 3px solid transparent;
+	  border-bottom: 3px solid transparent;
+	  border-left: 4px solid #777;
+		opacity: 0;
+	  transition: left 0.35s cubic-bezier(.6,.05,.19,.97), opacity 0.35s cubic-bezier(.6,.05,.19,.97);
+	}
 	&:hover {
-		background: #eee;
+		&:after {
+			left: -2px;
+			opacity: 1;
+		}
 	}
 }
 
@@ -59,12 +97,8 @@ h2 {
 	transition: opacity 0.5s cubic-bezier(.46,.02,.04,.99);
 }
 
-@media screen and (min-width: 520px) {
-	.batch {
-		/* display: inline-block; */
-	}
+@media screen and (min-width: 480px) {
 	.batch__item {
-		text-align: left;
 		padding: 5px 8px;
 	}
 	.modal .content {
@@ -82,6 +116,12 @@ h2 {
 		right: auto;
 		bottom: auto;
 		opacity: 1;
+	}
+	.RecruiterBatch {
+		h3 {
+			text-align: left;
+			margin: 20px;
+		}
 	}
 }
 

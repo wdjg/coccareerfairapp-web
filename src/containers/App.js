@@ -8,7 +8,6 @@ import QRScannerFull from './QRScannerFull'
 import Routes from './routes.js'
 import { showLoading } from 'react-redux-loading-bar'
 
-import 'antd/lib/style/index.css'
 import './App.css';
 import SmoothCollapse from 'react-smooth-collapse';
 
@@ -22,8 +21,6 @@ import { getLine } from '../redux/actions/line';
 import { setScannerVisibility } from '../redux/actions/scanner';
 import { setNavButtons } from '../redux/actions/navbar';
 import '../resources/icon-styles.css';
-
-import * as Auth from './auth.js';
 
 import { withRouter } from 'react-router-dom';
 
@@ -39,7 +36,6 @@ class App extends React.Component {
 			show_navs: true,
 			show_menu: false,
 			notification_modal: false,
-			dismissed_notification: false,
 			line_company: {}
 		};
 		this.last_scroll = 0;
@@ -51,10 +47,6 @@ class App extends React.Component {
 		this.props.setNavButtons([
 			{onClick: () => this.props.history.push('/login'), content: "Login"},
 		]);
-		// this.scroll_content.addEventListener('scroll', this.handleScroll.bind(this));
-		if (!window.location.href.includes('https')) {
-			
-		}
 		if (!this.props.user.user_type)
 			this.props.sessionLogin().then(user => {
 				if (user && !this.queryInterval) {
@@ -191,10 +183,12 @@ class App extends React.Component {
 					shade
 					show={this.state.notification_modal}
 					closeModal={()=>this.notificationClose()}
-					className="line-notication">
-					<h1>You're up!</h1>
-					<p>{this.state.line_company.name} is ready for you, head over to the line labelled <b>virtual line</b></p>
-					<Button onClick={()=>this.notificationClose()}>Close</Button>
+					className="line-notification">
+					<div className="modal-content">
+						<h1>You're up!</h1>
+						<p>{this.state.line_company.name} is ready for you, head over to the line labelled <b>virtual line</b></p>
+						<Button onClick={()=>this.notificationClose()}>Close</Button>
+					</div>
 				</Modal>
 				{this.props.browser.greaterThan.extraSmall ? (
 						<div className="desktop">

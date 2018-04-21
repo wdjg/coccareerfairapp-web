@@ -10,6 +10,8 @@ import { Provider } from 'react-redux';
 import { renderToString } from 'react-dom/server';
 import { ConnectedRouter, push } from 'react-router-redux';
 
+import forceSSL from 'express-force-ssl';
+
 import App from '../containers/App';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
@@ -34,11 +36,7 @@ server
         </ConnectedRouter>
       </Provider>
     );
-
-// server
-//   .get('./testImage.jpg', (req, res) => {
-//     res.sendfile(path.resolve('./uploads/testImage.jpg'));
-//     });
+server.use(forceSSL);
 
     // Grab the initial state from our Redux store
     const finalState = store.getState();

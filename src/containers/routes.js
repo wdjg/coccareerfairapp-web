@@ -53,4 +53,4 @@ class Routes extends React.Component {
 	}
 }
 
-export default withRouter(Routes)
+export default Routes;

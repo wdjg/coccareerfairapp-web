@@ -3,7 +3,8 @@ import './SearchCompanies.css';
 import classNames from 'classnames'
 
 import InputClear from '../../components/InputClear';
-import Filter from '../../components/Filter';
+import Filter from '../../components/Filter'
+import Loading from '../../components/Loading';
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
@@ -35,6 +36,8 @@ class SearchCompanies extends Component {
 	}
 
 	renderCompanies(companies, textFilter) {
+		if (companies.length < 1)
+			return <Loading/>
 		return companies.filter(company => {
   		let valid = company.name.toLowerCase().includes(textFilter.toLowerCase());
   		// if(this.state.day >= 0) valid &= company.day == this.state.day;
@@ -63,10 +66,6 @@ class SearchCompanies extends Component {
 				<div className="content">
 					<div className="companies">
 						{this.renderCompanies(this.props.companies, this.props.filter.search)}
-					</div>
-					<div className={classNames("filter", {
-						show: this.props.browser.greaterThan.extraSmall || this.state.show_filter})}>
-						
 					</div>
 				</div>
 			</div>
@@ -106,7 +105,7 @@ const Company = ({...props, index, setCompanyHover, hoverState}) => (
 			</Link>
 			<div className="company__bottom">
 				<div className="company__type">Type</div>
-				{props.line_stats && <div className="company__line">In line: {props.line_stats.size}</div>}
+				{props.line_stats && <div className="company__line">Virtual Line: {props.line_stats.size}</div>}
 			</div>
 		</div>
 		<div className="company__arrow"></div>

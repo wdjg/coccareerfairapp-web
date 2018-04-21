@@ -7,6 +7,7 @@ import { getBatch, setInterviewStudent } from '../../redux/actions/batch';
 
 import Modal from '../../components/Modal';
 import Button from '../../components/Button';
+import Loading from '../../components/Loading';
 
 import './RecruiterBatch.css';
 
@@ -29,7 +30,8 @@ class RecruiterBatch extends Component {
 	}
 
 	componentDidMount() {
-		
+		console.log("BATCH MOUNT")
+		this.props.getBatch(this.props.user.token);
 	}
 
 	beginInterview(student) {
@@ -47,6 +49,8 @@ class RecruiterBatch extends Component {
 	}
 
 	renderStudents() {
+		if (this.props.batch.length < 1)
+			return <Loading/>
 		return this.props.batch.map((entry, index) => (
 			<li className="batch__item" key={index} onClick={() => this.openStudentBatchModal(entry)}>
 				{entry.name}
@@ -67,6 +71,7 @@ class RecruiterBatch extends Component {
 						<div className="data">{this.renderInterviewTime(this.props.interviewTime)}min</div>
 					</div>*/}
 				</div>
+				<h3>Select a student to interview</h3>
 				<h2>Students on Deck</h2>
 				<ul className="batch">
 					{this.renderStudents()}
@@ -77,12 +82,12 @@ class RecruiterBatch extends Component {
 						<h1 className="name">{this.state.modal_student.name}</h1>
 						<div className="buttons">
 							<Button 
-								className="btn begin"
+								className="btn begin green"
 								onClick={() => this.beginInterview(this.state.modal_student)}>
 								Begin
 							</Button>
 							<Button
-								className="btn cancel"
+								className="btn cancel red"
 								onClick={this.closeModal.bind(this)}>
 								Cancel
 							</Button>
