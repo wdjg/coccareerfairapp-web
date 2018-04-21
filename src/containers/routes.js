@@ -12,7 +12,7 @@ import RecruiterProfile from './RecruiterProfile';
 import Interview from './Interview';
 import SearchCompanies from './SearchCompanies';
 import MapScreen from './MapScreen';
-
+import Info from './Info';
 import * as Auth from './auth.js';
 
 import { Route, Switch, withRouter } from 'react-router-dom';
@@ -38,15 +38,16 @@ class Routes extends React.Component {
 			<ConnectedSwitch>
 				<Route path="/login" component={Auth.userIsNotAuth(Login)} />
 				{!this.props.auth && <Route exact path="/" component={SearchCompanies}/>}
-				<Route exact path="/" component={this.checkUser()} />	
+				<Route exact path="/" component={this.checkUser()} />
 				<Route path="/batch" component={Auth.userIsAuth(Auth.userIsRecruiter(RecruiterBatch))} />
 				<Route path="/qr" component={Auth.userIsAuth(Auth.userIsRecruiter(QRDisplay))} />
-				<Route path="/interview" component={Interview} />	
-				<Route path="/profile" component={Auth.userIsAuth(this.props.auth === "recruiter" ? Auth.userIsRecruiter(RecruiterProfile) : Auth.userIsStudent(StudentProfile))} />	
+				<Route path="/interview" component={Interview} />
+				<Route path="/profile" component={Auth.userIsAuth(this.props.auth === "recruiter" ? Auth.userIsRecruiter(RecruiterProfile) : Auth.userIsStudent(StudentProfile))} />
 				<Route path="/company/:id/notfound" component={NotFound} />
 				<Route path="/company/:id" render={props => (<CompanyProfile {...props} auth={this.props.auth} />)} />
 				<Route path="/search" component={SearchCompanies} />
 				<Route path="/map" component={MapScreen} />
+				<Route path="/info" component={Info} />
 				<Route path="*" component={NotFound} />
 			</ConnectedSwitch>
 		)
