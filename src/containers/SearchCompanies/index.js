@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import './SearchCompanies.css';
 import classNames from 'classnames'
 
-import InputClear from '../../components/InputClear';
-import Filter from '../../components/Filter';
+// import Filter from '../../components/Filter'
+import Loading from '../../components/Loading';
+import SearchBar from '../../components/SearchBar';
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
@@ -12,7 +13,6 @@ import { Link } from 'react-router-dom';
 import { getCompanies } from '../../redux/actions/companies';
 import { setNavContent } from '../../redux/actions/navbar';
 import { setFilterKey } from '../../redux/actions/searchfilter'
-import BurgerFilter from '../../resources/burger-filter.svg';
 
 class SearchCompanies extends Component {
 
@@ -35,6 +35,8 @@ class SearchCompanies extends Component {
 	}
 
 	renderCompanies(companies, textFilter) {
+		if (companies.length < 1)
+			return <Loading/>
 		return companies.filter(company => {
   		let valid = company.name.toLowerCase().includes(textFilter.toLowerCase());
   		// if(this.state.day >= 0) valid &= company.day == this.state.day;
@@ -63,10 +65,6 @@ class SearchCompanies extends Component {
 				<div className="content">
 					<div className="companies">
 						{this.renderCompanies(this.props.companies, this.props.filter.search)}
-					</div>
-					<div className={classNames("filter", {
-						show: this.props.browser.greaterThan.extraSmall || this.state.show_filter})}>
-						
 					</div>
 				</div>
 			</div>
@@ -106,39 +104,9 @@ const Company = ({...props, index, setCompanyHover, hoverState}) => (
 			</Link>
 			<div className="company__bottom">
 				<div className="company__type">Type</div>
-				<div className="company__line">In line: {2}</div>
+				{props.line_stats && <div className="company__line">Virtual Line: {props.line_stats.size}</div>}
 			</div>
 		</div>
 		<div className="company__arrow"></div>
 	</div>
 );
-
-
-class SearchBar extends Component {
-	onSearchClear() {
-		this.props.setFilterKey('search','')
-		this.searchInput.focus();
-	}
-	render() {
-		return (
-			<div className={classNames("search", {topbar: this.props.topbar})}>
-				<input
-					type="text"
-					className="search-input"
-					placeholder="Search Companies"
-					value={this.props.filter.search}
-					ref={ref => {this.searchInput = ref}}
-					onChange={e => this.props.setFilterKey('search', e.target.value)}/>
-				<InputClear 
-					className="search__button"
-					active={this.props.filter.search} onClick={this.onSearchClear.bind(this)} />
-				
-			</div>
-		);
-	}
-}
-// {this.props.browser.is.extraSmall && <div
-// 					className="search__button filter"
-// 					onClick={this.props.onFilterClick}><img src={BurgerFilter} alt=""/></div>}
-SearchBar = connect(state => ({ filter: state.searchfilter, browser: state.browser }), 
-	dispatch => bindActionCreators({ setFilterKey }, dispatch))(SearchBar)

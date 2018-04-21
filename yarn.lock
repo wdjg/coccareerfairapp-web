@@ -2640,6 +2640,12 @@ expand-tilde@^2.0.0, expand-tilde@^2.0.2:
   dependencies:
     homedir-polyfill "^1.0.1"
 
+express-force-ssl@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/express-force-ssl/-/express-force-ssl-0.3.2.tgz#01b2b498ae6fd2e41152b22b57a3e173773af67e"
+  dependencies:
+    lodash.assign "^3.2.0"
+
 express@4.16.2:
   version "4.16.2"
   resolved "https://registry.yarnpkg.com/express/-/express-4.16.2.tgz#e35c6dfe2d64b7dca0a5cd4f21781be3299e076c"
@@ -6388,6 +6394,12 @@ react-height@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-height/-/react-height-3.0.0.tgz#fae322f9da64d3e9e25536f26b77c73954261524"
   dependencies:
     prop-types "15.5.8"
+
+react-https-redirect@^1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/react-https-redirect/-/react-https-redirect-1.0.10.tgz#c5181d0ed649d1024b49243b8de66a3fa8b27f6e"
+  dependencies:
+    prop-types "^15.5.8"
 
 react-icon-base@2.1.0:
   version "2.1.0"

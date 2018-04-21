@@ -1,6 +1,6 @@
 import * as LineAPI from '../../api/line';
 import * as CompaniesAPI from '../../api/companies';
-import { updateCompany } from './companies';
+// import { updateCompany } from './companies';
 
 export const UPDATE_LINE_DETAILS = 'UPDATE_LINE_DETAILS';
 export const SET_LINE_DETAILS = 'SET_LINE_DETAILS';
@@ -22,9 +22,11 @@ export const setLineDetails = details => ({
 export function getLine(token) {
 	return dispatch => {
 		return LineAPI.getLine(token).then(res => {
+			
 			const line_res = res;
 			if (res.data && res.data.lines.length > 0) {
 				dispatch(updateLineDetails(line_res.data.lines[0]));
+				dispatch(getUserLineStats(token, res.data.lines[0].employer_id))
 				return CompaniesAPI.getCompany(token, res.data.lines[0].employer_id).then(res => {
 					if (!res.data)
 						throw Error("Company doesn't exist (this is probably because you reset the company id after you joined the line)");
@@ -44,7 +46,17 @@ export function getLine(token) {
 
 export function getLineStats(token, employer_id) {
 	return dispatch => {
-		LineAPI.getLineStats(token, employer_id).then(res => {
+		LineAPI.getLineStats(employer_id).then(res => {
+			dispatch(updateLineDetails(res.data));
+		}).catch(err => {
+			console.log(err);
+		});
+	}
+}
+
+export function getUserLineStats(token, employer_id) {
+	return dispatch => {
+		LineAPI.getUserLineStats(token, employer_id).then(res => {
 			dispatch(updateLineDetails(res.data));
 		}).catch(err => {
 			console.log(err);

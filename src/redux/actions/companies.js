@@ -25,19 +25,15 @@ export const updateCompany = company => ({
 export function getCompanies(token) {
 	return dispatch => {
 		return CompaniesAPI.getAllCompanies(token).then(res => {
-			if (token) {
-				let promises = []
-				res.data.employers.forEach(employer => {
-					promises.push(LineAPI.getLineStats(token, employer._id).then(res => {
-						return {...employer, line_stats: res.data};
-					}).catch(err => console.log(err)));
-				});
-				Promise.all(promises).then(employers => {
-					dispatch(setCompanies(employers));
-				});
-			} else {
-				dispatch(setCompanies(res.data.employers));
-			}
+			let promises = []
+			res.data.employers.forEach(employer => {
+				promises.push(LineAPI.getLineStats(employer._id).then(res => {
+					return {...employer, line_stats: res.data};
+				}).catch(err => console.log(err)));
+			});
+			Promise.all(promises).then(employers => {
+				dispatch(setCompanies(employers));
+			});
 		});
 	}
 }

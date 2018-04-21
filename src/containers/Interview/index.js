@@ -22,6 +22,19 @@ class Interview extends Component {
 		this.incrementer = null;
 	}
 
+	componentDidMount() {
+		var noStudent =  Object.keys(this.props.interview_student).length === 0 && 
+			this.props.interview_student.constructor === Object;
+		if (noStudent) {
+			this.props.history.goBack();
+		}
+	}
+
+	componentWillUnmount() {
+		if (this.state.line_status !== "stop" && this.state.line_status !== "")
+			this.props.setStudentLineStatus(this.props.user.token, this.props.interview_student.line_id, "finishrecruiter");
+	}
+
 	recruiterStart() {
 		this.setState({
 			line_status: "start"
@@ -34,7 +47,7 @@ class Interview extends Component {
 			line_status: "stop"
 		})
 		this.props.setStudentLineStatus(this.props.user.token, this.props.interview_student.line_id, "finishrecruiter");
-		this.props.history.push("batch");
+		this.props.history.push("/");
 	}
 
 	handleStartClick() {
@@ -55,30 +68,25 @@ class Interview extends Component {
 	}
 
 	handleCancelClick() {
-		this.props.history.push("batch");
+		this.props.history.push("/");
 	}
 
 	render() {
 		return (
 			<div className="Interview">
-				<br />
 				<h1>{this.props.interview_student.name}</h1>
-				<br />
-				<br />
 				<div className="stopwatch">
+					<h2>Interview Time</h2>
 					<h1 className="stopwatch-timer">{formattedSeconds(this.state.seconds_elapsed)}</h1>
 	        		{(this.state.seconds_elapsed === 0 || this.incrementer === this.state.last_cleared_incrementer
 		          		? 
-		          		<div>
-		          			<br />
-		          			<Button className="start-btn" onClick={this.handleStartClick.bind(this)}>Start Interview</Button>
-		          			<Button className="cancel-btn" onClick={this.handleCancelClick.bind(this)}>Cancel Interview</Button>
+		          		<div className="buttons">
+		          			<Button className="start-btn green" onClick={this.handleStartClick.bind(this)}>Start Interview</Button>
+		          			<Button className="cancel-btn red" onClick={this.handleCancelClick.bind(this)}>Return to Batch</Button>
 		          		</div>
 		          		: 
-		          		<div>
-		          			<br />
-		          			<Button className="stop-btn" onClick={this.handleStopClick.bind(this)}>End Interview</Button>
-		          			<Button className="batch-btn" onClick={this.handleCancelClick.bind(this)}>Return To Batch</Button>
+		          		<div className="buttons">
+		          			<Button className="stop-btn red" onClick={this.handleStopClick.bind(this)}>End Interview</Button>
 		          		</div>
 		          		
 	          		)}

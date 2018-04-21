@@ -5,17 +5,13 @@ import { bindActionCreators } from 'redux';
 
 import { getBatch, setInterviewStudent } from '../../redux/actions/batch';
 
-import BottomModal from '../../components/BottomModal';
+import Modal from '../../components/Modal';
 import Button from '../../components/Button';
+import Loading from '../../components/Loading';
 
 import './RecruiterBatch.css';
 
-// const TEST_BATCH = [
-// {name: "Valdimar Haraldsson", id: "9532016"},
-// {name: "Floopy Doop", id: "AAAAAAAAAARG"},
-// {name: "Hermann Jung-Olsen", id: "45634516"},
-// {name: "Gudrun Gjukadóttir", id: "67824594"},
-// {name: "Blerg Fergusson", id: "8679305"},]
+import * as Auth from '../auth.js'
 
 class RecruiterBatch extends Component {
 
@@ -29,7 +25,8 @@ class RecruiterBatch extends Component {
 	}
 
 	componentDidMount() {
-		this.props.getBatch(this.props.user.token, this.props.user.employer_id);
+		console.log("BATCH MOUNT")
+		this.props.getBatch(this.props.user.token);
 	}
 
 	beginInterview(student) {
@@ -47,6 +44,8 @@ class RecruiterBatch extends Component {
 	}
 
 	renderStudents() {
+		if (this.props.batch.length < 1)
+			return <Loading/>
 		return this.props.batch.map((entry, index) => (
 			<li className="batch__item" key={index} onClick={() => this.openStudentBatchModal(entry)}>
 				{entry.name}
@@ -62,33 +61,34 @@ class RecruiterBatch extends Component {
 		return (
 			<div className="RecruiterBatch">
 				<div className="stats">
-					<div className="stat__entry interview-time">
+					{/*<div className="stat__entry interview-time">
 						<h2>Average Interview Length</h2>
 						<div className="data">{this.renderInterviewTime(this.props.interviewTime)}min</div>
-					</div>
+					</div>*/}
 				</div>
-				<h2>Batch</h2>
+				<h3>Select a student to interview</h3>
+				<h2>Students on Deck</h2>
 				<ul className="batch">
 					{this.renderStudents()}
 				</ul>
-				<BottomModal show={this.state.show_modal} closeModal={() => this.closeModal()}>
+				<Modal shade show={this.state.show_modal} closeModal={() => this.closeModal()}>
 					{this.state.modal_student && <div>
 						<h2 className="interview-title">Interview With:</h2>
 						<h1 className="name">{this.state.modal_student.name}</h1>
 						<div className="buttons">
 							<Button 
-								className="btn begin"
+								className="btn begin green"
 								onClick={() => this.beginInterview(this.state.modal_student)}>
 								Begin
 							</Button>
 							<Button
-								className="btn cancel"
+								className="btn cancel red"
 								onClick={this.closeModal.bind(this)}>
 								Cancel
 							</Button>
 						</div>
 					</div>}
-				</BottomModal>
+				</Modal>
 			</div>
 		);
 	}
@@ -104,4 +104,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => 
 	bindActionCreators({ getBatch, setInterviewStudent }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(RecruiterBatch);
+export default Auth.userIsAuth(Auth.userIsRecruiter(connect(mapStateToProps, mapDispatchToProps)(RecruiterBatch)));

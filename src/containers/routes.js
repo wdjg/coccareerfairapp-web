@@ -5,7 +5,7 @@ import Login from './Login';
 import StudentMain from './StudentMain';
 import StudentProfile from './StudentProfile';
 import CompanyProfile from './CompanyProfile';
-import RecruiterMain from './RecruiterMain';
+// import RecruiterMain from './RecruiterMain';
 import RecruiterBatch from './RecruiterBatch';
 import QRDisplay from './QRDisplay';
 import RecruiterProfile from './RecruiterProfile';
@@ -13,9 +13,8 @@ import Interview from './Interview';
 import SearchCompanies from './SearchCompanies';
 import MapScreen from './MapScreen';
 import Info from './Info';
-import * as Auth from './auth.js';
 
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux'
 
 const ConnectedSwitch = connect(state => ({
@@ -23,26 +22,16 @@ const ConnectedSwitch = connect(state => ({
 }))(Switch);
 
 class Routes extends React.Component {
-	checkUser() {
-		if (this.props.auth === "student") {
-			return Auth.userIsStudent(StudentMain);
-		} else if (this.props.auth === "recruiter") {
-			return Auth.userIsRecruiter(RecruiterMain);
-		} else if (this.props.auth === "admin") {
-			return Auth.userIsAdmin(SearchCompanies);
-		}
-	}
-
 	render() {
 		return (
 			<ConnectedSwitch>
-				<Route path="/login" component={Auth.userIsNotAuth(Login)} />
+				<Route path="/login" component={Login} />
 				{!this.props.auth && <Route exact path="/" component={SearchCompanies}/>}
-				<Route exact path="/" component={this.checkUser()} />
-				<Route path="/batch" component={Auth.userIsAuth(Auth.userIsRecruiter(RecruiterBatch))} />
-				<Route path="/qr" component={Auth.userIsAuth(Auth.userIsRecruiter(QRDisplay))} />
-				<Route path="/interview" component={Interview} />
-				<Route path="/profile" component={Auth.userIsAuth(this.props.auth === "recruiter" ? Auth.userIsRecruiter(RecruiterProfile) : Auth.userIsStudent(StudentProfile))} />
+				<Route exact path="/" component={this.props.auth === "recruiter" ? RecruiterBatch : this.props.auth === "admin" ? SearchCompanies : StudentMain} />	
+				<Route path="/batch" component={RecruiterBatch} />
+				<Route path="/qr" component={QRDisplay} />
+				<Route path="/interview" component={Interview} />	
+				<Route path="/profile" component={this.props.auth === "recruiter" ? RecruiterProfile : StudentProfile} />	
 				<Route path="/company/:id/notfound" component={NotFound} />
 				<Route path="/company/:id" render={props => (<CompanyProfile {...props} auth={this.props.auth} />)} />
 				<Route path="/search" component={SearchCompanies} />
@@ -54,4 +43,4 @@ class Routes extends React.Component {
 	}
 }
 
-export default withRouter(Routes)
+export default Routes;

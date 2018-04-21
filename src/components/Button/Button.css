@@ -19,6 +19,22 @@
 		color: $grey;
 		border: solid 1px $grey;
 	}
+	&.green {
+		border-color: #4bd761;
+		color: #4bd761;
+		&:hover {
+			background: #4bd761;
+			color: $white;
+		}
+	}
+	&.red {
+		border-color: #fd3d2a;
+		color: #fd3d2a;
+		&:hover {
+			background: #fd3d2a;
+			color: $white;
+		}
+	}
 }
 
 /*#f24e33;*/

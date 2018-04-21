@@ -7,8 +7,6 @@ import { bindActionCreators } from 'redux';
 import { setFilterKey } from '../../redux/actions/searchfilter';
 
 import { Select } from 'antd';
-import 'antd/lib/select/style/index.css'
-import 'antd/lib/select/style/index.css'
 const Option = Select.Option;
 
 

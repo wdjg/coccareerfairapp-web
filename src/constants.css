@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700,900');
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
 
 /* $black: #1f1f1f; /*1d1d1e*/
 /* $black: #4e4b4a;
@@ -15,7 +15,7 @@ $text-light: #9e989a;
 $text-dark: #423f3c;
 $side-nav-width: 155px;
 
-$font-family: 'Roboto', sans-serif;
+$font-family: 'Lato', sans-serif;
 /* #b7b7bc; */
 
 $content-padding: 10px;
@@ -26,4 +26,5 @@ $snazzy-ease: cubic-bezier(.46,.02,.04,.99);
 
 body {
 	background: $white;
+	font-family: $font-family;
 }

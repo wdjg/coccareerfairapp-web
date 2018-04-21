@@ -11,7 +11,17 @@ export function getLine(token) {
 	})
 }
 
-export function getLineStats(token, employer_id) {
+export function getLineStats(employer_id) {
+	return axios({
+		method: 'get',
+		url: 'https://coccareerfairapp-development.herokuapp.com/api/lines/stats?employer_id=' + employer_id,
+		headers: {
+			'Content-Type': 'application/json',
+		}
+	})
+}
+
+export function getUserLineStats(token, employer_id) {
 	return axios({
 		method: 'get',
 		url: 'https://coccareerfairapp-development.herokuapp.com/api/lines/auth/stats?employer_id=' + employer_id,
@@ -21,17 +31,6 @@ export function getLineStats(token, employer_id) {
 		}
 	})
 }
-
-// export function getUserLineStats(token) {
-// 	return axios({
-// 		method: 'get',
-// 		url: 'https://coccareerfairapp-development.herokuapp.com/api/lines/stats',
-// 		headers: {
-// 			'Content-Type': 'application/json',
-// 			'Authorization': 'Bearer ' + token,
-// 		}
-// 	})
-// }
 
 export function joinLine(token, employer_id) {
 	return axios({

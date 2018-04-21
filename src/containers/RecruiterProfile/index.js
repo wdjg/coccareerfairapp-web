@@ -8,6 +8,8 @@ import { updateUser } from '../../redux/actions/user'
 import EditableInfo from '../../components/EditableInfo';
 import Button from '../../components/Button';
 
+import * as Auth from '../auth.js';
+
 class RecruiterProfile extends Component {
 
 	constructor(props) {
@@ -74,4 +76,4 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch =>
 	bindActionCreators({updateUser}, dispatch)
-export default connect(mapStateToProps, mapDispatchToProps)(RecruiterProfile);
+export default Auth.userIsAuth(Auth.userIsRecruiter(connect(mapStateToProps, mapDispatchToProps)(RecruiterProfile)));
