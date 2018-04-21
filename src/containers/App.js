@@ -56,7 +56,7 @@ class App extends React.Component {
 						this.props.getBatch(user.token, user.employer_id);
 					this.queryInterval = setInterval(() => {
 						if (!this.state.notification_modal) {
-							if (user.user_type === 'student')
+							if (user.user_type === 'student' && !this.props.scanner_visible)
 								this.props.getLine(user.token);
 							else if (user.user_type === 'recruiter')
 								this.props.getBatch(user.token, user.employer_id);
@@ -231,7 +231,7 @@ class App extends React.Component {
 						</div>
 					) 
 				}
-				<QRScannerFull onExit={() => this.props.setScannerVisibility(false)} visible={this.props.scannerVisible}/>
+				<QRScannerFull onExit={() => this.props.setScannerVisibility(false)} visible={this.props.scanner_visible}/>
 			</div>
 		)
 	}
@@ -240,7 +240,7 @@ class App extends React.Component {
 
 const mapStateToProps = state => ({
 	user: state.user,
-	scannerVisible: state.scanner.visible,
+	scanner_visible: state.scanner.visible,
 	browser: state.browser,
 	navbar: state.navbar,
 	line: state.line,

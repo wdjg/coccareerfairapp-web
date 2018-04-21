@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import './QRDisplay.css'
 import * as QRAPI from '../../api/qr';
+import * as Auth from '../auth.js';
 
 class QRDisplay extends Component {
 
@@ -34,4 +35,4 @@ const mapStateToProps = state => ({
 	user: state.user,
 });
 
-export default connect(mapStateToProps)(QRDisplay);
+export default Auth.userIsAuth(Auth.userIsRecruiter(connect(mapStateToProps)(QRDisplay)));

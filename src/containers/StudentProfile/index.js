@@ -11,6 +11,8 @@ import { updateUser } from '../../redux/actions/user';
 import EditableInfo from '../../components/EditableInfo';
 import Button from '../../components/Button';
 
+import * as Auth from '../auth.js';
+
 class StudentProfile extends Component {
 
 	constructor() {
@@ -145,4 +147,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
 	bindActionCreators({ updateUser}, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(StudentProfile);
+export default Auth.userIsAuth(Auth.userIsStudent(connect(mapStateToProps, mapDispatchToProps)(StudentProfile)));

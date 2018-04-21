@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getLine } from '../../redux/actions/line';
 
+import * as Auth from '../auth.js'
+
 const ordinal = i => {
 	var j = i % 10,
 		k = i % 100;
@@ -27,12 +29,12 @@ class StudentMain extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			show_camera: false,
 			company: {},
 		}
 	}
 
 	componentDidMount() {
+		console.log("STUDENT MAIN MOUNT")
 		if (this.props.line) {
 			const company = this.props.companies.find(e => e._id === this.props.line.employer_id)
 			if (company)
@@ -50,7 +52,7 @@ class StudentMain extends Component {
 
 	render() {
 		return (
-			<div className="StudentMain" onClick={() => this.setState(prev => ({show_camera: true}))}>
+			<div className="StudentMain">
 				<div className="line-details">
 					<div className="company">
 						<h2>In Line</h2>
@@ -61,6 +63,7 @@ class StudentMain extends Component {
 						<div className="data place">{this.renderPlace(this.props.line.myPlace)}</div>
 					</div>
 				</div>
+				<SearchCompanies/>
 			</div>
 		);
 	}
@@ -75,4 +78,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => 
 	bindActionCreators({ getLine }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(StudentMain);
+export default Auth.userIsAuth(Auth.userIsStudent(connect(mapStateToProps, mapDispatchToProps)(StudentMain)));

@@ -11,12 +11,7 @@ import Loading from '../../components/Loading';
 
 import './RecruiterBatch.css';
 
-// const TEST_BATCH = [
-// {name: "Valdimar Haraldsson", id: "9532016"},
-// {name: "Floopy Doop", id: "AAAAAAAAAARG"},
-// {name: "Hermann Jung-Olsen", id: "45634516"},
-// {name: "Gudrun Gjukadóttir", id: "67824594"},
-// {name: "Blerg Fergusson", id: "8679305"},]
+import * as Auth from '../auth.js'
 
 class RecruiterBatch extends Component {
 
@@ -109,4 +104,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => 
 	bindActionCreators({ getBatch, setInterviewStudent }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(RecruiterBatch);
+export default Auth.userIsAuth(Auth.userIsRecruiter(connect(mapStateToProps, mapDispatchToProps)(RecruiterBatch)));

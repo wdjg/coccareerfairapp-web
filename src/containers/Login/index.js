@@ -16,6 +16,8 @@ import { studentLogin, recruiterLogin } from '../../redux/actions/login';
 import { studentRegister, recruiterRegister } from '../../redux/actions/register';
 import { getCompany } from '../../redux/actions/companies';
 
+import * as Auth from '../auth.js';
+
 const loginTabs = [{id: 'student', label: 'Student'}, {id: 'recruiter', label: 'Recruiter'}];
 
 class Login extends Component {
@@ -267,7 +269,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
 	bindActionCreators({ updateUser, studentLogin, recruiterLogin, studentRegister, recruiterRegister, getCompany }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Auth.userIsNotAuth(connect(mapStateToProps, mapDispatchToProps)(Login));
 
 const validateLogin = values => {
 	// same as above, but feel free to move this into a class method now.

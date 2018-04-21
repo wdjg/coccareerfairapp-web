@@ -1,6 +1,6 @@
 import * as LineAPI from '../../api/line';
 import * as CompaniesAPI from '../../api/companies';
-import { updateCompany } from './companies';
+// import { updateCompany } from './companies';
 
 export const UPDATE_LINE_DETAILS = 'UPDATE_LINE_DETAILS';
 export const SET_LINE_DETAILS = 'SET_LINE_DETAILS';
