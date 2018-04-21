@@ -47,7 +47,7 @@ class Info extends Component {
 				</div>
 				<div className="faq-entry">
 					<h2 className="question">Why do I need to check in a second time?</h2>
-					<div className="answer">>Checking in confirms that you have made it back to the company&rsquo;s booth in time.</div>
+					<div className="answer">Checking in confirms that you have made it back to the company&rsquo;s booth in time.</div>
 				</div>
 				<div className="faq-entry">
 					<h2 className="question">Which line do I join when I return to the company?</h2>
