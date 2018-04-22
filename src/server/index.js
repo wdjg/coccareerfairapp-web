@@ -30,7 +30,7 @@ server
     // Render the component to a string
     const markup = renderToString(
       <Provider store={store}>
-        <HttpsRedirect>
+        <HttpsRedirect style={{width: '100%', height: '100%'}}>
           <ConnectedRouter history={history}>
             <App />
           </ConnectedRouter>
