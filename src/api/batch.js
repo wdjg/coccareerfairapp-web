@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 export function getBatch(token, employer_id) {
 	return axios({
 		method: 'get',

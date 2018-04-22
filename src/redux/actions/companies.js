@@ -34,6 +34,8 @@ export function getCompanies(token) {
 			Promise.all(promises).then(employers => {
 				dispatch(setCompanies(employers));
 			});
+		}).catch(err => {
+			console.log(err);
 		});
 	}
 }

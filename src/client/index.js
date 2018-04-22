@@ -14,7 +14,7 @@ const history = createHistory();
 const store = configureStore(window.__PRELOADED_STATE__, history);
 hydrate(
   <Provider store={store}>
-  	<HttpsRedirect>
+  	<HttpsRedirect style={{width: '100%', height: '100%'}}>
 	  	<ConnectedRouter history={history}>
 	    	<App />
 	    </ConnectedRouter>
