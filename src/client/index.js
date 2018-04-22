@@ -6,6 +6,7 @@ import { hydrate } from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import { calculateResponsiveState } from 'redux-responsive'
+import HttpsRedirect from 'react-https-redirect';
 
 import App from '../containers/App';
 
@@ -13,9 +14,11 @@ const history = createHistory();
 const store = configureStore(window.__PRELOADED_STATE__, history);
 hydrate(
   <Provider store={store}>
-  	<ConnectedRouter history={history}>
-    	<App />
-    </ConnectedRouter>
+  	<HttpsRedirect>
+	  	<ConnectedRouter history={history}>
+	    	<App />
+	    </ConnectedRouter>
+    </HttpsRedirect>
   </Provider>,
   document.getElementById('root')
 );
