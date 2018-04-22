@@ -11,6 +11,7 @@ import { renderToString } from 'react-dom/server';
 import { ConnectedRouter, push } from 'react-router-redux';
 
 import App from '../containers/App';
+import HttpsRedirect from 'react-https-redirect';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 const server = express();
@@ -29,9 +30,11 @@ server
     // Render the component to a string
     const markup = renderToString(
       <Provider store={store}>
-        <ConnectedRouter history={history}>
-          <App />
-        </ConnectedRouter>
+        <HttpsRedirect>
+          <ConnectedRouter history={history}>
+            <App />
+          </ConnectedRouter>
+        </HttpsRedirect>
       </Provider>
     );
 
