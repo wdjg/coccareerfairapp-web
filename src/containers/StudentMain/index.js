@@ -34,7 +34,6 @@ class StudentMain extends Component {
 	}
 
 	componentDidMount() {
-		console.log("STUDENT MAIN MOUNT")
 		if (this.props.line) {
 			const company = this.props.companies.find(e => e._id === this.props.line.employer_id)
 			if (company)

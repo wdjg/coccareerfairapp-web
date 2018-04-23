@@ -109,3 +109,31 @@
 .scanner-modal.show .content {
 	bottom: 0;
 }
+
+.scanner-modal > div {
+	background: #fff;
+	padding: 10px;
+	min-width: 40%;
+	.buttons {
+		margin-top: 10px;
+		width: 100%;
+		display: flex;
+		.Button {
+			flex: 1;
+		}
+	}
+}
+
+.loading-modal > div {
+	background: #fff;
+	padding: 30px;
+	& > div {
+		justify-content: center;
+		display: flex;
+		align-items: center;
+		flex-flow: column;
+	}
+	.Loading {
+		margin-bottom: 10px;
+	}
+}

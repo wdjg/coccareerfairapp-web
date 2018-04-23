@@ -89,7 +89,7 @@ class App extends React.Component {
 			if (this.props.user.token && !this.queryInterval) {
 				this.queryInterval = setInterval(() => {
 					if (!this.state.notification_modal) {
-						if (this.props.user.user_type === 'student')
+						if (this.props.user.user_type === 'student' && !this.props.scanner_visible)
 							this.props.getLine(this.props.user.token);
 						else if (this.props.user.user_type === 'recruiter')
 							this.props.getBatch(this.props.user.token, this.props.user.employer_id);

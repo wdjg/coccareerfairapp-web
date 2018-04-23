@@ -25,7 +25,6 @@ class RecruiterBatch extends Component {
 	}
 
 	componentDidMount() {
-		console.log("BATCH MOUNT")
 		this.props.getBatch(this.props.user.token);
 	}
 

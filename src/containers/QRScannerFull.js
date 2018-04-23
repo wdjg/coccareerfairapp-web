@@ -7,7 +7,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 
 import Button from '../components/Button';
-import BottomModal from '../components/BottomModal';
+import Modal from '../components/Modal';
+import Loading from '../components/Loading';
 import SmoothCollapse from 'react-smooth-collapse'
 
 import { getCompanyFromQR } from '../redux/actions/qr';
@@ -47,12 +48,28 @@ class QRScannerFull extends Component {
 		}
 	}
 
+	// componentDidMount() {
+	// 	this.setState({
+	// 		scanning: true,
+	// 	});
+	// }
+
+	componentWillUnmount() {
+		this.setState({
+			company: null,
+			scanning: false,
+			show_modal: false,
+			confirm_status: null,
+			error_status: null,
+		});
+	}
+
 	scanError(err) {
 		console.log(err);
 	}
 
 	scanSuccess(data) {
-		if (!data || this.state.scanning)
+		if (!data || this.state.scanning || this.state.show_modal)
 			return;
 		this.setState({ 
 			scanning: true,
@@ -115,7 +132,11 @@ class QRScannerFull extends Component {
 						<div className="corner bl"></div>
 						<div className="corner br"></div>
 					</div>
-					<BottomModal className="scanner-modal" show={this.state.show_modal}>
+					<Modal className="loading-modal" show={this.state.scanning} shade>
+						<Loading/>
+						Scanning...
+					</Modal>
+					<Modal className="scanner-modal" show={this.state.show_modal} shade>
 						{this.state.company && <div>
 							<h2 className="join-title">{can_inline ? 'Confirm Line Entry' : 'Join Line'}:</h2>
 							<h1 className="name">{this.state.company.name}</h1>
@@ -130,12 +151,12 @@ class QRScannerFull extends Component {
 							</SmoothCollapse>
 							{(!this.state.confirm_status && !this.state.error_status) ? <div className="buttons">
 								<Button 
-									className="btn confirm"
+									className="btn confirm green"
 									onClick={() => this.handleConfirm(this.state.company._id)}>
 									{can_inline ? 'Confirm' : 'Join'}
 								</Button>
 								<Button
-									className="btn cancel"
+									className="btn cancel red"
 									onClick={() => this.closeModal(false)}>
 									Cancel
 								</Button>
@@ -146,7 +167,7 @@ class QRScannerFull extends Component {
 								{this.state.error_status ? "Retry" : "Close"}
 							</Button>}
 						</div>}
-					</BottomModal>
+					</Modal>
 					<div className={classNames("exit", {active: state === 'entering' || state === 'entered'})} onClick={this.props.onExit}></div>
 				</div>)}
 			</Transition>

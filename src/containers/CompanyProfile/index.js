@@ -54,8 +54,6 @@ class CompanyProfile extends Component {
 			]);
 		const { match: { params } } = this.props;
 		this.props.getCompany(this.props.user.token, params.id).then(res => {
-			console.log(this.props.companies);
-			console.log(params.id);
 			const company = this.props.companies.find(e => e._id === params.id)
 			if (company)
 				this.setState({company: company});
