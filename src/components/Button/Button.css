@@ -15,10 +15,6 @@
 		background: $primary;
 		color: $white;
 	}
-	&:disabled {
-		color: $grey;
-		border: solid 1px $grey;
-	}
 	&.green {
 		border-color: #4bd761;
 		color: #4bd761;
@@ -34,6 +30,10 @@
 			background: #fd3d2a;
 			color: $white;
 		}
+	}
+	&:disabled {
+		color: $grey;
+		border: solid 1px $grey;
 	}
 }
 

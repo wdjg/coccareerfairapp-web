@@ -1,12 +1,12 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
-import logger from 'redux-logger'
+// import logger from 'redux-logger'
 import { routerMiddleware } from 'react-router-redux'
 import { createResponsiveStoreEnhancer } from 'redux-responsive'
 
 const configureStore = (preloadedState, history) => {
-  const middleware = [thunk, routerMiddleware(history), logger];
+  const middleware = [thunk, routerMiddleware(history)];
   const store = createStore(
     rootReducer,
     preloadedState,
