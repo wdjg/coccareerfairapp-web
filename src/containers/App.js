@@ -136,7 +136,6 @@ class App extends React.Component {
 
 	handleScroll(event) {
 		const d_scroll = event.srcElement.scrollTop - this.last_scroll;
-		console.log(d_scroll)
 		if (d_scroll > 10) {
 			this.last_scroll = event.srcElement.scrollTop;
 			this.setState({ show_navs: false });
