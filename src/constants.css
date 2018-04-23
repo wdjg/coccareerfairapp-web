@@ -23,8 +23,3 @@ $top-bar-height: 50px;
 $top-bar-margin: 12px;
 
 $snazzy-ease: cubic-bezier(.46,.02,.04,.99);
-
-body {
-	background: $white;
-	font-family: $font-family;
-}

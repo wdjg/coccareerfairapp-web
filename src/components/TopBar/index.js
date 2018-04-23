@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './TopBar.css';
 // import { Menu, Dropdown, Button, Icon } from 'antd';
-import MenuIcon from '../../resources/burger-title.svg';
+// import MenuIcon from '../../resources/burger-title.svg';
 
 class TopBar extends Component {
 
@@ -17,7 +17,6 @@ class TopBar extends Component {
 		return (
 			<nav className="TopBar">
 				<div className="TopBar__item left" onClick={this.props.onBurgerClick}>
-					<img className="burger" src={MenuIcon} alt="menu"/>
 				</div>
 				<div className="TopBar__item title">{this.props.title}</div>
 				<div className="TopBar__item right">

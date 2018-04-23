@@ -13,10 +13,13 @@ html {
 }
 
 body {
+	background: $white;
+	font-family: $font-family;
 	width: 100%;
 	height: 100%;
   margin: 0;
   padding: 0;
+  color: $text-dark;
   /* font-family: $font-family; */
   /* background: $background; */
   & > div {
@@ -92,9 +95,9 @@ h2 {
 	}
 	.content {
 		flex: 1;
-		/* display: flex; */
 		flex-flow: column;
 		.content__topbar {
+			flex-shrink: 0;
 			background: #fff;
 			display: flex;
 			height: $nav-width;
@@ -138,9 +141,11 @@ h2 {
 			}
 		}
 		.content__container {
-			flex: 1;
+			height: calc(100% - $nav-width);
+			overflow-y: auto;
 			& > div {
 				width: calc(100% - $side-nav-width);
+				height: 100%;
 				transition: width 0.5s cubic-bezier(.46,.02,.04,.99);
 			}
 		}
@@ -193,6 +198,11 @@ h2 {
 	}
 }
 
+.content__container {
+	overflow-y: auto;
+	flex: 1;
+}
+
 @media screen and (max-width: 900px) {
 	.content__container > div {
 		width: 100%;
@@ -225,8 +235,6 @@ h2 {
 }
 
 .bottom-bar-hider {
-	position: fixed;
-	bottom: 0;
 	width: 100%;
 }
 
@@ -269,4 +277,13 @@ h2 {
 	.line-notification .Modal__content {
 		width: 90%;
 	}	
+	.topbar-title { 
+		display: none;
+	}
+}
+
+.topbar-title {
+	height: 100%;
+	line-height: 100%;
+	line-height: $nav-width;
 }

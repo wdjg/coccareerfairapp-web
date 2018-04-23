@@ -103,10 +103,11 @@ const Company = ({...props, index, setCompanyHover, hoverState}) => (
 				<h1>{props.name}</h1>
 			</Link>
 			<div className="company__bottom">
-				<div className="company__type">Type</div>
+				
 				{props.line_stats && <div className="company__line">Virtual Line: {props.line_stats.size}</div>}
 			</div>
 		</div>
 		<div className="company__arrow"></div>
 	</div>
 );
+// <div className="company__type">Type</div>

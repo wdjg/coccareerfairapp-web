@@ -66,7 +66,13 @@ class App extends React.Component {
 			});
 	}
 
+	componentWillUnmount() {
+		this.scroll_content.removeEventListener('scroll', this.handleScroll.bind(this));
+	}
+
 	componentWillReceiveProps(next) {
+		this.scroll_content.removeEventListener('scroll', this.handleScroll.bind(this));
+		this.scroll_content.addEventListener('scroll', this.handleScroll.bind(this));
 		if (this.props.line !== next.line) {
 			if (next.line.status === 'inline') {
 				const company = next.companies.find(e => e._id === this.props.line.employer_id)
@@ -128,12 +134,9 @@ class App extends React.Component {
 		));
 	}
 
-	componentWillUnmount() {
-		this.scroll_content.removeEventListener('scroll', this.handleScroll.bind(this));
-	}
-
 	handleScroll(event) {
 		const d_scroll = event.srcElement.scrollTop - this.last_scroll;
+		console.log(d_scroll)
 		if (d_scroll > 10) {
 			this.last_scroll = event.srcElement.scrollTop;
 			this.setState({ show_navs: false });
