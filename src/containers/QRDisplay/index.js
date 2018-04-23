@@ -13,12 +13,22 @@ class QRDisplay extends Component {
 		this.state = {
 			code: ''
 		}
+		this.QRInterval = null;
 	}
 
 	componentDidMount() {
 		QRAPI.getQRCode(this.props.user.token, this.props.user.employer_id).then(res => {
 			this.setState({ code: res.data.qr_code_value })
-		})
+		});
+		this.QRInterval = setInterval(() => {
+			QRAPI.getQRCode(this.props.user.token, this.props.user.employer_id).then(res => {
+				this.setState({ code: res.data.qr_code_value })
+			});
+		}, 30000);
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.QRInterval);
 	}
 
 	render() {
