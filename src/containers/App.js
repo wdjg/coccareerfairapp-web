@@ -74,7 +74,7 @@ class App extends React.Component {
 		this.scroll_content.removeEventListener('scroll', this.handleScroll.bind(this));
 		this.scroll_content.addEventListener('scroll', this.handleScroll.bind(this));
 		if (this.props.line !== next.line) {
-			if (next.line.status === 'inline') {
+			if (next.line.status === 'notification') {
 				const company = next.companies.find(e => e._id === this.props.line.employer_id)
 				this.setState({
 					notification_modal: !next.user.dismissed_notification, 
