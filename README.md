@@ -55,7 +55,7 @@ April 23rd, 2018
 1. Install the latest [Node.js](https://nodejs.org/en/)
 2. Update npm via the terminal `npm i -g npm` (may need to run with sudo, i.e. `sudo npm i -g npm`)
 3. Install [Yarn](https://yarnpkg.com/en/)
-4. Then you can start
+4. Then you can start a terminal or command shell and use the following commands
 
 ```bash
 git clone https://github.com/wdjg/coccareerfairapp-web.git 
