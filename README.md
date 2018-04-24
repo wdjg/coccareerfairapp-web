@@ -1,7 +1,21 @@
-# Jacket - Front End
+# Jacket - Front-End
 
-This is the front end repository for Jacket, a career fair information and virtual line system for Georgia Tech's College of Computing.
+This is the front end repository for Jacket, a career fair information and virtual line system for Georgia Tech's College of Computing. 
 
+This repository only includes the front-end portion of this project, which consists of the React app and web assets. The back-end portion of this project can be found [here](https://github.com/wdjg/coccareerfairapp-server).
+
+This project was built with node v8.9.4 and npm v5.8.0.
+
+This app is currently deployed on heroku on these free tier boxes:
+
+```
+jacket-web-development.herokuapp.com // web development box
+jacket-server-development.herokuapp.com // server development box
+
+jacket-app.herokuapp.com // web production box
+jacket-server-production.herokuapp.com // server production box
+If you need access to this Repository, Heroku, Zenhub, or other documents, please see the contact information below.
+```
 
 ## Quick Start
 
