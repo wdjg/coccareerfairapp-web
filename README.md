@@ -14,8 +14,9 @@ jacket-server-development.herokuapp.com // server development box
 
 jacket-app.herokuapp.com // web production box
 jacket-server-production.herokuapp.com // server production box
-If you need access to this Repository, Heroku, Zenhub, or other documents, please see the contact information below.
 ```
+
+If you need access to this Repository, Heroku, Zenhub, or other documents, please see the contact information below.
 
 ## Release Notes
 
