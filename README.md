@@ -56,3 +56,7 @@ By default, runs tests related to files changed since the last commit.
 ### `npm start -- --inspect` or `yarn start -- --inspect`
 
 To debug the node server, you can use `razzle start --inspect`. This will start the node server and enable the inspector agent. For more information, see [this](https://nodejs.org/en/docs/inspector/).
+
+#Contact
+
+John Britti: <jbritti3@gatech.ed>
