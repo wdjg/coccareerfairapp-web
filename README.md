@@ -33,6 +33,8 @@ yarn dev
 
 Then open http://localhost:3000/ to see your app. Your console should look like this:
 
+<img src="https://cloud.githubusercontent.com/assets/4060187/26324663/b31788c4-3f01-11e7-8e6f-ffa48533af54.png" width="500px" alt="Razzle Development Mode"/>
+
 Below is a list of commands you will probably find useful.
 
 ### `yarn dev` 
